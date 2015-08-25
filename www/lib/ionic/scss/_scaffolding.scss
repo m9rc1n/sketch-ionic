@@ -1,3 +1,4 @@
+
 /**
  * Scaffolding
  * --------------------------------------------------
@@ -96,7 +97,6 @@ body.grade-c {
   @include text-size-adjust(none);
   @include transform-origin(left, top);
 }
-
 /**
  * Set ms-viewport to prevent MS "page squish" and allow fluid scrolling
  * https://msdn.microsoft.com/en-us/library/ie/hh869615(v=vs.85).aspx
@@ -110,12 +110,10 @@ body.grade-c {
   position: absolute;
   z-index: $z-index-scroll-bar;
 }
-
 // hide the scroll-bar during animations
 .ng-animate .scroll-bar {
   visibility: hidden;
 }
-
 .scroll-bar-h {
   right: 2px;
   bottom: 3px;
@@ -137,7 +135,6 @@ body.grade-c {
     width: 100%;
   }
 }
-
 .scroll-bar-indicator {
   position: absolute;
   border-radius: 4px;
@@ -149,12 +146,10 @@ body.grade-c {
     opacity: 0;
   }
 }
-
 .platform-android .scroll-bar-indicator {
   // android doesn't have rounded ends on scrollbar
   border-radius: 0;
 }
-
 .grade-b .scroll-bar-indicator,
 .grade-c .scroll-bar-indicator {
   // disable rgba background and border radius for low end devices
@@ -205,13 +200,13 @@ ion-infinite-scroll {
   }
 }
 
+
 // Pad top/bottom of content so it doesn't hide behind .bar-title and .bar-tab.
 // Note: For these to work, content must come after both bars in the markup
 /* If you change these, change platform.scss as well */
 .has-header {
   top: $bar-height;
 }
-
 // Force no header
 .no-header {
   top: 0;
@@ -220,11 +215,9 @@ ion-infinite-scroll {
 .has-subheader {
   top: $bar-height + $bar-subheader-height;
 }
-
 .has-tabs-top {
   top: $bar-height + $tabs-height;
 }
-
 .has-header.has-subheader.has-tabs-top {
   top: $bar-height + $bar-subheader-height + $tabs-height;
 }
@@ -232,7 +225,6 @@ ion-infinite-scroll {
 .has-footer {
   bottom: $bar-footer-height;
 }
-
 .has-subfooter {
   bottom: $bar-footer-height + $bar-subfooter-height;
 }
@@ -256,11 +248,9 @@ ion-infinite-scroll {
   @include transition-duration(0);
   z-index: $z-index-pane;
 }
-
 .view {
   z-index: $z-index-view;
 }
-
 .pane,
 .view {
   position: absolute;
@@ -273,7 +263,6 @@ ion-infinite-scroll {
   background-color: $base-background-color;
   overflow: hidden;
 }
-
 .view-container {
   position: absolute;
   display: block;

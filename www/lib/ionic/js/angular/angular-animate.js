@@ -32,7 +32,7 @@
   function assertArg(arg, name, reason) {
     if (!arg) {
       throw ngMinErr('areq', "Argument '{0}' is {1}", (name || '?'), (reason || "required"));
-    }
+  }
     return arg;
   }
 
@@ -50,7 +50,7 @@
     if (options && (options.to || options.from)) {
       styles.to = options.to;
       styles.from = options.from;
-    }
+  }
     return styles;
   }
 
@@ -66,7 +66,7 @@
         className += (i > 0) ? ' ' : '';
         className += isPrefix ? fix + klass
           : klass + fix;
-      }
+    }
     });
     return className;
   }
@@ -75,7 +75,7 @@
     var index = arr.indexOf(val);
     if (val >= 0) {
       arr.splice(index, 1);
-    }
+  }
   }
 
   function stripCommentsFromElement(element) {
@@ -97,12 +97,12 @@
         default:
           return jqLite(extractElementNode(element));
           break;
-      }
+    }
     }
 
     if (element.nodeType === ELEMENT_NODE) {
       return jqLite(element);
-    }
+  }
   }
 
   function extractElementNode(element) {
@@ -111,8 +111,8 @@
       var elm = element[i];
       if (elm.nodeType == ELEMENT_NODE) {
         return elm;
-      }
     }
+  }
   }
 
   function $$addClass($$jqLite, element, className) {
@@ -132,12 +132,12 @@
       if (options.addClass) {
         $$addClass($$jqLite, element, options.addClass);
         options.addClass = null;
-      }
+    }
       if (options.removeClass) {
         $$removeClass($$jqLite, element, options.removeClass);
         options.removeClass = null;
-      }
     }
+  }
   }
 
   function prepareAnimationOptions(options) {
@@ -150,7 +150,7 @@
         domOperation = noop;
       };
       options.$$prepared = true;
-    }
+  }
     return options;
   }
 
@@ -163,14 +163,14 @@
     if (options.from) {
       element.css(options.from);
       options.from = null;
-    }
+  }
   }
 
   function applyAnimationToStyles(element, options) {
     if (options.to) {
       element.css(options.to);
       options.to = null;
-    }
+  }
   }
 
   function mergeAnimationOptions(element, target, newOptions) {
@@ -190,7 +190,7 @@
       target.removeClass = classes.removeClass;
     } else {
       target.removeClass = null;
-    }
+  }
 
     return target;
   }
@@ -229,7 +229,7 @@
       if (allow) {
         if (classes[prop].length) {
           classes[prop] += ' ';
-        }
+      }
         classes[prop] += klass;
       }
     });
@@ -237,7 +237,7 @@
     function splitClassesToLookup(classes) {
       if (isString(classes)) {
         classes = classes.split(' ');
-      }
+    }
 
       var obj = {};
       forEach(classes, function (klass) {
@@ -248,7 +248,7 @@
         }
       });
       return obj;
-    }
+  }
 
     return classes;
   }
@@ -298,15 +298,15 @@
         runNextTask(innerQueue);
         if (innerQueue.length) {
           updatedQueue.push(innerQueue);
-        }
       }
+    }
       tickQueue = updatedQueue;
 
       if (!cancelFn) {
         $$rAF(function () {
           if (!cancelFn) nextTick();
         });
-      }
+    }
     }
 
     function runNextTask(tasks) {
@@ -614,14 +614,14 @@
         // only numerical-based values have a negative sign or digit as the first value
         if (c === '-' || c === '+' || c >= 0) {
           val = parseMaxTime(val);
-        }
+      }
 
         // by setting this to null in the event that the delay is not set or is set directly as 0
         // then we can still allow for zegative values to be used later on and not mistake this
         // value for being greater than any other negative value.
         if (val === 0) {
           val = null;
-        }
+      }
         styles[actualStyleName] = val;
       }
     });
@@ -637,7 +637,7 @@
       // getComputedStyle will always handle the conversion for us
       if (value.charAt(value.length - 1) == 's') {
         value = value.substring(0, value.length - 1);
-      }
+    }
       value = parseFloat(value) || 0;
       maxValue = maxValue ? Math.max(value, maxValue) : value;
     });
@@ -655,7 +655,7 @@
       style += DURATION_KEY;
     } else {
       value += ' linear all';
-    }
+  }
     return [style, value];
   }
 
@@ -744,7 +744,7 @@
             timings = computeCssStyles($window, node, properties);
             if (timings.animationIterationCount === 'infinite') {
               timings.animationIterationCount = 1;
-            }
+        }
           }
 
           // we keep putting this in multiple times even though the value and the cacheKey are the same
@@ -776,7 +776,7 @@
               $$jqLite.removeClass(node, staggerClassName);
 
               gcsStaggerLookup.put(cacheKey, stagger);
-            }
+        }
           }
 
           return stagger || {};
@@ -805,7 +805,7 @@
             // during this looping then it will consider new requests
             for (var i = 0; i < rafWaitQueue.length; i++) {
               rafWaitQueue[i](width);
-            }
+        }
             rafWaitQueue.length = 0;
           });
         }
@@ -969,8 +969,8 @@
           flags.hasAnimations = timings.animationDuration > 0;
           flags.hasTransitionAll = flags.hasTransitions && timings.transitionProperty == 'all';
           flags.applyTransitionDuration = hasToStyles && (
-          (flags.hasTransitions && !flags.hasTransitionAll)
-          || (flags.hasAnimations && !flags.hasTransitions));
+            (flags.hasTransitions && !flags.hasTransitionAll)
+            || (flags.hasAnimations && !flags.hasTransitions));
           flags.applyAnimationDuration = options.duration && flags.hasAnimations;
           flags.applyTransitionDelay = truthyTimingValue(options.delay) && (flags.applyTransitionDuration || flags.hasTransitions);
           flags.applyAnimationDelay = truthyTimingValue(options.delay) && flags.hasAnimations;
@@ -1009,8 +1009,8 @@
           if (!options.skipBlocking) {
             flags.blockTransition = timings.transitionDuration > 0;
             flags.blockKeyframeAnimation = timings.animationDuration > 0 &&
-            stagger.animationDelay > 0 &&
-            stagger.animationDuration === 0;
+              stagger.animationDelay > 0 &&
+              stagger.animationDuration === 0;
           }
 
           applyAnimationFromStyles(element, options);
@@ -1028,7 +1028,7 @@
               if (animationClosed) return;
 
               runnerHost = {
-                end: endFn,
+            end: endFn,
                 cancel: cancelFn,
                 resume: null, //this will be set during the start() phase
                 pause: null
@@ -1140,7 +1140,7 @@
                   animationPaused
                     ? temporaryStyles.push(value)
                     : removeFromArray(temporaryStyles, value);
-                }
+            }
               } else if (animationPaused && playAnimation) {
                 animationPaused = false;
                 close();
@@ -1288,11 +1288,11 @@
                 // the animation will automatically close itself since transitions cannot be paused.
                 animationCompleted = true;
                 close();
-              }
-            }
           }
         }
-      }];
+          }
+        }
+  }];
   }];
 
   var $$AnimateCssDriverProvider = ['$$animationProvider', function ($$animationProvider) {
@@ -1380,8 +1380,8 @@
                       runner.complete();
                     });
                     return currentAnimation;
-                  }
-                }
+              }
+            }
                 // in the event that there is no `in` animation
                 end();
                 runner.complete();
@@ -1398,7 +1398,7 @@
                 if (currentAnimation) {
                   currentAnimation.end();
                 }
-              }
+          }
             }
           };
 
@@ -1418,7 +1418,7 @@
                 case 'left':
                   value += bodyNode.scrollLeft;
                   break;
-              }
+          }
               styles[key] = Math.floor(value) + 'px';
             });
             return styles;
@@ -1512,7 +1512,7 @@
                 forEach(animationRunners, function (runner) {
                   runner.end();
                 });
-              }
+          }
             }
           };
         }
@@ -1532,7 +1532,7 @@
             options.event = animationDetails.event;
             if (options.event === 'leave') {
               options.onDone = options.domOperation;
-            }
+        }
           } else {
             options.event = null;
           }
@@ -1545,7 +1545,7 @@
           // a flag as a hint as to whether an animation was detected or not
           return animator.$$willAnimate ? animator : null;
         }
-      }];
+  }];
   }];
 
 // TODO(matsko): use caching here to speed things up for detection
@@ -1620,7 +1620,7 @@
                 chain.push(function (fn) {
                   closeActiveAnimations = before(fn);
                 });
-              }
+          }
 
               if (chain.length) {
                 chain.push(function (fn) {
@@ -1635,7 +1635,7 @@
                 chain.push(function (fn) {
                   closeActiveAnimations = after(fn);
                 });
-              }
+          }
 
               var animationClosed = false;
               var runner = new $$AnimateRunner({
@@ -1726,7 +1726,7 @@
                     resolved = true;
                     (endProgressCb || noop)(rejected);
                     runner.complete(!rejected);
-                  }
+              }
                 };
 
                 runner = new $$AnimateRunner({
@@ -1735,7 +1735,7 @@
                   },
                   cancel: function () {
                     onAnimationComplete(true);
-                  }
+              }
                 });
 
                 endProgressCb = executeAnimationFn(animation, element, event, options, function (result) {
@@ -1778,8 +1778,8 @@
               if (operations.length) {
                 forEach(operations, function (animateFn) {
                   runners.push(animateFn());
-                });
-              }
+            });
+          }
 
               runners.length ? $$AnimateRunner.all(runners, callback) : callback();
 
@@ -1823,7 +1823,7 @@
 
               if (fromAnimation) {
                 animationRunners.push(fromAnimation.start());
-              }
+            }
 
               if (toAnimation) {
                 animationRunners.push(toAnimation.start());
@@ -1843,14 +1843,14 @@
                   forEach(animationRunners, function (runner) {
                     // at this point we cannot cancel animations for groups just yet. 1.5+
                     runner.end();
-                  });
-                };
+                });
+              };
               }
 
               function done(status) {
                 runner.complete(status);
-              }
             }
+          }
           };
         } else {
           return prepareAnimation(animationDetails);
@@ -1865,7 +1865,7 @@
         var classes = animationDetails.classes;
         return $$animateJs(element, event, classes, options);
       }
-    }];
+  }];
   }];
 
   var NG_ANIMATE_ATTR_NAME = 'data-ng-animate';
@@ -2045,7 +2045,7 @@
                   (!matchCallback || entry.callback === matchCallback);
                 return !isMatch;
               });
-            }
+        }
           },
 
           pin: function (element, parentElement) {
@@ -2091,10 +2091,10 @@
                     disabledElementsLookup.put(node, true);
                   } else if (recordExists) {
                     disabledElementsLookup.remove(node);
-                  }
-                }
               }
-            }
+                }
+          }
+        }
 
             return bool;
           }
@@ -2181,12 +2181,12 @@
             var skipAnimationFlag = isAllowed('skip', element, newAnimation, existingAnimation);
             if (skipAnimationFlag) {
               if (existingAnimation.state === RUNNING_STATE) {
-                close();
-                return runner;
+            close();
+            return runner;
               } else {
                 mergeAnimationOptions(element, existingAnimation.options, options);
                 return existingAnimation.runner;
-              }
+          }
             }
 
             var cancelAnimationFlag = isAllowed('cancel', element, newAnimation, existingAnimation);
@@ -2204,7 +2204,7 @@
               } else {
                 // this will merge the existing animation options into this new follow-up animation
                 mergeAnimationOptions(element, newAnimation.options, existingAnimation.options);
-              }
+          }
             } else {
               // a joined animation means that this animation will take over the existing one
               // so an example would involve a leave animation taking over an enter. Then when
@@ -2218,7 +2218,7 @@
                   options = mergeAnimationOptions(element, existingAnimation.options, newAnimation.options);
                   return runner;
                 }
-              }
+          }
             }
           } else {
             // normalization in this case means that it removes redundant CSS classes that
@@ -2233,7 +2233,7 @@
           if (!isValidAnimation) {
             // animate (from/to) can be quickly checked first, otherwise we check if any classes are present
             isValidAnimation = (newAnimation.event === 'animate' && Object.keys(newAnimation.options.to || {}).length > 0)
-            || hasAnimationClasses(newAnimation.options);
+              || hasAnimationClasses(newAnimation.options);
           }
 
           if (!isValidAnimation) {
@@ -2278,21 +2278,21 @@
               if (animationCancelled) {
                 applyAnimationClasses(element, options);
                 applyAnimationStyles(element, options);
-              }
+          }
 
               // if the event changed from something like enter to leave then we do
               // it, otherwise if it's the same then the end result will be the same too
               if (animationCancelled || (isStructural && animationDetails.event !== event)) {
                 options.domOperation();
                 runner.end();
-              }
+          }
 
               // in the event that the element animation was not cancelled or a follow-up animation
               // isn't allowed to animate from here then we need to clear the state of the element
               // so that any future animations won't read the expired animation data.
-              if (!isValidAnimation) {
-                clearElementAnimationState(element);
-              }
+          if (!isValidAnimation) {
+            clearElementAnimationState(element);
+          }
 
               return;
             }
@@ -2352,7 +2352,7 @@
               case PRE_DIGEST_STATE:
                 if (animationDetails) {
                   activeAnimationsLookup.remove(child);
-                }
+            }
                 break;
             }
           });
@@ -2390,7 +2390,7 @@
 
             if (animationDetails.state === RUNNING_STATE) {
               animationDetails.runner.end();
-            }
+        }
             clearElementAnimationState(node);
           }
         }
@@ -2411,13 +2411,13 @@
               // angular doesn't want to attempt to animate elements outside of the application
               // therefore we need to ensure that the rootElement is an ancestor of the current element
               rootElementDetected = isMatchingElement(parentElement, $rootElement);
-            }
+        }
 
             var parentNode = parentElement[0];
             if (parentNode.nodeType !== ELEMENT_NODE) {
               // no point in inspecting the #document element
               break;
-            }
+        }
 
             var details = activeAnimationsLookup.get(parentNode) || {};
             // either an enter, leave or move animation will commence
@@ -2425,14 +2425,14 @@
             // but if a parent animation is class-based then that's ok
             if (!parentAnimationDetected) {
               parentAnimationDetected = details.structural || disabledElementsLookup.get(parentNode);
-            }
+        }
 
             if (isUndefined(animateChildren) || animateChildren === true) {
               var value = parentElement.data(NG_ANIMATE_CHILDREN_DATA);
               if (isDefined(value)) {
                 animateChildren = value;
-              }
-            }
+          }
+        }
 
             // there is no need to continue traversing at this point
             if (parentAnimationDetected && animateChildren === false) break;
@@ -2445,15 +2445,15 @@
                 parentHost = parentElement.data(NG_ANIMATE_PIN_DATA);
                 if (parentHost) {
                   parentElement = parentHost;
-                }
-              }
+            }
+          }
             }
 
             if (!bodyElementDetected) {
               // we also need to ensure that the element is or will be apart of the body element
               // otherwise it is pointless to even issue an animation to be rendered
               bodyElementDetected = isMatchingElement(parentElement, bodyElement);
-            }
+        }
 
             parentElement = parentElement.parent();
           }
@@ -2475,7 +2475,7 @@
             : details;
           activeAnimationsLookup.put(node, newValue);
         }
-      }];
+  }];
   }];
 
   var $$rAFMutexFactory = ['$$rAF', function ($$rAF) {
@@ -2486,7 +2486,7 @@
       });
       return function (fn) {
         passed ? fn() : $$rAF(fn);
-      };
+    };
     };
   }];
 
@@ -2503,7 +2503,7 @@
         if (index === chain.length) {
           callback(true);
           return;
-        }
+      }
 
         chain[index](function (response) {
           if (response === false) {
@@ -2512,7 +2512,7 @@
           }
           index++;
           next();
-        });
+      });
       }
     };
 
@@ -2527,7 +2527,7 @@
         status = status && response;
         if (++count === runners.length) {
           callback(status);
-        }
+      }
       }
     };
 
@@ -2560,7 +2560,7 @@
           this.promise = $q(function (resolve, reject) {
             self.done(function (status) {
               status === false ? reject() : resolve();
-            });
+          });
           });
         }
         return this.promise;
@@ -2621,7 +2621,7 @@
           });
           this._doneCallbacks.length = 0;
           this._state = DONE_COMPLETE_STATE;
-        }
+      }
       }
     };
 
@@ -2774,7 +2774,7 @@
                   var operation = invokeFirstDriver(animationEntry);
                   if (operation) {
                     startAnimationFn = operation.start;
-                  }
+              }
                 }
 
                 if (!startAnimationFn) {
@@ -2803,7 +2803,7 @@
               var attr = node.getAttribute(NG_ANIMATE_REF_ATTR);
               if (attr && attr.length) {
                 anchors.push(node);
-              }
+          }
             });
             return anchors;
           }
@@ -2828,7 +2828,7 @@
                     animationID: index,
                     element: jqLite(anchor)
                   };
-                });
+            });
               } else {
                 preparedAnimations.push(animation);
               }
@@ -2904,8 +2904,8 @@
                 if (aa === b[j]) {
                   matches.push(aa);
                   break;
-                }
-              }
+            }
+          }
             }
 
             return matches.join(' ');
@@ -2922,7 +2922,7 @@
               var driver = factory(animationDetails);
               if (driver) {
                 return driver;
-              }
+          }
             }
           }
 
@@ -2969,7 +2969,7 @@
             runner.complete(!rejected);
           }
         };
-      }];
+  }];
   }];
 
   /* global angularAnimateModule: true,

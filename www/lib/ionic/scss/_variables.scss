@@ -1,3 +1,4 @@
+
 // Colors
 // -------------------------------
 
@@ -10,6 +11,7 @@ $energized: #ffc900 !default;
 $assertive: #ef473a !default;
 $royal: #886aea !default;
 $dark: #444 !default;
+
 
 // Base
 // -------------------------------
@@ -24,10 +26,8 @@ $font-size-base: 14px !default;
 $font-size-large: 18px !default;
 $font-size-small: 11px !default;
 
-$line-height-base: 1.428571429 !default;
-// 20/14
-$line-height-computed: floor($font-size-base * $line-height-base) !default;
-// ~20px
+$line-height-base: 1.428571429 !default; // 20/14
+$line-height-computed: floor($font-size-base * $line-height-base) !default; // ~20px
 $line-height-large: 1.33 !default;
 $line-height-small: 1.5 !default;
 
@@ -56,10 +56,12 @@ $border-radius-base: 4px !default;
 $border-radius-large: 6px !default;
 $border-radius-small: 3px !default;
 
+
 // Content
 // -------------------------------
 
 $scroll-refresh-icon-color: #666666 !default;
+
 
 // Buttons
 // -------------------------------
@@ -150,6 +152,7 @@ $button-default-border: $button-stable-border !default;
 $button-default-active-bg: $button-stable-active-bg !default;
 $button-default-active-border: $button-stable-active-border !default;
 
+
 // Bars
 // -------------------------------
 
@@ -223,6 +226,7 @@ $bar-default-border: $bar-light-border !default;
 $bar-default-active-bg: $bar-light-active-bg !default;
 $bar-default-active-border: $bar-light-active-border !default;
 
+
 // Tabs
 // -------------------------------
 
@@ -279,6 +283,7 @@ $tabs-off-opacity: 0.4 !default;
 $tabs-striped-off-opacity: $tabs-off-opacity !default;
 $tabs-striped-off-color: #000 !default;
 $tabs-striped-border-width: 2px !default;
+
 
 // Items
 // -------------------------------
@@ -367,6 +372,7 @@ $item-default-text: $item-light-text !default;
 $item-default-active-bg: #D9D9D9 !default;
 $item-default-active-border: $item-light-active-border !default;
 
+
 // Item Editing
 // -------------------------------
 
@@ -377,8 +383,7 @@ $item-remove-transition-duration: 300ms !default;
 $item-remove-transition-function: ease-in !default;
 $item-remove-descendents-transition-function: cubic-bezier(.25, .81, .24, 1) !default;
 
-$item-left-edit-left: 8px !default;
-// item's left side edit's "left" property
+$item-left-edit-left: 8px !default; // item's left side edit's "left" property
 
 $item-right-edit-open-width: 50px !default;
 $item-left-edit-open-width: 50px !default;
@@ -389,6 +394,7 @@ $item-delete-icon-color: $assertive !default;
 $item-reorder-icon-size: 32px !default;
 $item-reorder-icon-color: $dark !default;
 
+
 // Lists
 // -------------------------------
 
@@ -396,6 +402,7 @@ $list-header-bg: transparent !default;
 $list-header-color: #222 !default;
 $list-header-padding: 5px 15px !default;
 $list-header-margin-top: 20px !default;
+
 
 // Cards
 // -------------------------------
@@ -410,6 +417,7 @@ $card-border-width: 1px !default;
 $card-border-color: #ccc !default;
 $card-border-radius: 2px !default;
 $card-box-shadow: 0 1px 3px rgba(0, 0, 0, .3) !default;
+
 
 // Forms
 // -------------------------------
@@ -427,11 +435,13 @@ $input-border-width: $item-border-width !default;
 $input-label-color: $dark !default;
 $input-color-placeholder: lighten($dark, 40%) !default;
 
+
 // Progress
 // -------------------------------
 
 $progress-width: 100% !default;
 $progress-margin: 15px auto !default;
+
 
 // Toggle
 // -------------------------------
@@ -477,6 +487,7 @@ $toggle-transition-duration: .3s !default;
 
 $toggle-hit-area-expansion: 5px;
 
+
 // Checkbox
 // -------------------------------
 
@@ -511,6 +522,7 @@ $checkbox-on-border-default: $positive !default;
 $checkbox-check-width: 1px !default;
 $checkbox-check-color: #fff !default;
 
+
 // Range
 // -------------------------------
 
@@ -532,6 +544,7 @@ $range-royal-track-bg: $button-royal-bg !default;
 $range-dark-track-bg: $button-dark-bg !default;
 $range-default-track-bg: #ccc !default;
 
+
 // Menus
 // -------------------------------
 
@@ -541,6 +554,7 @@ $menu-animation-speed: 200ms !default;
 
 $menu-side-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0, 0, 0, 0.2) !default;
 
+
 // Modals
 // -------------------------------
 
@@ -548,13 +562,13 @@ $modal-bg-color: #fff !default;
 $modal-backdrop-bg-active: #000 !default;
 $modal-backdrop-bg-inactive: rgba(0, 0, 0, 0) !default;
 
-$modal-inset-mode-break-point: 680px !default;
-// @media min-width
+$modal-inset-mode-break-point: 680px !default; // @media min-width
 $modal-inset-mode-top: 20% !default;
 $modal-inset-mode-right: 20% !default;
 $modal-inset-mode-bottom: 20% !default;
 $modal-inset-mode-left: 20% !default;
 $modal-inset-mode-min-height: 240px !default;
+
 
 // Popovers
 // -------------------------------
@@ -576,16 +590,15 @@ $popover-border-radius-ios: 10px !default;
 $popover-bg-color-android: #fafafa !default;
 $popover-box-shadow-android: 0 2px 6px rgba(0, 0, 0, 0.35) !default;
 
+
 // Grids
 // -------------------------------
 
 $grid-padding-width: 10px !default;
-$grid-responsive-sm-break: 567px !default;
-// smaller than landscape phone
-$grid-responsive-md-break: 767px !default;
-// smaller than portrait tablet
-$grid-responsive-lg-break: 1023px !default;
-// smaller than landscape tablet
+$grid-responsive-sm-break: 567px !default; // smaller than landscape phone
+$grid-responsive-md-break: 767px !default; // smaller than portrait tablet
+$grid-responsive-lg-break: 1023px !default; // smaller than landscape tablet
+
 
 // Action Sheets
 // -------------------------------
@@ -597,6 +610,7 @@ $sheet-options-bg-color: #f1f2f3 !default;
 $sheet-options-bg-active-color: #e4e5e7 !default;
 $sheet-options-text-color: #007aff !default;
 $sheet-options-border-color: #d1d3d6 !default;
+
 
 // Popups
 // -------------------------------
@@ -613,6 +627,7 @@ $popup-button-border-radius: 2px !default;
 $popup-button-line-height: 20px !default;
 $popup-button-min-height: 45px !default;
 
+
 // Loading
 // -------------------------------
 
@@ -624,6 +639,7 @@ $loading-font-size: 15px !default;
 
 $loading-backdrop-fadein-duration: 0.1s !default;
 $loading-backdrop-bg-color: rgba(0, 0, 0, 0.4) !default;
+
 
 // Badges
 // -------------------------------

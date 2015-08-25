@@ -1,12 +1,16 @@
 @charset "UTF-8";
 
-@import // Ionicons "ionicons/ionicons.scss",
-  // Variables "mixins",
+@import // Ionicons
+"ionicons/ionicons.scss",
+  // Variables
+"mixins",
 "variables",
-  // Base "reset",
+  // Base
+"reset",
 "scaffolding",
 "type",
-  // Components "action-sheet",
+  // Components
+"action-sheet",
 "backdrop",
 "bar",
 "tabs",
@@ -21,17 +25,21 @@
 "slide-box",
 "refresher",
 "spinner",
-  // Forms "form",
+  // Forms
+"form",
 "checkbox",
 "toggle",
 "radio",
 "range",
 "select",
 "progress",
-  // Buttons "button",
+  // Buttons
+"button",
 "button-bar",
-  // Util "grid",
+  // Util
+"grid",
 "util",
 "platform",
-  // Animations "animations",
+  // Animations
+"animations",
 "transitions";

@@ -87,149 +87,149 @@
 
         return {
           show: actionSheet
-        };
+  };
 
-        /**
-         * @ngdoc method
-         * @name $ionicActionSheet#show
-         * @description
-         * Load and return a new action sheet.
-         *
-         * A new isolated scope will be created for the
-         * action sheet and the new element will be appended into the body.
-         *
-         * @param {object} options The options for this ActionSheet. Properties:
-         *
-         *  - `[Object]` `buttons` Which buttons to show.  Each button is an object with a `text` field.
-         *  - `{string}` `titleText` The title to show on the action sheet.
-         *  - `{string=}` `cancelText` the text for a 'cancel' button on the action sheet.
-         *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
-         *  - `{function=}` `cancel` Called if the cancel button is pressed, the backdrop is tapped or
-         *     the hardware back button is pressed.
-         *  - `{function=}` `buttonClicked` Called when one of the non-destructive buttons is clicked,
-         *     with the index of the button that was clicked and the button object. Return true to close
-         *     the action sheet, or false to keep it opened.
-         *  - `{function=}` `destructiveButtonClicked` Called when the destructive button is clicked.
-         *     Return true to close the action sheet, or false to keep it opened.
-         *  -  `{boolean=}` `cancelOnStateChange` Whether to cancel the actionSheet when navigating
-         *     to a new state.  Default true.
-         *  - `{string}` `cssClass` The custom CSS class name.
-         *
-         * @returns {function} `hideSheet` A function which, when called, hides & cancels the action sheet.
-         */
-        function actionSheet(opts) {
-          var scope = $rootScope.$new(true);
+  /**
+   * @ngdoc method
+   * @name $ionicActionSheet#show
+   * @description
+   * Load and return a new action sheet.
+   *
+   * A new isolated scope will be created for the
+   * action sheet and the new element will be appended into the body.
+   *
+   * @param {object} options The options for this ActionSheet. Properties:
+   *
+   *  - `[Object]` `buttons` Which buttons to show.  Each button is an object with a `text` field.
+   *  - `{string}` `titleText` The title to show on the action sheet.
+   *  - `{string=}` `cancelText` the text for a 'cancel' button on the action sheet.
+   *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
+   *  - `{function=}` `cancel` Called if the cancel button is pressed, the backdrop is tapped or
+   *     the hardware back button is pressed.
+   *  - `{function=}` `buttonClicked` Called when one of the non-destructive buttons is clicked,
+   *     with the index of the button that was clicked and the button object. Return true to close
+   *     the action sheet, or false to keep it opened.
+   *  - `{function=}` `destructiveButtonClicked` Called when the destructive button is clicked.
+   *     Return true to close the action sheet, or false to keep it opened.
+   *  -  `{boolean=}` `cancelOnStateChange` Whether to cancel the actionSheet when navigating
+   *     to a new state.  Default true.
+   *  - `{string}` `cssClass` The custom CSS class name.
+   *
+   * @returns {function} `hideSheet` A function which, when called, hides & cancels the action sheet.
+   */
+  function actionSheet(opts) {
+    var scope = $rootScope.$new(true);
 
-          extend(scope, {
-            cancel: noop,
-            destructiveButtonClicked: noop,
-            buttonClicked: noop,
-            $deregisterBackButton: noop,
-            buttons: [],
-            cancelOnStateChange: true
-          }, opts || {});
+    extend(scope, {
+      cancel: noop,
+      destructiveButtonClicked: noop,
+      buttonClicked: noop,
+      $deregisterBackButton: noop,
+      buttons: [],
+      cancelOnStateChange: true
+    }, opts || {});
 
-          function textForIcon(text) {
-            if (text && /icon/.test(text)) {
-              scope.$actionSheetHasIcon = true;
-            }
-          }
+    function textForIcon(text) {
+      if (text && /icon/.test(text)) {
+        scope.$actionSheetHasIcon = true;
+      }
+    }
 
-          for (var x = 0; x < scope.buttons.length; x++) {
-            textForIcon(scope.buttons[x].text);
-          }
-          textForIcon(scope.cancelText);
-          textForIcon(scope.destructiveText);
+    for (var x = 0; x < scope.buttons.length; x++) {
+      textForIcon(scope.buttons[x].text);
+    }
+    textForIcon(scope.cancelText);
+    textForIcon(scope.destructiveText);
 
-          // Compile the template
-          var element = scope.element = $compile('<ion-action-sheet ng-class="cssClass" buttons="buttons"></ion-action-sheet>')(scope);
+    // Compile the template
+    var element = scope.element = $compile('<ion-action-sheet ng-class="cssClass" buttons="buttons"></ion-action-sheet>')(scope);
 
-          // Grab the sheet element for animation
-          var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
+    // Grab the sheet element for animation
+    var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
-          var stateChangeListenDone = scope.cancelOnStateChange ?
-            $rootScope.$on('$stateChangeSuccess', function () {
-              scope.cancel();
-            }) :
-            noop;
+    var stateChangeListenDone = scope.cancelOnStateChange ?
+      $rootScope.$on('$stateChangeSuccess', function () {
+        scope.cancel();
+      }) :
+      noop;
 
-          // removes the actionSheet from the screen
-          scope.removeSheet = function (done) {
-            if (scope.removed) return;
+    // removes the actionSheet from the screen
+    scope.removeSheet = function (done) {
+      if (scope.removed) return;
 
-            scope.removed = true;
-            sheetEl.removeClass('action-sheet-up');
-            $timeout(function () {
-              // wait to remove this due to a 300ms delay native
-              // click which would trigging whatever was underneath this
-              $ionicBody.removeClass('action-sheet-open');
-            }, 400);
-            scope.$deregisterBackButton();
-            stateChangeListenDone();
+      scope.removed = true;
+      sheetEl.removeClass('action-sheet-up');
+      $timeout(function () {
+        // wait to remove this due to a 300ms delay native
+        // click which would trigging whatever was underneath this
+        $ionicBody.removeClass('action-sheet-open');
+      }, 400);
+      scope.$deregisterBackButton();
+      stateChangeListenDone();
 
-            $animate.removeClass(element, 'active').then(function () {
-              scope.$destroy();
-              element.remove();
-              // scope.cancel.$scope is defined near the bottom
-              scope.cancel.$scope = sheetEl = null;
-              (done || noop)();
-            });
-          };
+      $animate.removeClass(element, 'active').then(function () {
+        scope.$destroy();
+        element.remove();
+        // scope.cancel.$scope is defined near the bottom
+        scope.cancel.$scope = sheetEl = null;
+        (done || noop)();
+      });
+    };
 
-          scope.showSheet = function (done) {
-            if (scope.removed) return;
+    scope.showSheet = function (done) {
+      if (scope.removed) return;
 
-            $ionicBody.append(element)
-              .addClass('action-sheet-open');
+      $ionicBody.append(element)
+        .addClass('action-sheet-open');
 
-            $animate.addClass(element, 'active').then(function () {
-              if (scope.removed) return;
-              (done || noop)();
-            });
-            $timeout(function () {
-              if (scope.removed) return;
-              sheetEl.addClass('action-sheet-up');
-            }, 20, false);
-          };
+      $animate.addClass(element, 'active').then(function () {
+        if (scope.removed) return;
+        (done || noop)();
+      });
+      $timeout(function () {
+        if (scope.removed) return;
+        sheetEl.addClass('action-sheet-up');
+      }, 20, false);
+    };
 
-          // registerBackButtonAction returns a callback to deregister the action
-          scope.$deregisterBackButton = $ionicPlatform.registerBackButtonAction(
-            function () {
-              $timeout(scope.cancel);
-            },
-            IONIC_BACK_PRIORITY.actionSheet
-          );
+    // registerBackButtonAction returns a callback to deregister the action
+    scope.$deregisterBackButton = $ionicPlatform.registerBackButtonAction(
+      function () {
+        $timeout(scope.cancel);
+      },
+      IONIC_BACK_PRIORITY.actionSheet
+    );
 
-          // called when the user presses the cancel button
-          scope.cancel = function () {
-            // after the animation is out, call the cancel callback
-            scope.removeSheet(opts.cancel);
-          };
+    // called when the user presses the cancel button
+    scope.cancel = function () {
+      // after the animation is out, call the cancel callback
+      scope.removeSheet(opts.cancel);
+    };
 
-          scope.buttonClicked = function (index) {
-            // Check if the button click event returned true, which means
-            // we can close the action sheet
-            if (opts.buttonClicked(index, opts.buttons[index]) === true) {
-              scope.removeSheet();
-            }
-          };
+    scope.buttonClicked = function (index) {
+      // Check if the button click event returned true, which means
+      // we can close the action sheet
+      if (opts.buttonClicked(index, opts.buttons[index]) === true) {
+        scope.removeSheet();
+      }
+    };
 
-          scope.destructiveButtonClicked = function () {
-            // Check if the destructive button click event returned true, which means
-            // we can close the action sheet
-            if (opts.destructiveButtonClicked() === true) {
-              scope.removeSheet();
-            }
-          };
+    scope.destructiveButtonClicked = function () {
+      // Check if the destructive button click event returned true, which means
+      // we can close the action sheet
+      if (opts.destructiveButtonClicked() === true) {
+        scope.removeSheet();
+      }
+    };
 
-          scope.showSheet();
+    scope.showSheet();
 
-          // Expose the scope on $ionicActionSheet's return value for the sake
-          // of testing it.
-          scope.cancel.$scope = scope;
+    // Expose the scope on $ionicActionSheet's return value for the sake
+    // of testing it.
+    scope.cancel.$scope = scope;
 
-          return scope.cancel;
-        }
+    return scope.cancel;
+  }
       }]);
 
 
@@ -399,7 +399,7 @@
             case '@':
               if (!attrs[attrName]) {
                 return;
-              }
+          }
               attrs.$observe(attrName, function (value) {
                 scope[scopeName] = value;
               });
@@ -413,7 +413,7 @@
             case '=':
               if (!attrs[attrName]) {
                 return;
-              }
+          }
               unwatch = scope.$watch(attrs[attrName], function (value) {
                 scope[scopeName] = value;
               });
@@ -425,7 +425,7 @@
               /* jshint -W044 */
               if (attrs[attrName] && attrs[attrName].match(RegExp(scopeName + '\(.*?\)'))) {
                 throw new Error('& expression binding "' + scopeName + '" looks like it will recursively call "' +
-                attrs[attrName] + '" and cause a stack overflow! Please choose a different scopeName.');
+                  attrs[attrName] + '" and cause a stack overflow! Please choose a different scopeName.');
               }
               parentGet = $parse(attrs[attrName]);
               scope[scopeName] = function (locals) {
@@ -755,7 +755,7 @@
                 if ($state.params.hasOwnProperty(key) && $state.params[key]) {
                   id += "_" + key + "=" + $state.params[key];
                 }
-              }
+        }
             }
             return id;
           }
@@ -770,7 +770,7 @@
               if ($state.params.hasOwnProperty(key)) {
                 rtn = rtn || {};
                 rtn[key] = $state.params[key];
-              }
+        }
             }
           }
           return rtn;
@@ -825,9 +825,9 @@
                   tmp = getHistoryById(currentView.historyId);
                   if (tmp && tmp.parentHistoryId === hist.parentHistoryId) {
                     direction = DIRECTION_SWAP;
-                  }
-                }
-              }
+            }
+          }
+        }
 
             } else if (forwardView && forwardView.stateId === currentStateId) {
               // they went to the forward one, set the forward view to no longer a forward view
@@ -847,16 +847,16 @@
                   tmp = getHistoryById(currentView.historyId);
                   if (tmp && tmp.parentHistoryId === hist.parentHistoryId) {
                     direction = DIRECTION_SWAP;
-                  }
-                }
-              }
+            }
+          }
+        }
 
               tmp = getParentHistoryObj(parentScope);
               if (forwardView.historyId && tmp.scope) {
                 // if a history has already been created by the forward view then make sure it stays the same
                 tmp.scope.$historyId = forwardView.historyId;
                 historyId = forwardView.historyId;
-              }
+        }
 
             } else if (currentView && currentView.historyId !== historyId &&
               hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
@@ -922,8 +922,8 @@
                       var stackItem = tmp.stack[x];
                       stackItem && stackItem.destroy && stackItem.destroy();
                       tmp.stack.splice(x);
-                    }
-                    historyId = forwardView.historyId;
+              }
+              historyId = forwardView.historyId;
                   }
                 }
 
@@ -936,13 +936,13 @@
 
                   tmp = getHistoryById(currentView.historyId);
                   if (tmp && tmp.parentHistoryId === hist.parentHistoryId) {
-                    direction = DIRECTION_SWAP;
+              direction = DIRECTION_SWAP;
 
                   } else {
                     tmp = getHistoryById(tmp.parentHistoryId);
                     if (tmp && tmp.historyId === hist.historyId) {
-                      direction = DIRECTION_EXIT;
-                    }
+                direction = DIRECTION_EXIT;
+              }
                   }
                 }
 
@@ -984,9 +984,9 @@
                   if (hist.stack[x].viewId === viewId) {
                     hist.stack[x].index = 0;
                     hist.stack[x].backViewId = hist.stack[x].forwardViewId = null;
-                  } else {
+            } else {
                     delete viewHistory.views[hist.stack[x].viewId];
-                  }
+            }
                 }
                 hist.stack = [viewHistory.views[viewId]];
               }
@@ -1002,7 +1002,7 @@
                   direction = DIRECTION_NONE;
                   if (x > 0) {
                     hist.stack[x - 1].forwardViewId = null;
-                  }
+            }
                   viewHistory.forwardView = null;
                   viewHistory.currentView.index = viewHistory.backView.index;
                   viewHistory.currentView.backViewId = viewHistory.backView.backViewId;
@@ -1305,8 +1305,8 @@
                       nextViewOptions = null;
                     }, nextViewOptions.expire);
                   });
-                }
-              }
+          }
+        }
             }
             return nextViewOptions;
           },
@@ -1327,8 +1327,8 @@
 
             while (climbScope) {
               if (climbScope.$$disconnected) {
-                return false;
-              }
+          return false;
+        }
 
               if (!foundHistoryId && climbScope.hasOwnProperty('$historyId')) {
                 foundHistoryId = true;
@@ -1875,7 +1875,7 @@
               // swap, enter, exit
               setStyles(enteringEle, 1, 0, -1);
               setStyles(leavingEle, 0, 0, -1);
-            }
+        }
           },
           shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
         };
@@ -1924,7 +1924,7 @@
             } else {
               enter(enteringHeaderCtrl, leavingHeaderCtrl, step);
               leave(leavingHeaderCtrl, enteringHeaderCtrl, step);
-            }
+        }
           },
           direction: direction,
           shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
@@ -1961,7 +1961,7 @@
               // swap, enter, exit
               setStyles(enteringEle, 0);
               setStyles(leavingEle, 0);
-            }
+        }
           },
           shouldAnimate: shouldAnimate
         };
@@ -2034,13 +2034,13 @@
             if (angular.isObject(configObj[n])) {
               if (!isDefined(platformObj[n])) {
                 platformObj[n] = {};
-              }
+          }
               addConfig(configObj[n], platformObj[n]);
 
             } else if (!isDefined(platformObj[n])) {
               platformObj[n] = null;
-            }
-          }
+        }
+      }
         }
       }
 
@@ -2060,7 +2060,7 @@
               if (arguments.length) {
                 configObj[namespace] = newValue;
                 return providerObj;
-              }
+          }
               if (configObj[namespace] == PLATFORM) {
                 // if the config is set to 'platform', then get this config's platform value
                 var platformConfig = stringObj(configProperties.platform, ionic.Platform.platform() + platformPath + '.' + namespace);
@@ -2072,7 +2072,7 @@
               }
               return configObj[namespace];
             };
-          }
+      }
 
         });
       }
@@ -2084,7 +2084,7 @@
             obj = obj[str[i]];
           } else {
             return null;
-          }
+      }
         }
         return obj;
       }
@@ -2293,7 +2293,7 @@
                     setTimeout(function () {
                       !self.isShown && self.element.removeClass('visible');
                     }, 200);
-                  }
+          }
                   $timeout.cancel(self.durationTimeout);
                   self.isShown = false;
                 };
@@ -2429,189 +2429,189 @@
       'IONIC_BACK_PRIORITY',
       function ($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
 
-        /**
-         * @ngdoc controller
-         * @name ionicModal
-         * @module ionic
-         * @description
-         * Instantiated by the {@link ionic.service:$ionicModal} service.
-         *
-         * Be sure to call [remove()](#remove) when you are done with each modal
-         * to clean it up and avoid memory leaks.
-         *
-         * Note: a modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating
-         * scope, passing in itself as an event argument. Note: both modal.removed and modal.hidden are
-         * called when the modal is removed.
-         */
-        var ModalView = ionic.views.Modal.inherit({
-          /**
-           * @ngdoc method
-           * @name ionicModal#initialize
-           * @description Creates a new modal controller instance.
-           * @param {object} options An options object with the following properties:
-           *  - `{object=}` `scope` The scope to be a child of.
-           *    Default: creates a child of $rootScope.
-           *  - `{string=}` `animation` The animation to show & hide with.
-           *    Default: 'slide-in-up'
-           *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
-           *    the modal when shown. Will only show the keyboard on iOS, to force the keyboard to show
-           *    on Android, please use the [Ionic keyboard plugin](https://github.com/driftyco/ionic-plugin-keyboard#keyboardshow).
-           *    Default: false.
-           *  - `{boolean=}` `backdropClickToClose` Whether to close the modal on clicking the backdrop.
-           *    Default: true.
-           *  - `{boolean=}` `hardwareBackButtonClose` Whether the modal can be closed using the hardware
-           *    back button on Android and similar devices.  Default: true.
-           */
-          initialize: function (opts) {
-            ionic.views.Modal.prototype.initialize.call(this, opts);
-            this.animation = opts.animation || 'slide-in-up';
-          },
+  /**
+   * @ngdoc controller
+   * @name ionicModal
+   * @module ionic
+   * @description
+   * Instantiated by the {@link ionic.service:$ionicModal} service.
+   *
+   * Be sure to call [remove()](#remove) when you are done with each modal
+   * to clean it up and avoid memory leaks.
+   *
+   * Note: a modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating
+   * scope, passing in itself as an event argument. Note: both modal.removed and modal.hidden are
+   * called when the modal is removed.
+   */
+  var ModalView = ionic.views.Modal.inherit({
+    /**
+     * @ngdoc method
+     * @name ionicModal#initialize
+     * @description Creates a new modal controller instance.
+     * @param {object} options An options object with the following properties:
+     *  - `{object=}` `scope` The scope to be a child of.
+     *    Default: creates a child of $rootScope.
+     *  - `{string=}` `animation` The animation to show & hide with.
+     *    Default: 'slide-in-up'
+     *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
+     *    the modal when shown. Will only show the keyboard on iOS, to force the keyboard to show
+     *    on Android, please use the [Ionic keyboard plugin](https://github.com/driftyco/ionic-plugin-keyboard#keyboardshow).
+     *    Default: false.
+     *  - `{boolean=}` `backdropClickToClose` Whether to close the modal on clicking the backdrop.
+     *    Default: true.
+     *  - `{boolean=}` `hardwareBackButtonClose` Whether the modal can be closed using the hardware
+     *    back button on Android and similar devices.  Default: true.
+     */
+    initialize: function (opts) {
+      ionic.views.Modal.prototype.initialize.call(this, opts);
+      this.animation = opts.animation || 'slide-in-up';
+    },
 
-          /**
-           * @ngdoc method
-           * @name ionicModal#show
-           * @description Show this modal instance.
-           * @returns {promise} A promise which is resolved when the modal is finished animating in.
-           */
-          show: function (target) {
-            var self = this;
+    /**
+     * @ngdoc method
+     * @name ionicModal#show
+     * @description Show this modal instance.
+     * @returns {promise} A promise which is resolved when the modal is finished animating in.
+     */
+    show: function (target) {
+      var self = this;
 
-            if (self.scope.$$destroyed) {
-              $log.error('Cannot call ' + self.viewType + '.show() after remove(). Please create a new ' + self.viewType + ' instance.');
-              return $$q.when();
-            }
+      if (self.scope.$$destroyed) {
+        $log.error('Cannot call ' + self.viewType + '.show() after remove(). Please create a new ' + self.viewType + ' instance.');
+        return $$q.when();
+      }
 
-            // on iOS, clicks will sometimes bleed through/ghost click on underlying
-            // elements
-            $ionicClickBlock.show(600);
-            stack.add(self);
+      // on iOS, clicks will sometimes bleed through/ghost click on underlying
+      // elements
+      $ionicClickBlock.show(600);
+      stack.add(self);
 
-            var modalEl = jqLite(self.modalEl);
+      var modalEl = jqLite(self.modalEl);
 
-            self.el.classList.remove('hide');
-            $timeout(function () {
-              if (!self._isShown) return;
-              $ionicBody.addClass(self.viewType + '-open');
-            }, 400, false);
+      self.el.classList.remove('hide');
+      $timeout(function () {
+        if (!self._isShown) return;
+        $ionicBody.addClass(self.viewType + '-open');
+      }, 400, false);
 
-            if (!self.el.parentElement) {
-              modalEl.addClass(self.animation);
-              $ionicBody.append(self.el);
-            }
+      if (!self.el.parentElement) {
+        modalEl.addClass(self.animation);
+        $ionicBody.append(self.el);
+      }
 
-            // if modal was closed while the keyboard was up, reset scroll view on
-            // next show since we can only resize it once it's visible
-            var scrollCtrl = modalEl.data('$$ionicScrollController');
-            scrollCtrl && scrollCtrl.resize();
+      // if modal was closed while the keyboard was up, reset scroll view on
+      // next show since we can only resize it once it's visible
+      var scrollCtrl = modalEl.data('$$ionicScrollController');
+      scrollCtrl && scrollCtrl.resize();
 
-            if (target && self.positionView) {
-              self.positionView(target, modalEl);
-              // set up a listener for in case the window size changes
+      if (target && self.positionView) {
+        self.positionView(target, modalEl);
+        // set up a listener for in case the window size changes
 
-              self._onWindowResize = function () {
-                if (self._isShown) self.positionView(target, modalEl);
-              };
-              ionic.on('resize', self._onWindowResize, window);
-            }
+        self._onWindowResize = function () {
+          if (self._isShown) self.positionView(target, modalEl);
+        };
+        ionic.on('resize', self._onWindowResize, window);
+      }
 
-            modalEl.addClass('ng-enter active')
-              .removeClass('ng-leave ng-leave-active');
+      modalEl.addClass('ng-enter active')
+        .removeClass('ng-leave ng-leave-active');
 
-            self._isShown = true;
-            self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
-              self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
-              IONIC_BACK_PRIORITY.modal
-            );
+      self._isShown = true;
+      self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
+        self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
+        IONIC_BACK_PRIORITY.modal
+      );
 
-            ionic.views.Modal.prototype.show.call(self);
+      ionic.views.Modal.prototype.show.call(self);
 
-            $timeout(function () {
-              if (!self._isShown) return;
-              modalEl.addClass('ng-enter-active');
-              ionic.trigger('resize');
-              self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.shown', self);
-              self.el.classList.add('active');
-              self.scope.$broadcast('$ionicHeader.align');
-            }, 20);
+      $timeout(function () {
+        if (!self._isShown) return;
+        modalEl.addClass('ng-enter-active');
+        ionic.trigger('resize');
+        self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.shown', self);
+        self.el.classList.add('active');
+        self.scope.$broadcast('$ionicHeader.align');
+      }, 20);
 
-            return $timeout(function () {
-              if (!self._isShown) return;
-              //After animating in, allow hide on backdrop click
-              self.$el.on('click', function (e) {
-                if (self.backdropClickToClose && e.target === self.el && stack.isHighest(self)) {
-                  self.hide();
-                }
-              });
-            }, 400);
-          },
-
-          /**
-           * @ngdoc method
-           * @name ionicModal#hide
-           * @description Hide this modal instance.
-           * @returns {promise} A promise which is resolved when the modal is finished animating out.
-           */
-          hide: function () {
-            var self = this;
-            var modalEl = jqLite(self.modalEl);
-
-            // on iOS, clicks will sometimes bleed through/ghost click on underlying
-            // elements
-            $ionicClickBlock.show(600);
-            stack.remove(self);
-
-            self.el.classList.remove('active');
-            modalEl.addClass('ng-leave');
-
-            $timeout(function () {
-              if (self._isShown) return;
-              modalEl.addClass('ng-leave-active')
-                .removeClass('ng-enter ng-enter-active active');
-            }, 20, false);
-
-            self.$el.off('click');
-            self._isShown = false;
-            self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.hidden', self);
-            self._deregisterBackButton && self._deregisterBackButton();
-
-            ionic.views.Modal.prototype.hide.call(self);
-
-            // clean up event listeners
-            if (self.positionView) {
-              ionic.off('resize', self._onWindowResize, window);
-            }
-
-            return $timeout(function () {
-              $ionicBody.removeClass(self.viewType + '-open');
-              self.el.classList.add('hide');
-            }, self.hideDelay || 320);
-          },
-
-          /**
-           * @ngdoc method
-           * @name ionicModal#remove
-           * @description Remove this modal instance from the DOM and clean up.
-           * @returns {promise} A promise which is resolved when the modal is finished animating out.
-           */
-          remove: function () {
-            var self = this;
-            self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.removed', self);
-
-            return self.hide().then(function () {
-              self.scope.$destroy();
-              self.$el.remove();
-            });
-          },
-
-          /**
-           * @ngdoc method
-           * @name ionicModal#isShown
-           * @returns boolean Whether this modal is currently shown.
-           */
-          isShown: function () {
-            return !!this._isShown;
+      return $timeout(function () {
+        if (!self._isShown) return;
+        //After animating in, allow hide on backdrop click
+        self.$el.on('click', function (e) {
+          if (self.backdropClickToClose && e.target === self.el && stack.isHighest(self)) {
+            self.hide();
           }
         });
+      }, 400);
+    },
+
+    /**
+     * @ngdoc method
+     * @name ionicModal#hide
+     * @description Hide this modal instance.
+     * @returns {promise} A promise which is resolved when the modal is finished animating out.
+     */
+    hide: function () {
+      var self = this;
+      var modalEl = jqLite(self.modalEl);
+
+      // on iOS, clicks will sometimes bleed through/ghost click on underlying
+      // elements
+      $ionicClickBlock.show(600);
+      stack.remove(self);
+
+      self.el.classList.remove('active');
+      modalEl.addClass('ng-leave');
+
+      $timeout(function () {
+        if (self._isShown) return;
+        modalEl.addClass('ng-leave-active')
+          .removeClass('ng-enter ng-enter-active active');
+      }, 20, false);
+
+      self.$el.off('click');
+      self._isShown = false;
+      self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.hidden', self);
+      self._deregisterBackButton && self._deregisterBackButton();
+
+      ionic.views.Modal.prototype.hide.call(self);
+
+      // clean up event listeners
+      if (self.positionView) {
+        ionic.off('resize', self._onWindowResize, window);
+      }
+
+      return $timeout(function () {
+        $ionicBody.removeClass(self.viewType + '-open');
+        self.el.classList.add('hide');
+      }, self.hideDelay || 320);
+    },
+
+    /**
+     * @ngdoc method
+     * @name ionicModal#remove
+     * @description Remove this modal instance from the DOM and clean up.
+     * @returns {promise} A promise which is resolved when the modal is finished animating out.
+     */
+    remove: function () {
+      var self = this;
+      self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.removed', self);
+
+      return self.hide().then(function () {
+        self.scope.$destroy();
+        self.$el.remove();
+      });
+    },
+
+    /**
+     * @ngdoc method
+     * @name ionicModal#isShown
+     * @returns boolean Whether this modal is currently shown.
+     */
+    isShown: function () {
+      return !!this._isShown;
+    }
+  });
 
         var createModal = function (templateString, options) {
           // Create a new scope for the modal
@@ -2740,17 +2740,17 @@
      * @description Aligns the title with the buttons in a given direction.
      * @param {string=} direction The direction to the align the title text towards.
      * Available: 'left', 'right', 'center'. Default: 'center'.
-     */
+   */
       'align',
-    /**
-     * @ngdoc method
-     * @name $ionicNavBarDelegate#showBackButton
-     * @description
-     * Set/get whether the {@link ionic.directive:ionNavBackButton} is shown
-     * (if it exists and there is a previous view that can be navigated to).
-     * @param {boolean=} show Whether to show the back button.
-     * @returns {boolean} Whether the back button is shown.
-     */
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#showBackButton
+   * @description
+   * Set/get whether the {@link ionic.directive:ionNavBackButton} is shown
+   * (if it exists and there is a previous view that can be navigated to).
+   * @param {boolean=} show Whether to show the back button.
+   * @returns {boolean} Whether the back button is shown.
+   */
       'showBackButton',
     /**
      * @ngdoc method
@@ -2904,7 +2904,7 @@
               for (actionId in self.$backButtonActions) {
                 if (!priorityAction || self.$backButtonActions[actionId].priority >= priorityAction.priority) {
                   priorityAction = self.$backButtonActions[actionId];
-                }
+            }
               }
               if (priorityAction) {
                 priorityAction.fn(e);
@@ -2935,7 +2935,7 @@
                 ionic.Platform.ready(function () {
                   document.removeEventListener(type, cb);
                 });
-              };
+          };
             },
 
             /**
@@ -2957,7 +2957,7 @@
 
               return q.promise;
             }
-          };
+      };
           return self;
         }]
       };
@@ -3602,10 +3602,10 @@
                   // click which would trigging whatever was underneath this
                   if (!popupStack.length) {
                     $ionicBody.removeClass('popup-open');
-                  }
+            }
                 }, 400, false);
                 ($ionicPopup._backButtonActionDone || noop)();
-              }
+        }
 
               popup.remove();
 
@@ -3630,7 +3630,7 @@
               type: opts.okType || 'button-positive',
               onTap: function () {
                 return true;
-              }
+        }
             }]
           }, opts || {}));
         }
@@ -3675,7 +3675,7 @@
               type: opts.okType || 'button-positive',
               onTap: function () {
                 return scope.data.response || '';
-              }
+        }
             }]
           }, opts || {}));
         }
@@ -3706,13 +3706,13 @@
         return el.style[cssprop];
       }
 
-      /**
-       * Checks if a given element is statically positioned
-       * @param element - raw DOM element
-       */
-      function isStaticPositioned(element) {
-        return (getStyle(element, 'position') || 'static') === 'static';
-      }
+  /**
+   * Checks if a given element is statically positioned
+   * @param element - raw DOM element
+   */
+  function isStaticPositioned(element) {
+    return (getStyle(element, 'position') || 'static') === 'static';
+  }
 
       /**
        * returns the closest, non-statically positioned parentOffset of a given element
@@ -3744,7 +3744,7 @@
             offsetParentBCR = this.offset(jqLite(offsetParentEl));
             offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
             offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
-          }
+      }
 
           var boundingClientRect = element[0].getBoundingClientRect();
           return {
@@ -3752,7 +3752,7 @@
             height: boundingClientRect.height || element.prop('offsetHeight'),
             top: elBCR.top - offsetParentBCR.top,
             left: elBCR.left - offsetParentBCR.left
-          };
+      };
         },
 
         /**
@@ -3765,12 +3765,12 @@
          */
         offset: function (element) {
           var boundingClientRect = element[0].getBoundingClientRect();
-          return {
-            width: boundingClientRect.width || element.prop('offsetWidth'),
-            height: boundingClientRect.height || element.prop('offsetHeight'),
-            top: boundingClientRect.top + ($window.pageYOffset || $document[0].documentElement.scrollTop),
-            left: boundingClientRect.left + ($window.pageXOffset || $document[0].documentElement.scrollLeft)
-          };
+      return {
+        width: boundingClientRect.width || element.prop('offsetWidth'),
+        height: boundingClientRect.height || element.prop('offsetHeight'),
+        top: boundingClientRect.top + ($window.pageYOffset || $document[0].documentElement.scrollTop),
+        left: boundingClientRect.left + ($window.pageXOffset || $document[0].documentElement.scrollLeft)
+      };
         }
 
       };
@@ -3841,13 +3841,13 @@
      * @ngdoc method
      * @name $ionicScrollDelegate#resize
      * @description Tell the scrollView to recalculate the size of its container.
-     */
+   */
       'resize',
-    /**
-     * @ngdoc method
-     * @name $ionicScrollDelegate#scrollTop
-     * @param {boolean=} shouldAnimate Whether the scroll should animate.
-     */
+  /**
+   * @ngdoc method
+   * @name $ionicScrollDelegate#scrollTop
+   * @param {boolean=} shouldAnimate Whether the scroll should animate.
+   */
       'scrollTop',
     /**
      * @ngdoc method
@@ -3902,9 +3902,9 @@
      * @name $ionicScrollDelegate#anchorScroll
      * @description Tell the scrollView to scroll to the element with an id
      * matching window.location.hash.
-     *
+   *
      * If no matching element is found, it will scroll to top.
-     *
+   *
      * @param {boolean=} shouldAnimate Whether the scroll should animate.
      */
       'anchorScroll',
@@ -3935,7 +3935,7 @@
      * @param {string} handle
      * @returns `delegateInstance` A delegate instance that controls only the
      * scrollViews with `delegate-handle` matching the given handle.
-     *
+   *
      * Example: `$ionicScrollDelegate.$getByHandle('my-handle').scrollTop();`
      */
     ]));
@@ -3986,15 +3986,15 @@
      * @description Toggle the left side menu (if it exists).
      * @param {boolean=} isOpen Whether to open or close the menu.
      * Default: Toggles the menu.
-     */
+   */
       'toggleLeft',
-    /**
-     * @ngdoc method
-     * @name $ionicSideMenuDelegate#toggleRight
-     * @description Toggle the right side menu (if it exists).
-     * @param {boolean=} isOpen Whether to open or close the menu.
-     * Default: Toggles the menu.
-     */
+  /**
+   * @ngdoc method
+   * @name $ionicSideMenuDelegate#toggleRight
+   * @description Toggle the right side menu (if it exists).
+   * @param {boolean=} isOpen Whether to open or close the menu.
+   * Default: Toggles the menu.
+   */
       'toggleRight',
     /**
      * @ngdoc method
@@ -4002,7 +4002,7 @@
      * @description Gets the ratio of open amount over menu width. For example, a
      * menu of width 100 that is opened by 50 pixels is 50% opened, and would return
      * a ratio of 0.5.
-     *
+   *
      * @returns {float} 0 if nothing is open, between 0 and 1 if left menu is
      * opened/opening, and between 0 and -1 if right menu is opened/opening.
      */
@@ -4050,7 +4050,7 @@
      * @returns `delegateInstance` A delegate instance that controls only the
      * {@link ionic.directive:ionSideMenus} directives with `delegate-handle` matching
      * the given handle.
-     *
+   *
      * Example: `$ionicSideMenuDelegate.$getByHandle('my-handle').toggleLeft();`
      */
     ]));
@@ -4094,13 +4094,13 @@
    */
   IonicModule
     .service('$ionicSlideBoxDelegate', ionic.DelegateService([
-    /**
-     * @ngdoc method
-     * @name $ionicSlideBoxDelegate#update
-     * @description
-     * Update the slidebox (for example if using Angular with ng-repeat,
-     * resize it for the elements inside).
-     */
+  /**
+   * @ngdoc method
+   * @name $ionicSlideBoxDelegate#update
+   * @description
+   * Update the slidebox (for example if using Angular with ng-repeat,
+   * resize it for the elements inside).
+   */
       'update',
     /**
      * @ngdoc method
@@ -4167,7 +4167,7 @@
      * @returns `delegateInstance` A delegate instance that controls only the
      * {@link ionic.directive:ionSlideBox} directives with `delegate-handle` matching
      * the given handle.
-     *
+   *
      * Example: `$ionicSlideBoxDelegate.$getByHandle('my-handle').stop();`
      */
     ]));
@@ -4216,7 +4216,7 @@
      * @description Select the tab matching the given index.
      *
      * @param {number} index Index of the tab to select.
-     */
+   */
       'select',
     /**
      * @ngdoc method
@@ -4415,7 +4415,7 @@
                 })
               );
               element.children().data('$ngControllerController', controller);
-            }
+      }
             if (options.appendTo) {
               jqLite(options.appendTo).append(element);
             }
@@ -4425,7 +4425,7 @@
             return {
               element: element,
               scope: scope
-            };
+      };
           });
         }
 
@@ -4536,7 +4536,7 @@
                     viewEle.data(DATA_ELE_IDENTIFIER, enteringEleIdentifier + ionic.Utils.nextUid());
                     viewEle.data(DATA_DESTROY_ELE, true);
 
-                  } else {
+              } else {
                     enteringEle = viewEle;
                   }
 
@@ -4675,11 +4675,11 @@
                       $ionicClickBlock.show(defaultTimeout);
                     } else {
                       cancelTransition();
-                    }
+                }
                     viewTransition.shouldAnimate = shouldAnimate;
-                    viewTransition.run(0);
+                viewTransition.run(0);
                     viewTransition = null;
-                  }
+              }
                 };
 
               } else if (renderEnd) {
@@ -4956,7 +4956,7 @@
           if (viewScope) {
             viewScope.$emit('$ionicView.unloaded', ele.data(DATA_VIEW));
             viewScope.$destroy();
-          }
+      }
           ele.remove();
         }
       }
@@ -4976,7 +4976,7 @@
         $element.data(dataName, scope);
       };
       return $compile;
-    }]);
+  }]);
   }]);
 
   /**
@@ -4997,9 +4997,9 @@
               var scroll = document.querySelector('.scroll-content');
               if (scroll) {
                 scroll.scrollTop = 0;
-              }
-            }, 0, false);
           }
+            }, 0, false);
+      }
           return $location.__hash(value);
         };
 
@@ -5100,14 +5100,14 @@
                 if (ele) {
                   self.backButtonIcon = $ionicConfig.backButton.icon();
                   ele.className = 'icon ' + self.backButtonIcon;
-                }
+          }
               }
 
               if (self.backButtonText !== $ionicConfig.backButton.text()) {
                 ele = getEle(BACK_BUTTON + ' .back-text');
                 if (ele) {
                   ele.textContent = self.backButtonText = $ionicConfig.backButton.text();
-                }
+          }
               }
             }
           }
@@ -5244,19 +5244,19 @@
                         } else {
                           if (d.classList.contains(PREVIOUS_TITLE)) continue;
                           backButtonWidth += d.offsetWidth;
-                        }
-                      }
+                  }
+                }
 
-                    } else {
+              } else {
                       backButtonWidth += b.offsetWidth;
-                    }
+              }
 
                   } else if (b.nodeType == 3 && b.nodeValue.trim()) {
                     bounds = ionic.DomUtil.getTextBounds(b);
                     backButtonWidth += bounds && bounds.width || 0;
-                  }
+            }
 
-                }
+          }
                 childSize = backButtonWidth || c.offsetWidth;
 
               } else {
@@ -5453,11 +5453,11 @@
           } else {
             maxScroll = self.getNativeMaxScroll();
             if ((
-              maxScroll.left !== -1 &&
-              self.scrollEl.scrollLeft >= maxScroll.left - self.scrollEl.clientWidth
+                maxScroll.left !== -1 &&
+                self.scrollEl.scrollLeft >= maxScroll.left - self.scrollEl.clientWidth
               ) || (
-              maxScroll.top !== -1 &&
-              self.scrollEl.scrollTop >= maxScroll.top - self.scrollEl.clientHeight
+                maxScroll.top !== -1 &&
+                self.scrollEl.scrollTop >= maxScroll.top - self.scrollEl.clientHeight
               )) {
               onInfinite();
             }
@@ -5724,7 +5724,7 @@
                 if (itemType === 'title') {
                   // clear out the text based title
                   headerBarInstance.title("");
-                }
+          }
 
                 // there's a custom nav bar item
                 positionItem(navBarItemEle, itemType);
@@ -5732,7 +5732,7 @@
                 if (navEle[itemType]) {
                   // make sure the default on this itemType is hidden
                   navEle[itemType].addClass(CSS_HIDE);
-                }
+          }
                 lastViewItemEle[itemType] = navBarItemEle;
 
               } else if (navEle[itemType]) {
@@ -5771,7 +5771,7 @@
                 if (navEle[n]) {
                   navEle[n].removeData();
                   navEle[n] = null;
-                }
+          }
               }
               leftButtonsEle && leftButtonsEle.removeData();
               rightButtonsEle && rightButtonsEle.removeData();
@@ -5809,9 +5809,9 @@
                 leftButtonsEle = jqLite('<div class="buttons buttons-left">');
                 if (navEle[BACK_BUTTON]) {
                   navEle[BACK_BUTTON].after(leftButtonsEle);
-                } else {
+          } else {
                   headerBarEle.prepend(leftButtonsEle);
-                }
+          }
               }
               if (itemType == SECONDARY_BUTTONS) {
                 leftButtonsEle.append(ele);
@@ -6325,7 +6325,7 @@
 
                 // disconnect the leaving scope
                 ionic.Utils.disconnectScope(viewElement.scope());
-              }
+        }
             }
           }
 
@@ -6376,7 +6376,7 @@
               for (y = 0; y < stateIds.length; y++) {
                 if (eleIdentifier === stateIds[y]) {
                   $ionicViewSwitcher.destroyViewEle(viewElement);
-                }
+          }
               }
               continue;
             }
@@ -6561,7 +6561,7 @@
               for (var x = dragPoints.length - 2; x >= 0; x--) {
                 if (now - startDrag.t > 200) {
                   break;
-                }
+          }
                 startDrag = dragPoints[x];
               }
 
@@ -6638,7 +6638,7 @@
             for (var x = 0; x < $ionicNavBarDelegate._instances.length; x++) {
               if ($ionicNavBarDelegate._instances[x].$$delegateHandle == navBarDelegate) {
                 return $ionicNavBarDelegate._instances[x];
-              }
+        }
             }
           }
           return $element.inheritedData('$ionNavBarController');
@@ -6712,7 +6712,7 @@
             } else {
               scrollTo(0, scrollTime, deactivate);
               isOverscrolling = false;
-            }
+        }
           }
         }
 
@@ -6741,11 +6741,11 @@
             if (isOverscrolling) {
               isOverscrolling = false;
               setScrollLock(false);
-            }
+        }
 
             if (isDragging) {
               nativescroll(scrollParent, parseInt(deltaY - dragOffset, 10) * -1);
-            }
+        }
 
             // if we're not at overscroll 0 yet, 0 out
             if (lastOverscroll !== 0) {
@@ -6808,7 +6808,7 @@
             ionic.requestAnimationFrame(function () {
               scrollChild.classList.add('overscroll');
               show();
-            });
+        });
 
           } else {
             ionic.requestAnimationFrame(function () {
@@ -6832,9 +6832,9 @@
             $timeout(function () {
 
               if (isOverscrolling) {
-                isOverscrolling = false;
-                setScrollLock(false);
-              }
+            isOverscrolling = false;
+            setScrollLock(false);
+          }
 
             }, scrollTime);
 
@@ -6869,14 +6869,14 @@
             overscroll(parseInt((easedT * (Y - from)) + from, 10));
 
             if (time < 1) {
-              ionic.requestAnimationFrame(scroll);
+          ionic.requestAnimationFrame(scroll);
 
             } else {
 
               if (Y < 5 && Y > -5) {
                 isOverscrolling = false;
                 setScrollLock(false);
-              }
+          }
 
               callback && callback();
             }
@@ -7033,7 +7033,7 @@
                 scrollView.options.bouncing = false;
                 // Faster scroll decel
                 scrollView.options.deceleration = 0.95;
-              }
+        }
             }
           });
         }
@@ -7122,7 +7122,7 @@
             if (!(hash && elm)) {
               scrollView.scrollTo(0, 0, !!shouldAnimate);
               return;
-            }
+      }
             var curElm = elm;
             var scrollLeft = 0, scrollTop = 0;
             do {
@@ -7143,17 +7143,17 @@
         };
 
 
-        /**
-         * @private
-         */
-        self._setRefresher = function (refresherScope, refresherElement, refresherMethods) {
-          self.refresher = refresherElement;
-          var refresherHeight = self.refresher.clientHeight || 60;
-          scrollView.activatePullToRefresh(
-            refresherHeight,
-            refresherMethods
-          );
-        };
+  /**
+   * @private
+   */
+  self._setRefresher = function (refresherScope, refresherElement, refresherMethods) {
+    self.refresher = refresherElement;
+    var refresherHeight = self.refresher.clientHeight || 60;
+    scrollView.activatePullToRefresh(
+      refresherHeight,
+      refresherMethods
+    );
+  };
 
       }]);
 
@@ -7653,9 +7653,9 @@
               for (y = 0; y < data[k][x].t; y++) {
                 createSvgElement(k, data[k][x].fn(y, spinnerName), ele, spinnerName);
               }
-            } else {
+          } else {
               createSvgElement(k, data[k][x], ele, spinnerName);
-            }
+          }
           }
 
         } else {
@@ -7698,7 +7698,7 @@
               },
               t: 1
             }]
-          };
+        };
         },
         t: 12
       }]
@@ -7824,47 +7824,47 @@
 
       lines: {
         sw: 7,
-        lc: ROUND,
-        line: [{
-          fn: function (i) {
-            return {
-              x1: 10 + (i * 14),
-              x2: 10 + (i * 14),
-              a: [{
-                fn: function () {
-                  return {
-                    an: 'y1',
-                    dur: DURATION,
-                    v: animationValues('16;18;28;18;16', i),
-                    rc: INDEFINITE
-                  };
-                },
-                t: 1
-              }, {
-                fn: function () {
-                  return {
-                    an: 'y2',
-                    dur: DURATION,
-                    v: animationValues('48;44;36;46;48', i),
-                    rc: INDEFINITE
-                  };
-                },
-                t: 1
-              }, {
-                fn: function () {
-                  return {
-                    an: STROKE_OPACITY,
-                    dur: DURATION,
-                    v: animationValues('1;.8;.5;.4;1', i),
-                    rc: INDEFINITE
-                  };
-                },
-                t: 1
-              }]
-            };
-          },
-          t: 4
-        }]
+      lc: ROUND,
+      line: [{
+        fn: function (i) {
+          return {
+            x1: 10 + (i * 14),
+            x2: 10 + (i * 14),
+            a: [{
+              fn: function () {
+                return {
+                  an: 'y1',
+                  dur: DURATION,
+                  v: animationValues('16;18;28;18;16', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }, {
+              fn: function () {
+                return {
+                  an: 'y2',
+                  dur: DURATION,
+                  v: animationValues('48;44;36;46;48', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }, {
+              fn: function () {
+                return {
+                  an: STROKE_OPACITY,
+                  dur: DURATION,
+                  v: animationValues('1;.8;.5;.4;1', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }]
+          };
+        },
+        t: 4
+      }]
       },
 
       ripple: {
@@ -7890,7 +7890,7 @@
                   };
                 },
                 t: 1
-              }, {
+            }, {
                 fn: function () {
                   return {
                     an: STROKE_OPACITY,
@@ -7901,7 +7901,7 @@
                   };
                 },
                 t: 1
-              }]
+            }]
             };
           },
           t: 2
@@ -7917,11 +7917,11 @@
             stop: [{
               offset: 0.1,
               class: 'stop1'
-            }, {
+          }, {
               offset: 1,
               class: 'stop2'
             }]
-          }]
+        }]
         }],
         g: [{
           sw: 4,
@@ -7960,7 +7960,7 @@
             translateX = -64;
             dasharray = (128 - (-58 * v));
             dashoffset = (182 * v);
-          }
+        }
 
           var rotateLine = [0, -101, -90, -11, -180, 79, -270, -191][rIndex];
 
@@ -7975,18 +7975,18 @@
           if (v >= 1) {
             rIndex++;
             if (rIndex > 7) rIndex = 0;
-            startTime = Date.now();
+          startTime = Date.now();
           }
 
           ionic.requestAnimationFrame(run);
-        }
+      }
 
         return function () {
           startTime = Date.now();
           run();
         };
 
-      }
+    }
 
     };
 
@@ -8164,7 +8164,7 @@
                 title: tab.title,
                 url: tab.href,
                 uiSref: tab.uiSref
-              });
+        });
             }
           }
         };
@@ -8323,7 +8323,7 @@
               $scope.cancel();
               $scope.$apply();
             }
-          };
+      };
 
           var backdropClick = function (e) {
             if (e.target == $element[0]) {
@@ -8404,7 +8404,7 @@
           }, function (value, name) {
             if (isDefined(value)) {
               input.attr(name, value);
-            }
+        }
           });
           var checkboxWrapper = element[0].querySelector('.checkbox');
           checkboxWrapper.classList.add('checkbox-' + $ionicConfig.form.checkbox());
@@ -8521,14 +8521,14 @@
 
       if (scrollView.options.scrollingX && scrollView.options.scrollingY) {
         throw new Error("collection-repeat expected a parent x or y scrollView, not " +
-        "an xy scrollView.");
+          "an xy scrollView.");
       }
 
       var repeatExpr = attr.collectionRepeat;
       var match = repeatExpr.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
       if (!match) {
         throw new Error("collection-repeat expected expression in form of '_item_ in " +
-        "_collection_[ track by _id_]' but got '" + attr.collectionRepeat + "'.");
+          "_collection_[ track by _id_]' but got '" + attr.collectionRepeat + "'.");
       }
       var keyExpr = match[1];
       var listExpr = match[2];
@@ -8568,7 +8568,7 @@
       function onResize() {
         if (changeValidator.resizeRequiresRefresh(scrollView.__clientWidth, scrollView.__clientHeight)) {
           refreshDimensions();
-        }
+      }
       }
 
       scope.$watchCollection(listGetter, function (newValue) {
@@ -8581,7 +8581,7 @@
         scope.$$postDigest(function () {
           getRepeatManager().setData(data);
           if (changeValidator.dataChangeRequiresRefresh(data)) refreshDimensions();
-        });
+      });
       });
 
       scope.$on('$destroy', function () {
@@ -8624,7 +8624,7 @@
 
             return !!requiresRefresh;
           }
-        });
+      });
       }
 
       function getRepeatManager() {
@@ -8653,16 +8653,16 @@
             if (ionic.DomUtil.contains(node, containerNode)) {
               elementIsAfterRepeater = true;
               return false;
-            }
+          }
             return elementIsAfterRepeater;
-          });
+        });
           container = angular.element('<span class="collection-repeat-after-container">');
           if (scrollView.options.scrollingX) {
             container.addClass('horizontal');
           }
           container.append(afterNodes);
           scrollView.__content.appendChild(container[0]);
-        }
+      }
         return container;
       }
 
@@ -8686,12 +8686,12 @@
           parseDimensionAttr(heightExpr, heightData);
         } else {
           heightData.computed = true;
-        }
+      }
         if (widthExpr) {
           parseDimensionAttr(widthExpr, widthData);
         } else {
           widthData.computed = true;
-        }
+      }
       }
 
       function refreshDimensions() {
@@ -8707,7 +8707,7 @@
             throw new Error('collection-repeat tried to compute the height of repeated elements "' +
             repeatExpr + '", but was unable to. Please provide the "item-height" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
-          }
+        }
         } else if (!heightData.dynamic && heightData.getValue) {
           // If it's a constant with a getter (eg percent), we just refresh .value after resize
           heightData.value = heightData.getValue();
@@ -8719,11 +8719,11 @@
             throw new Error('collection-repeat tried to compute the width of repeated elements "' +
             repeatExpr + '", but was unable to. Please provide the "item-width" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
-          }
+        }
         } else if (!widthData.dynamic && widthData.getValue) {
           // If it's a constant with a getter (eg percent), we just refresh .value after resize
           widthData.value = widthData.getValue();
-        }
+      }
         // Dynamic dimensions aren't updated on resize. Since they're already dynamic anyway,
         // .getValue() will be used.
 
@@ -8742,7 +8742,7 @@
           // quotes, to attempt to let the user provide a simple `attr="100%"` or `attr="100px"`
           if (attrValue.trim().match(/\d+(px|%)$/)) {
             attrValue = '"' + attrValue + '"';
-          }
+        }
           parsedValue = $parse(attrValue);
         }
 
@@ -8757,17 +8757,17 @@
           // For percents, store the percent getter on .getValue()
           if (attrValue.indexOf('%') > -1) {
             var decimalValue = intValue / 100;
-            dimensionData.getValue = dimensionData === heightData ?
-              function () {
-                return Math.floor(decimalValue * scrollView.__clientHeight);
-              } :
-              function () {
-                return Math.floor(decimalValue * scrollView.__clientWidth);
-              };
+          dimensionData.getValue = dimensionData === heightData ?
+            function () {
+              return Math.floor(decimalValue * scrollView.__clientHeight);
+            } :
+            function () {
+              return Math.floor(decimalValue * scrollView.__clientWidth);
+            };
           } else {
             // For static constants, just store the static constant.
             dimensionData.value = intValue;
-          }
+        }
 
         } else {
           dimensionData.dynamic = true;
@@ -8786,7 +8786,7 @@
               }
               return parseInt(result);
             };
-        }
+      }
       }
 
       var computedStyleNode;
@@ -8809,9 +8809,9 @@
         computedStyleDimensions.height = parseInt(style.height);
 
         containerNode.removeChild(computedStyleNode);
-      }
-
     }
+
+  }
 
   }
 
@@ -8976,7 +8976,7 @@
           var poolSize = Math.max(20, renderBuffer * 3);
           for (var i = 0; i < poolSize; i++) {
             itemsPool.push(new RepeatItem());
-          }
+        }
         }
 
         isLayoutReady = true;
@@ -8986,7 +8986,7 @@
           if (scrollView.__scrollLeft > scrollView.__maxScrollLeft ||
             scrollView.__scrollTop > scrollView.__maxScrollTop) {
             scrollView.resize();
-          }
+        }
           forceRerender(true);
         }
       };
@@ -9040,7 +9040,7 @@
             delete itemsShownMap[i];
             itemsLeaving.push(item);
             item.isShown = false;
-          }
+        }
         }
 
         // Render indicies that aren't shown yet
@@ -9055,8 +9055,8 @@
           if (i >= data.length || (itemsShownMap[i] && !forceRerender)) continue;
 
           item = itemsShownMap[i] || (itemsShownMap[i] = itemsLeaving.length ? itemsLeaving.pop() :
-            itemsPool.length ? itemsPool.shift() :
-              new RepeatItem());
+              itemsPool.length ? itemsPool.shift() :
+                new RepeatItem());
           itemsEntering.push(item);
           item.isShown = true;
 
@@ -9083,7 +9083,7 @@
                 .replace(PRIMARY, (item.primarySize = dim.primarySize) + 1)
                 .replace(SECONDARY, (item.secondarySize = dim.secondarySize))
             );
-          }
+        }
 
         }
 
@@ -9112,8 +9112,8 @@
               var src = img.src;
               img.src = ONE_PX_TRANSPARENT_IMG_SRC;
               img.src = src;
-            }
           }
+        }
         }
         if (forceRerender) {
           var rootScopePhase = $rootScope.$$phase;
@@ -9136,9 +9136,9 @@
           while (itemsEntering.length) {
             item = itemsEntering.pop();
             if (item.isShown) {
-              if (!rootScopePhase) item.scope.$digest();
-            }
+            if (!rootScopePhase) item.scope.$digest();
           }
+        }
           digestEnteringItems.running = false;
         });
       }
@@ -9278,7 +9278,7 @@
             dim.primaryPos = prevDimension.primaryPos + prevDimension.primarySize;
             dim.secondaryPos = 0;
           }
-        }
+      }
 
         function calculateDimensionsGrid(toIndex) {
           var i, prevDimension, dim;
@@ -9291,7 +9291,7 @@
             dim.secondaryPos = prevDimension.secondaryPos + prevDimension.secondarySize;
 
             if (i === 0 || dim.secondaryPos + dim.secondarySize > self.scrollSecondarySize) {
-              dim.secondaryPos = 0;
+            dim.secondaryPos = 0;
               dim.primarySize = self.getItemPrimarySize(i, data[i]);
               dim.primaryPos = prevDimension.primaryPos + prevDimension.rowPrimarySize;
 
@@ -9305,7 +9305,7 @@
               dimensions[dim.rowStartIndex].rowPrimarySize = dim.rowPrimarySize = Math.max(
                 dimensions[dim.rowStartIndex].rowPrimarySize,
                 dim.primarySize
-              );
+            );
               dim.rowPrimarySize = Math.max(dim.primarySize, dim.rowPrimarySize);
             }
           }
@@ -9349,9 +9349,9 @@
               calculateDimensions(index);
               dimensionsIndex = index;
               debouncedScrollViewSetDimensions();
-            }
-
           }
+
+        }
           return dimensions[index];
         };
 
@@ -9374,8 +9374,8 @@
             for (i = oldRenderStartIndex, len = data.length; i < len; i++) {
               if ((dim = this.getDimensions(i)) && dim.primaryPos + dim.rowPrimarySize >= scrollValue) {
                 break;
-              }
             }
+          }
             // scrolling up
           } else {
             for (i = oldRenderStartIndex; i >= 0; i--) {
@@ -9401,10 +9401,10 @@
                 while (i < len - 1 &&
                 (dim = this.getDimensions(i + 1)).primaryPos === lastRowDim.primaryPos) {
                   i++;
-                }
               }
-              break;
             }
+              break;
+          }
           }
 
           renderEndIndex = Math.min(i, data.length - 1);
@@ -9576,7 +9576,7 @@
                     scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 10,
                     scrollingComplete: onScrollComplete
                   };
-                }
+          }
 
                 // init scroll controller with appropriate options
                 scrollCtrl = $controller('$ionicScroll', {
@@ -9602,7 +9602,7 @@
                 });
               }
 
-            }
+      }
           }
         };
       }]);
@@ -9982,7 +9982,7 @@
         scope.$on('$destroy', function () {
           $ionicGesture.off(gesture, eventType, listener);
         });
-      };
+    };
     }];
   }
 
@@ -10067,41 +10067,41 @@
 
   function tapScrollToTopDirective() {
     return ['$ionicScrollDelegate', function ($ionicScrollDelegate) {
-      return {
-        restrict: 'E',
-        link: function ($scope, $element, $attr) {
-          if ($attr.noTapScroll == 'true') {
-            return;
-          }
-          ionic.on('tap', onTap, $element[0]);
-          $scope.$on('$destroy', function () {
-            ionic.off('tap', onTap, $element[0]);
-          });
+    return {
+      restrict: 'E',
+      link: function ($scope, $element, $attr) {
+        if ($attr.noTapScroll == 'true') {
+          return;
+        }
+        ionic.on('tap', onTap, $element[0]);
+        $scope.$on('$destroy', function () {
+          ionic.off('tap', onTap, $element[0]);
+        });
 
-          function onTap(e) {
-            var depth = 3;
-            var current = e.target;
-            //Don't scroll to top in certain cases
-            while (depth-- && current) {
-              if (current.classList.contains('button') ||
+        function onTap(e) {
+          var depth = 3;
+          var current = e.target;
+          //Don't scroll to top in certain cases
+          while (depth-- && current) {
+            if (current.classList.contains('button') ||
                 current.tagName.match(/input|textarea|select/i) ||
                 current.isContentEditable) {
-                return;
-              }
-              current = current.parentNode;
+              return;
             }
-            var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
-            var bounds = $element[0].getBoundingClientRect();
-            if (ionic.DomUtil.rectContains(
-                touch.pageX, touch.pageY,
-                bounds.left, bounds.top - 20,
-                bounds.left + bounds.width, bounds.top + bounds.height
-              )) {
-              $ionicScrollDelegate.scrollTop(true);
-            }
+            current = current.parentNode;
+          }
+          var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
+          var bounds = $element[0].getBoundingClientRect();
+          if (ionic.DomUtil.rectContains(
+              touch.pageX, touch.pageY,
+              bounds.left, bounds.top - 20,
+              bounds.left + bounds.width, bounds.top + bounds.height
+            )) {
+            $ionicScrollDelegate.scrollTop(true);
           }
         }
-      };
+      }
+    };
     }];
   }
 
@@ -10137,7 +10137,7 @@
               $scope.$on('$ionicHeader.align', function () {
                 ionic.requestAnimationFrame(function () {
                   ctrl.align();
-                });
+              });
               });
 
             } else {
@@ -10156,8 +10156,8 @@
               $scope.$watch('$hasTabs', function (val) {
                 $element.toggleClass('has-tabs', !!val);
               });
-            }
           }
+        }
         }
       };
     }];
@@ -10259,7 +10259,7 @@
             // if there's no scroll controller, and no overflow scroll div, infinite scroll wont work
             if (!scrollEl) {
               throw 'Infinite scroll must be used inside a scrollable div';
-            }
+        }
             //bind to native scroll events
             infiniteScrollCtrl.scrollEl.addEventListener('scroll', infiniteScrollCtrl.checkBounds);
           }
@@ -10325,7 +10325,7 @@
               innerElement.attr('ng-href', '{{$href()}}');
               if (isDefined($attrs.target)) {
                 innerElement.attr('target', '{{$target()}}');
-              }
+          }
             }
 
             innerElement.append($element.contents());
@@ -10352,14 +10352,14 @@
                   content.style[ionic.CSS.TRANSITION] = 'none';
                   $$rAF(function () {
                     content.style[ionic.CSS.TRANSITION] = '';
-                  });
-                  content.$$ionicOptionsOpen = false;
-                }
               });
+                  content.$$ionicOptionsOpen = false;
             }
-          };
-
+          });
         }
+      };
+
+    }
       };
     }]);
 
@@ -10427,7 +10427,7 @@
               listCtrl = listCtrl || $element.controller('ionList');
               if (listCtrl && listCtrl.showDelete()) {
                 container.addClass('visible active');
-              }
+          }
             }
           };
         }
@@ -10461,8 +10461,8 @@
             ngModelCtrl.$render = function () {
               input.value = ngModelCtrl.$viewValue || '';
               onInput();
-            };
-          }
+        };
+      }
 
           scope.$on('$destroy', function () {
             input.removeEventListener('input', onInput);
@@ -10602,8 +10602,8 @@
               $element[0].onclick = function (e) {
                 e.stopPropagation();
                 return false;
-              };
-            }
+          };
+        }
 
             var container = jqLite(ITEM_TPL_REORDER_BUTTON);
             container.append($element);
@@ -10612,7 +10612,7 @@
             if (listCtrl && listCtrl.showReorder()) {
               container.addClass('visible active');
             }
-          };
+      };
         }
       };
     }]);
@@ -10691,7 +10691,7 @@
           //deprecated
           ionic.off('native.showkeyboard', onShow, window);
           ionic.off('native.hidekeyboard', onHide, window);
-        });
+    });
       };
     });
 
@@ -10818,8 +10818,8 @@
                       // $evalAsync
                       $timeout(function () {
                         itemScope.$onReorder(oldIndex, newIndex);
-                      });
-                    }
+                });
+              }
                   },
                   canSwipe: function () {
                     return listCtrl.canSwipeItems();
@@ -10837,7 +10837,7 @@
                   $scope.$watch('!!(' + $attr.canSwipe + ')', function (value) {
                     listCtrl.canSwipeItems(value);
                   });
-                }
+          }
                 if (isDefined($attr.showDelete)) {
                   $scope.$watch('!!(' + $attr.showDelete + ')', function (value) {
                     listCtrl.showDelete(value);
@@ -10945,7 +10945,7 @@
                 historyRoot: true,
                 disableAnimate: true,
                 expire: 300
-              });
+          });
               // if no transition in 300ms, reset nextViewOptions
               // the expire should take care of it, but will be cancelled in some
               // cases. This directive is an exception to the rules of history.js
@@ -10956,7 +10956,7 @@
                 });
               }, 300);
               sideMenuCtrl.close();
-            }
+        }
           });
         }
       };
@@ -11012,7 +11012,7 @@
               }
             } else {
               $element.removeClass('hide');
-            }
+        }
           });
 
           $element.bind('click', function () {
@@ -11143,7 +11143,7 @@
                 hasButtonText = true;
               } else if (childNode.classList.contains('previous-title')) {
                 hasPreviousTitle = true;
-              }
+          }
             } else if (!hasInnerText && childNode.nodeType === 3) {
               hasInnerText = !!childNode.nodeValue.trim();
             }
@@ -11181,8 +11181,8 @@
               // only register the plain HTML, the navBarCtrl takes care of scope/compile/link
               navBarCtrl.navElement('backButton', buttonEle.outerHTML);
               buttonEle = null;
-            }
-          };
+        }
+      };
         }
       };
     }]);
@@ -11333,8 +11333,8 @@
               }
 
               spanEle = null;
-            }
-          };
+        }
+      };
         }
       };
     }]);
@@ -11435,8 +11435,8 @@
               }
 
               spanEle = null;
-            }
-          };
+        }
+      };
         }
       };
     }]);
@@ -11829,14 +11829,14 @@
           }, function (value, name) {
             if (isDefined(value)) {
               input.attr(name, value);
-            }
+          }
           });
 
           return function (scope, element, attr) {
             scope.getValue = function () {
               return scope.ngValue || attr.value;
             };
-          };
+      };
         }
       };
     });
@@ -12055,11 +12055,11 @@
                 maxZoom: $scope.$eval($scope.maxZoom) || 3,
                 minZoom: $scope.$eval($scope.minZoom) || 0.5,
                 preventDefault: true
-              };
+        };
               if (isPaging) {
                 scrollViewOptions.speedMultiplier = 0.8;
                 scrollViewOptions.bouncing = false;
-              }
+        }
 
               $controller('$ionicScroll', {
                 $scope: $scope,
@@ -12125,7 +12125,7 @@
             $scope.$watch($attr.isEnabled, function (val) {
               sideMenu.setIsEnabled(!!val);
             });
-          };
+      };
         }
       };
     });
@@ -12254,11 +12254,11 @@
                       // ok, we pretty much know which way they're going
                       // let's lock it in
                       primaryScrollAxis = scrollAxis;
-                    }
+              }
 
                     return scrollAxis;
-                  }
-                }
+            }
+          }
                 return 'y';
               }
 
@@ -12311,7 +12311,7 @@
                   $element[0].classList.remove('menu-animated');
                 },
                 offsetX: 0
-              };
+        };
 
               sideMenuCtrl.setContent(content);
 
@@ -12663,9 +12663,9 @@
                 children[i].classList.add('active');
               } else {
                 children[i].classList.remove('active');
-              }
-            }
-          };
+          }
+        }
+      };
 
           $scope.pagerClick = function (index) {
             slideBox.onPagerClick(index);
@@ -12673,7 +12673,7 @@
 
           $scope.numSlides = function () {
             return new Array(slideBox.slidesCount());
-          };
+      };
 
           $scope.$watch('currentSlide', function (v) {
             selectPage(v);
@@ -12985,7 +12985,7 @@
               $ionicBind($scope, $attr, {
                 onSelect: '&',
                 onDeselect: '&',
-                title: '@',
+          title: '@',
                 uiSref: '@',
                 href: '@'
               });
@@ -13015,7 +13015,7 @@
               function selectIfMatchesState() {
                 if (tabCtrl.tabMatchesState()) {
                   tabsCtrl.select($scope, false);
-                }
+          }
               }
 
               var tabNavElement = jqLite(tabNavTemplate);
@@ -13057,7 +13057,7 @@
                   }
 
                 }
-              }
+        }
 
               function destroyTab() {
                 childScope && childScope.$destroy();
@@ -13078,7 +13078,7 @@
                 }
               });
 
-            };
+      };
           }
         };
       }]);
@@ -13236,7 +13236,7 @@
                 var previousSelectedTab = tabsCtrl.previousSelectedTab();
                 if (previousSelectedTab) {
                   previousSelectedTab.$broadcast(ev.name.replace('NavView', 'Tabs'), data);
-                }
+          }
               }
 
               $scope.$on('$ionicNavView.beforeLeave', emitLifecycleEvent);
@@ -13354,8 +13354,8 @@
                   if (ngModelController) {
                     ngModelController.$setViewValue(checkbox.checked);
                     $scope.$apply();
-                  }
-                }
+            }
+          }
               });
 
               $scope.$on('$destroy', function () {
@@ -13485,7 +13485,7 @@
           tElement[0].removeAttribute('title');
           return function link($scope, $element, $attrs, viewCtrl) {
             viewCtrl.init();
-          };
+      };
         }
       };
     });

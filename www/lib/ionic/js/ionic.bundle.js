@@ -88,7 +88,7 @@
             if (index !== -1) {
               instances.splice(index, 1);
             }
-          };
+        };
         };
         DelegateService.prototype.$getByHandle = function (handle) {
           return new DelegateInstance(this._instances, handle);
@@ -110,8 +110,8 @@
                 //Only return the value from the first call
                 if (foundInstancesCount === 1) {
                   returnValue = ret;
-                }
               }
+            }
             });
 
             if (!foundInstancesCount && handle) {
@@ -143,7 +143,7 @@
       isDomReady = true;
       for (var x = 0; x < readyCallbacks.length; x++) {
         ionic.requestAnimationFrame(readyCallbacks[x]);
-      }
+    }
       readyCallbacks = [];
       document.removeEventListener('DOMContentLoaded', domReady);
     }
@@ -178,17 +178,17 @@
      */
     ionic.DomUtil = {
       //Call with proper context
-      /**
-       * @ngdoc method
-       * @name ionic.DomUtil#requestAnimationFrame
-       * @alias ionic.requestAnimationFrame
-       * @description Calls [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame), or a polyfill if not available.
-       * @param {function} callback The function to call when the next frame
-       * happens.
-       */
-      requestAnimationFrame: function (cb) {
-        return window._rAF(cb);
-      },
+    /**
+     * @ngdoc method
+     * @name ionic.DomUtil#requestAnimationFrame
+     * @alias ionic.requestAnimationFrame
+     * @description Calls [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame), or a polyfill if not available.
+     * @param {function} callback The function to call when the next frame
+     * happens.
+     */
+    requestAnimationFrame: function (cb) {
+      return window._rAF(cb);
+    },
 
       cancelAnimationFrame: function (requestId) {
         cancelAnimationFrame(requestId);
@@ -220,7 +220,7 @@
               cb.apply(context, args);
               isQueued = false;
             });
-          }
+        }
         };
       },
 
@@ -297,8 +297,8 @@
                 width: rect.width,
                 height: rect.height
               };
-            }
           }
+        }
         }
         return null;
       },
@@ -322,10 +322,10 @@
             if (c.nodeName && c.nodeName.toLowerCase() == type) {
               if (c == element) {
                 return k;
-              }
-              k++;
             }
+              k++;
           }
+        }
         }
         return Array.prototype.slice.call(element.parentNode.children).indexOf(element);
       },
@@ -359,7 +359,7 @@
         while (e.parentNode && depth--) {
           if (e.parentNode.classList && e.parentNode.classList.contains(className)) {
             return e.parentNode;
-          }
+        }
           e = e.parentNode;
         }
         return null;
@@ -377,7 +377,7 @@
         while (e && depth--) {
           if (e.classList && e.classList.contains(className)) {
             return e;
-          }
+        }
           e = e.parentNode;
         }
         return null;
@@ -424,10 +424,10 @@
             if (ele[dataKey] !== value) {
               ele.setAttribute(key, value);
               ele[dataKey] = value;
-            }
+          }
           } else if (typeof ele[dataKey] == 'undefined') {
             ele[dataKey] = ele.getAttribute(key);
-          }
+        }
           return ele[dataKey];
         }
       },
@@ -438,9 +438,9 @@
           for (var prop in styles) {
             if (ele['$style-' + prop] !== styles[prop]) {
               ele.style[prop] = ele['$style-' + prop] = styles[prop];
-            }
           }
         }
+      }
       }
 
     };
@@ -473,10 +473,10 @@
       var customEvent = function (event, params) {
         var evt;
         params = params || {
-          bubbles: false,
-          cancelable: false,
-          detail: undefined
-        };
+            bubbles: false,
+            cancelable: false,
+            detail: undefined
+      };
         try {
           evt = document.createEvent("CustomEvent");
           evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
@@ -503,28 +503,28 @@
     ionic.EventController = {
       VIRTUALIZED_EVENTS: ['tap', 'swipe', 'swiperight', 'swipeleft', 'drag', 'hold', 'release'],
 
-      /**
-       * @ngdoc method
-       * @name ionic.EventController#trigger
-       * @alias ionic.trigger
-       * @param {string} eventType The event to trigger.
-       * @param {object} data The data for the event. Hint: pass in
-       * `{target: targetElement}`
-       * @param {boolean=} bubbles Whether the event should bubble up the DOM.
-       * @param {boolean=} cancelable Whether the event should be cancelable.
-       */
-      // Trigger a new event
-      trigger: function (eventType, data, bubbles, cancelable) {
-        var event = new ionic.CustomEvent(eventType, {
-          detail: data,
-          bubbles: !!bubbles,
-          cancelable: !!cancelable
-        });
+    /**
+     * @ngdoc method
+     * @name ionic.EventController#trigger
+     * @alias ionic.trigger
+     * @param {string} eventType The event to trigger.
+     * @param {object} data The data for the event. Hint: pass in
+     * `{target: targetElement}`
+     * @param {boolean=} bubbles Whether the event should bubble up the DOM.
+     * @param {boolean=} cancelable Whether the event should be cancelable.
+     */
+    // Trigger a new event
+    trigger: function (eventType, data, bubbles, cancelable) {
+      var event = new ionic.CustomEvent(eventType, {
+        detail: data,
+        bubbles: !!bubbles,
+        cancelable: !!cancelable
+      });
 
-        // Make sure to trigger the event on the given target, or dispatch it from
-        // the window if we don't have an event target
-        data && data.target && data.target.dispatchEvent && data.target.dispatchEvent(event) || window.dispatchEvent(event);
-      },
+      // Make sure to trigger the event on the given target, or dispatch it from
+      // the window if we don't have an event target
+      data && data.target && data.target.dispatchEvent && data.target.dispatchEvent(event) || window.dispatchEvent(event);
+    },
 
       /**
        * @ngdoc method
@@ -544,7 +544,7 @@
             var gesture = new ionic.Gesture(element);
             gesture.on(type, callback);
             return gesture;
-          }
+        }
         }
 
         // Otherwise bind a normal event
@@ -635,17 +635,17 @@
    */
   (function (ionic) {
 
-    /**
-     * ionic.Gestures
-     * use this to create instances
-     * @param   {HTMLElement}   element
-     * @param   {Object}        options
-     * @returns {ionic.Gestures.Instance}
-     * @constructor
-     */
-    ionic.Gesture = function (element, options) {
-      return new ionic.Gestures.Instance(element, options || {});
-    };
+  /**
+   * ionic.Gestures
+   * use this to create instances
+   * @param   {HTMLElement}   element
+   * @param   {Object}        options
+   * @returns {ionic.Gestures.Instance}
+   * @constructor
+   */
+  ionic.Gesture = function (element, options) {
+    return new ionic.Gestures.Instance(element, options || {});
+  };
 
     ionic.Gestures = {};
 
@@ -710,7 +710,7 @@
       for (var name in ionic.Gestures.gestures) {
         if (ionic.Gestures.gestures.hasOwnProperty(name)) {
           ionic.Gestures.detection.register(ionic.Gestures.gestures[name]);
-        }
+      }
       }
 
       // Add touch events on the document
@@ -739,7 +739,7 @@
       if (element === null) {
         void 0;
         return this;
-      }
+    }
 
       // setup ionic.GesturesJS window events and register all gestures
       // this also sets up the default options
@@ -764,7 +764,7 @@
       ionic.Gestures.event.onTouch(element, ionic.Gestures.EVENT_START, function (ev) {
         if (self.enabled) {
           ionic.Gestures.detection.startDetect(self, ev);
-        }
+      }
       });
 
       // return instance
@@ -784,7 +784,7 @@
         for (var t = 0; t < gestures.length; t++) {
           this.element.addEventListener(gestures[t], handler, false);
         }
-        return this;
+      return this;
       },
 
 
@@ -862,112 +862,112 @@
 
 
     ionic.Gestures.event = {
-      /**
-       * simple addEventListener
-       * @param   {HTMLElement}   element
-       * @param   {String}        type
-       * @param   {Function}      handler
-       */
-      bindDom: function (element, type, handler) {
-        var types = type.split(' ');
-        for (var t = 0; t < types.length; t++) {
-          element.addEventListener(types[t], handler, false);
+    /**
+     * simple addEventListener
+     * @param   {HTMLElement}   element
+     * @param   {String}        type
+     * @param   {Function}      handler
+     */
+    bindDom: function (element, type, handler) {
+      var types = type.split(' ');
+      for (var t = 0; t < types.length; t++) {
+        element.addEventListener(types[t], handler, false);
+      }
+    },
+
+
+    /**
+     * touch events with mouse fallback
+     * @param   {HTMLElement}   element
+     * @param   {String}        eventType        like ionic.Gestures.EVENT_MOVE
+     * @param   {Function}      handler
+     */
+    onTouch: function onTouch(element, eventType, handler) {
+      var self = this;
+
+      this.bindDom(element, ionic.Gestures.EVENT_TYPES[eventType], function bindDomOnTouch(ev) {
+        var sourceEventType = ev.type.toLowerCase();
+
+        // onmouseup, but when touchend has been fired we do nothing.
+        // this is for touchdevices which also fire a mouseup on touchend
+        if (sourceEventType.match(/mouse/) && touch_triggered) {
+          return;
         }
-      },
 
-
-      /**
-       * touch events with mouse fallback
-       * @param   {HTMLElement}   element
-       * @param   {String}        eventType        like ionic.Gestures.EVENT_MOVE
-       * @param   {Function}      handler
-       */
-      onTouch: function onTouch(element, eventType, handler) {
-        var self = this;
-
-        this.bindDom(element, ionic.Gestures.EVENT_TYPES[eventType], function bindDomOnTouch(ev) {
-          var sourceEventType = ev.type.toLowerCase();
-
-          // onmouseup, but when touchend has been fired we do nothing.
-          // this is for touchdevices which also fire a mouseup on touchend
-          if (sourceEventType.match(/mouse/) && touch_triggered) {
-            return;
-          }
-
-          // mousebutton must be down or a touch event
-          else if (sourceEventType.match(/touch/) ||   // touch events are always on screen
-            sourceEventType.match(/pointerdown/) || // pointerevents touch
-            (sourceEventType.match(/mouse/) && ev.which === 1)   // mouse is pressed
-          ) {
+        // mousebutton must be down or a touch event
+        else if (sourceEventType.match(/touch/) ||   // touch events are always on screen
+          sourceEventType.match(/pointerdown/) || // pointerevents touch
+          (sourceEventType.match(/mouse/) && ev.which === 1)   // mouse is pressed
+        ) {
             enable_detect = true;
           }
 
-          // mouse isn't pressed
-          else if (sourceEventType.match(/mouse/) && ev.which !== 1) {
-            enable_detect = false;
+        // mouse isn't pressed
+        else if (sourceEventType.match(/mouse/) && ev.which !== 1) {
+          enable_detect = false;
+        }
+
+
+        // we are in a touch event, set the touch triggered bool to true,
+        // this for the conflicts that may occur on ios and android
+        if (sourceEventType.match(/touch|pointer/)) {
+          touch_triggered = true;
+        }
+
+        // count the total touches on the screen
+        var count_touches = 0;
+
+        // when touch has been triggered in this detection session
+        // and we are now handling a mouse event, we stop that to prevent conflicts
+        if (enable_detect) {
+          // update pointerevent
+          if (ionic.Gestures.HAS_POINTEREVENTS && eventType != ionic.Gestures.EVENT_END) {
+            count_touches = ionic.Gestures.PointerEvent.updatePointer(eventType, ev);
+          }
+          // touch
+          else if (sourceEventType.match(/touch/)) {
+            count_touches = ev.touches.length;
+          }
+          // mouse
+          else if (!touch_triggered) {
+            count_touches = sourceEventType.match(/up/) ? 0 : 1;
           }
 
-
-          // we are in a touch event, set the touch triggered bool to true,
-          // this for the conflicts that may occur on ios and android
-          if (sourceEventType.match(/touch|pointer/)) {
-            touch_triggered = true;
+          // if we are in a end event, but when we remove one touch and
+          // we still have enough, set eventType to move
+          if (count_touches > 0 && eventType == ionic.Gestures.EVENT_END) {
+            eventType = ionic.Gestures.EVENT_MOVE;
+          }
+          // no touches, force the end event
+          else if (!count_touches) {
+            eventType = ionic.Gestures.EVENT_END;
           }
 
-          // count the total touches on the screen
-          var count_touches = 0;
-
-          // when touch has been triggered in this detection session
-          // and we are now handling a mouse event, we stop that to prevent conflicts
-          if (enable_detect) {
-            // update pointerevent
-            if (ionic.Gestures.HAS_POINTEREVENTS && eventType != ionic.Gestures.EVENT_END) {
-              count_touches = ionic.Gestures.PointerEvent.updatePointer(eventType, ev);
-            }
-            // touch
-            else if (sourceEventType.match(/touch/)) {
-              count_touches = ev.touches.length;
-            }
-            // mouse
-            else if (!touch_triggered) {
-              count_touches = sourceEventType.match(/up/) ? 0 : 1;
-            }
-
-            // if we are in a end event, but when we remove one touch and
-            // we still have enough, set eventType to move
-            if (count_touches > 0 && eventType == ionic.Gestures.EVENT_END) {
-              eventType = ionic.Gestures.EVENT_MOVE;
-            }
-            // no touches, force the end event
-            else if (!count_touches) {
-              eventType = ionic.Gestures.EVENT_END;
-            }
-
-            // store the last move event
-            if (count_touches || last_move_event === null) {
-              last_move_event = ev;
-            }
-
-            // trigger the handler
-            handler.call(ionic.Gestures.detection, self.collectEventData(element, eventType, self.getTouchList(last_move_event, eventType), ev));
-
-            // remove pointerevent from list
-            if (ionic.Gestures.HAS_POINTEREVENTS && eventType == ionic.Gestures.EVENT_END) {
-              count_touches = ionic.Gestures.PointerEvent.updatePointer(eventType, ev);
-            }
+          // store the last move event
+          if (count_touches || last_move_event === null) {
+            last_move_event = ev;
           }
 
-          //debug(sourceEventType +" "+ eventType);
+          // trigger the handler
+          handler.call(ionic.Gestures.detection, self.collectEventData(element, eventType, self.getTouchList(last_move_event, eventType), ev));
 
-          // on the end we reset everything
-          if (!count_touches) {
-            last_move_event = null;
-            enable_detect = false;
-            touch_triggered = false;
-            ionic.Gestures.PointerEvent.reset();
+          // remove pointerevent from list
+          if (ionic.Gestures.HAS_POINTEREVENTS && eventType == ionic.Gestures.EVENT_END) {
+            count_touches = ionic.Gestures.PointerEvent.updatePointer(eventType, ev);
           }
-        });
-      },
+        }
+
+        //debug(sourceEventType +" "+ eventType);
+
+        // on the end we reset everything
+        if (!count_touches) {
+          last_move_event = null;
+          enable_detect = false;
+          touch_triggered = false;
+          ionic.Gestures.PointerEvent.reset();
+        }
+      });
+    },
 
 
       /**
@@ -1056,7 +1056,7 @@
           preventDefault: function () {
             if (this.srcEvent.preventManipulation) {
               this.srcEvent.preventManipulation();
-            }
+          }
 
             if (this.srcEvent.preventDefault) {
               // this.srcEvent.preventDefault();
@@ -1077,7 +1077,7 @@
            */
           stopDetect: function () {
             return ionic.Gestures.detection.stopDetect();
-          }
+        }
         };
       }
     };
@@ -1111,8 +1111,8 @@
        */
       updatePointer: function (type, pointerEvent) {
         if (type == ionic.Gestures.EVENT_END) {
-          this.pointers = {};
-        }
+        this.pointers = {};
+      }
         else {
           pointerEvent.identifier = pointerEvent.pointerId;
           this.pointers[pointerEvent.pointerId] = pointerEvent;
@@ -1128,7 +1128,7 @@
        */
       matchType: function (pointerType, ev) {
         if (!ev.pointerType) {
-          return false;
+        return false;
         }
 
         var types = {};
@@ -1172,7 +1172,7 @@
         for (var key in src) {
           if (dest[key] !== undefined && merge) {
             continue;
-          }
+        }
           dest[key] = src[key];
         }
         return dest;
@@ -1334,7 +1334,7 @@
           element.onselectstart = function () {
             return false;
           };
-        }
+      }
       }
     };
 
@@ -1403,8 +1403,8 @@
             if (gesture.handler.call(gesture, eventData, this.current.inst) === false) {
               this.stopDetect();
               break;
-            }
           }
+        }
         }
 
         // store as previous event event
@@ -1456,7 +1456,7 @@
           startEv.touches = [];
           for (var i = 0, len = ev.touches.length; i < len; i++) {
             startEv.touches.push(ionic.Gestures.utils.extend({}, ev.touches[i]));
-          }
+        }
         }
 
         var delta_time = ev.timeStamp - startEv.timeStamp,
@@ -1486,40 +1486,40 @@
       },
 
 
-      /**
-       * register new gesture
-       * @param   {Object}    gesture object, see gestures.js for documentation
-       * @returns {Array}     gestures
-       */
-      register: function register(gesture) {
-        // add an enable gesture options if there is no given
-        var options = gesture.defaults || {};
-        if (options[gesture.name] === undefined) {
-          options[gesture.name] = true;
-        }
-
-        // extend ionic.Gestures default options with the ionic.Gestures.gesture options
-        ionic.Gestures.utils.extend(ionic.Gestures.defaults, options, true);
-
-        // set its index
-        gesture.index = gesture.index || 1000;
-
-        // add ionic.Gestures.gesture to the list
-        this.gestures.push(gesture);
-
-        // sort the list by index
-        this.gestures.sort(function (a, b) {
-          if (a.index < b.index) {
-            return -1;
-          }
-          if (a.index > b.index) {
-            return 1;
-          }
-          return 0;
-        });
-
-        return this.gestures;
+    /**
+     * register new gesture
+     * @param   {Object}    gesture object, see gestures.js for documentation
+     * @returns {Array}     gestures
+     */
+    register: function register(gesture) {
+      // add an enable gesture options if there is no given
+      var options = gesture.defaults || {};
+      if (options[gesture.name] === undefined) {
+        options[gesture.name] = true;
       }
+
+      // extend ionic.Gestures default options with the ionic.Gestures.gesture options
+      ionic.Gestures.utils.extend(ionic.Gestures.defaults, options, true);
+
+      // set its index
+      gesture.index = gesture.index || 1000;
+
+      // add ionic.Gestures.gesture to the list
+      this.gestures.push(gesture);
+
+      // sort the list by index
+      this.gestures.sort(function (a, b) {
+        if (a.index < b.index) {
+          return -1;
+        }
+        if (a.index > b.index) {
+          return 1;
+        }
+        return 0;
+      });
+
+      return this.gestures;
+    }
     };
 
 
@@ -1667,14 +1667,14 @@
           // when you move or end we clear the timer
           case ionic.Gestures.EVENT_MOVE:
             if (ev.distance > inst.options.hold_threshold) {
-              clearTimeout(this.timer);
+            clearTimeout(this.timer);
             }
             break;
 
           case ionic.Gestures.EVENT_END:
             clearTimeout(this.timer);
             break;
-        }
+      }
       }
     };
 
@@ -1719,8 +1719,8 @@
           if (!did_doubletap || inst.options.tap_always) {
             ionic.Gestures.detection.current.name = 'tap';
             inst.trigger('tap', ev);
-          }
         }
+      }
       }
     };
 
@@ -1754,7 +1754,7 @@
             inst.trigger(this.name, ev);
             inst.trigger(this.name + ev.direction, ev);
           }
-        }
+      }
       }
     };
 
@@ -1802,7 +1802,7 @@
           if (inst.options.prevent_default_directions.length > 0
             && inst.options.prevent_default_directions.indexOf(ev.direction) != -1) {
             ev.srcEvent.preventDefault();
-          }
+        }
           this.preventedFirstMove = true;
         }
 
@@ -1846,7 +1846,7 @@
 
                 // recalculate event data using new start point
                 ev = ionic.Gestures.detection.extendEventData(ev);
-              }
+            }
             }
 
             // lock drag to axis?
@@ -1858,10 +1858,10 @@
               // keep direction on the axis that the drag gesture started on
               if (ionic.Gestures.utils.isVertical(last_direction)) {
                 ev.direction = (ev.deltaY < 0) ? ionic.Gestures.DIRECTION_UP : ionic.Gestures.DIRECTION_DOWN;
-              }
+            }
               else {
                 ev.direction = (ev.deltaX < 0) ? ionic.Gestures.DIRECTION_LEFT : ionic.Gestures.DIRECTION_RIGHT;
-              }
+            }
             }
 
             // first time, trigger dragstart event
@@ -1891,7 +1891,7 @@
 
             this.triggered = false;
             break;
-        }
+      }
       }
     };
 
@@ -1981,7 +1981,7 @@
 
             this.triggered = false;
             break;
-        }
+      }
       }
     };
 
@@ -2017,7 +2017,7 @@
 
         if (ev.eventType == ionic.Gestures.EVENT_START) {
           inst.trigger(this.name, ev);
-        }
+      }
       }
     };
 
@@ -2033,7 +2033,7 @@
       handler: function releaseGesture(ev, inst) {
         if (ev.eventType == ionic.Gestures.EVENT_END) {
           inst.trigger(this.name, ev);
-        }
+      }
       }
     };
   })(window.ionic);
@@ -2138,7 +2138,7 @@
           // the platform isn't ready yet, add it to this array
           // which will be called once the platform is ready
           readyCallbacks.push(cb);
-        }
+      }
       },
 
       /**
@@ -2188,16 +2188,16 @@
         self.platforms = [];
         var grade = 'a';
 
-        if (self.isWebView()) {
-          self.platforms.push('webview');
-          if (!(!window.cordova && !window.PhoneGap && !window.phonegap)) {
-            self.platforms.push('cordova');
-          } else if (window.forge) {
-            self.platforms.push('trigger');
-          }
-        } else {
-          self.platforms.push('browser');
+      if (self.isWebView()) {
+        self.platforms.push('webview');
+        if (!(!window.cordova && !window.PhoneGap && !window.phonegap)) {
+          self.platforms.push('cordova');
+        } else if (window.forge) {
+          self.platforms.push('trigger');
         }
+      } else {
+        self.platforms.push('browser');
+      }
         if (self.isIPad()) self.platforms.push('ipad');
 
         var platform = self.platform();
@@ -2221,7 +2221,7 @@
               grade = 'b';
             }
           }
-        }
+      }
 
         self.setGrade(grade);
       },
@@ -2421,7 +2421,7 @@
           // showStatusBar: default is false if no param provided
           self.showStatusBar((showStatusBar === true));
         });
-      }
+    }
 
     };
 
@@ -2436,11 +2436,11 @@
         // the window and scripts are fully loaded, and a cordova/phonegap
         // object exists then let's listen for the deviceready
         document.addEventListener("deviceready", onPlatformReady, false);
-      } else {
+    } else {
         // the window and scripts are fully loaded, but the window object doesn't have the
         // cordova/phonegap object, so its just a browser, not a webview wrapped w/ cordova
         onPlatformReady();
-      }
+    }
       if (windowLoadListenderAttached) {
         window.removeEventListener("load", onWindowLoad, false);
       }
@@ -2460,7 +2460,7 @@
       for (var x = 0; x < readyCallbacks.length; x++) {
         // fire off all the callbacks that were added before the platform was ready
         readyCallbacks[x]();
-      }
+    }
       readyCallbacks = [];
       ionic.trigger('platformready', {target: document});
 
@@ -2487,7 +2487,7 @@
         if (document.documentElement.style[keys[i]] !== undefined) {
           ionic.CSS.TRANSFORM = keys[i];
           break;
-        }
+      }
       }
 
       // transition
@@ -2496,7 +2496,7 @@
         if (document.documentElement.style[keys[i]] !== undefined) {
           ionic.CSS.TRANSITION = keys[i];
           break;
-        }
+      }
       }
 
       // The only prefix we care about is webkit for transitions.
@@ -2522,11 +2522,11 @@
 
               for (x = 0; x < arguments.length; x++) {
                 fn(classes, classes.indexOf(arguments[x]), arguments[x]);
-              }
+            }
 
               self.className = classes.join(" ");
-            };
-          }
+          };
+        }
 
           return {
             add: update(function (classes, index, value) {
@@ -2762,7 +2762,7 @@
           if (focusInput.isContentEditable) {
             clonedInput.contentEditable = focusInput.contentEditable;
             clonedInput.innerHTML = focusInput.innerHTML;
-          }
+        }
           focusInput.parentElement.insertBefore(clonedInput, focusInput);
           focusInput.classList.add('previous-input-focus');
 
@@ -2789,7 +2789,7 @@
           previousInputFocus[x].classList.remove('previous-input-focus');
           previousInputFocus[x].style.top = '';
           if (ionic.keyboard.isOpen && !ionic.keyboard.isClosing) previousInputFocus[x].focus();
-        }
+      }
       });
     },
 
@@ -2814,9 +2814,9 @@
         while (element) {
           if ((element.dataset ? element.dataset.tapDisabled : element.getAttribute('data-tap-disabled')) == 'true') {
             return true;
-          }
-          element = element.parentElement;
         }
+          element = element.parentElement;
+      }
       }
       return false;
     },
@@ -2842,8 +2842,8 @@
         if (e) {
           c.x = e.clientX || e.pageX || 0;
           c.y = e.clientY || e.pageY || 0;
-        }
       }
+    }
       return c;
     }
 
@@ -2854,7 +2854,7 @@
       tapDoc.addEventListener(type, tapEventListeners[type], useCapture);
     } else {
       tapDoc.removeEventListener(type, tapEventListeners[type]);
-    }
+  }
   }
 
   function tapClick(e) {
@@ -2897,9 +2897,9 @@
       if (!ionic.tap.isLabelWithTextInput(e.target)) {
         // labels clicks from native should not preventDefault othersize keyboard will not show on input focus
         e.preventDefault();
-      }
-      return false;
     }
+      return false;
+  }
   }
 
 // MOUSE
@@ -2916,8 +2916,8 @@
         // Allow through only the text input default. However, without preventDefault on an
         // input the 300ms delay can change focus on inputs after the keyboard shows up.
         // The focusin event handles the chance of focus changing after the keyboard shows.
-        e.preventDefault();
-      }
+      e.preventDefault();
+    }
 
       return false;
     }
@@ -2949,11 +2949,11 @@
 
   function tapMouseMove(e) {
     if (tapHasPointerMoved(e)) {
-      tapEventListener('mousemove', false);
-      ionic.activator.end();
+    tapEventListener('mousemove', false);
+    ionic.activator.end();
       tapPointerMoved = true;
       return false;
-    }
+  }
   }
 
 
@@ -2980,8 +2980,8 @@
       if (textInput !== tapActiveEle) {
         // don't preventDefault on an already focused input or else iOS's text caret isn't usable
         e.preventDefault();
-      }
     }
+  }
   }
 
   function tapTouchEnd(e) {
@@ -2994,8 +2994,8 @@
 
       if ((/^(select|option)$/i).test(e.target.tagName)) {
         e.preventDefault();
-      }
     }
+  }
 
     tapLastTouchTarget = e.target;
     tapTouchCancel();
@@ -3004,10 +3004,10 @@
   function tapTouchMove(e) {
     if (tapHasPointerMoved(e)) {
       tapPointerMoved = true;
-      tapEventListener(tapTouchMoveListener, false);
-      ionic.activator.end();
+    tapEventListener(tapTouchMoveListener, false);
+    ionic.activator.end();
       return false;
-    }
+  }
   }
 
   function tapTouchCancel() {
@@ -3031,7 +3031,7 @@
     if (ionic.scroll.isScrolling && ionic.tap.containsOrIsTextInput(e.target)) {
       e.preventDefault();
       return true;
-    }
+  }
   }
 
   function tapHandleFocus(ele) {
@@ -3055,18 +3055,18 @@
       ele.value = ele.value;
       if (tapEnabledTouchEvents) {
         tapTouchFocusedInput = ele;
-      }
+    }
 
     } else {
       tapFocusOutActive();
-    }
+  }
 
     if (triggerFocusIn) {
       tapActiveElement(ele);
       ionic.trigger('ionic.focusin', {
         target: ele
       }, true);
-    }
+  }
   }
 
   function tapFocusOutActive() {
@@ -3096,7 +3096,7 @@
       void 0;
       tapTouchFocusedInput.focus();
       tapTouchFocusedInput = null;
-    }
+  }
     ionic.scroll.isScrolling = false;
   }
 
@@ -3108,7 +3108,7 @@
   function tapActiveElement(ele) {
     if (arguments.length) {
       tapActiveEle = ele;
-    }
+  }
     return tapActiveEle || document.activeElement;
   }
 
@@ -3134,7 +3134,7 @@
       if (!climbEle) break;
       if (climbEle.tagName === 'LABEL') return climbEle;
       climbEle = climbEle.parentElement;
-    }
+  }
     if (allowSelf !== false) return ele;
   }
 
@@ -3146,8 +3146,8 @@
       if (ele.querySelector) {
         var control = ele.querySelector('input,textarea,select');
         if (control) return control;
-      }
     }
+  }
     return ele;
   }
 
@@ -3172,8 +3172,8 @@
       start: function (e) {
         var hitX = ionic.tap.pointerCoord(e).x;
         if (hitX > 0 && hitX < 30) {
-          return;
-        }
+        return;
+      }
 
         // when an element is touched/clicked, it climbs up a few
         // parents to see if it is an .item or .button element
@@ -3201,7 +3201,7 @@
               break;
             }
             ele = ele.parentElement;
-          }
+        }
 
           if (eleToActivate) {
             // queue that this element should be set to active
@@ -3237,8 +3237,8 @@
         if (queueElements[key]) {
           queueElements[key].classList.add(ACTIVATED_CLASS);
           activeElements[key] = queueElements[key];
-        }
       }
+    }
       queueElements = {};
     }
 
@@ -3290,36 +3290,36 @@
         };
       },
 
-      /**
-       * Only call a function once in the given interval.
-       *
-       * @param func {Function} the function to call
-       * @param wait {int} how long to wait before/after to allow function calls
-       * @param immediate {boolean} whether to call immediately or after the wait interval
-       */
-      debounce: function (func, wait, immediate) {
-        var timeout, args, context, timestamp, result;
-        return function () {
-          context = this;
-          args = arguments;
-          timestamp = new Date();
-          var later = function () {
-            var last = (new Date()) - timestamp;
-            if (last < wait) {
-              timeout = setTimeout(later, wait - last);
-            } else {
-              timeout = null;
-              if (!immediate) result = func.apply(context, args);
-            }
-          };
-          var callNow = immediate && !timeout;
-          if (!timeout) {
-            timeout = setTimeout(later, wait);
+    /**
+     * Only call a function once in the given interval.
+     *
+     * @param func {Function} the function to call
+     * @param wait {int} how long to wait before/after to allow function calls
+     * @param immediate {boolean} whether to call immediately or after the wait interval
+     */
+    debounce: function (func, wait, immediate) {
+      var timeout, args, context, timestamp, result;
+      return function () {
+        context = this;
+        args = arguments;
+        timestamp = new Date();
+        var later = function () {
+          var last = (new Date()) - timestamp;
+          if (last < wait) {
+            timeout = setTimeout(later, wait - last);
+          } else {
+            timeout = null;
+            if (!immediate) result = func.apply(context, args);
           }
-          if (callNow) result = func.apply(context, args);
-          return result;
         };
-      },
+        var callNow = immediate && !timeout;
+        if (!timeout) {
+          timeout = setTimeout(later, wait);
+        }
+        if (callNow) result = func.apply(context, args);
+        return result;
+      };
+    },
 
       /**
        * Throttle the given fun, only allowing it to be
@@ -3343,12 +3343,12 @@
           args = arguments;
           if (remaining <= 0) {
             clearTimeout(timeout);
-            timeout = null;
+          timeout = null;
             previous = now;
-            result = func.apply(context, args);
+          result = func.apply(context, args);
           } else if (!timeout && options.trailing !== false) {
             timeout = setTimeout(later, remaining);
-          }
+        }
           return result;
         };
       },
@@ -3442,7 +3442,7 @@
 
         if (scope.$root === scope) {
           return; // we can't disconnect the root node;
-        }
+      }
         if (!scope.$$disconnected) {
           return;
         }
@@ -3627,89 +3627,89 @@
    */
   ionic.keyboard = {
 
-    /**
-     * Whether the keyboard is open or not.
-     */
-    isOpen: false,
+  /**
+   * Whether the keyboard is open or not.
+   */
+  isOpen: false,
 
-    /**
-     * Whether the keyboard is closing or not.
-     */
-    isClosing: false,
+  /**
+   * Whether the keyboard is closing or not.
+   */
+  isClosing: false,
 
-    /**
-     * Whether the keyboard is opening or not.
-     */
-    isOpening: false,
+  /**
+   * Whether the keyboard is opening or not.
+   */
+  isOpening: false,
 
-    /**
-     * The height of the keyboard in pixels, as reported by the keyboard plugin.
-     * If the plugin is not available, calculated as the difference in
-     * window.innerHeight after the keyboard has shown.
-     */
-    height: 0,
+  /**
+   * The height of the keyboard in pixels, as reported by the keyboard plugin.
+   * If the plugin is not available, calculated as the difference in
+   * window.innerHeight after the keyboard has shown.
+   */
+  height: 0,
 
-    /**
-     * Whether the device is in landscape orientation or not.
-     */
-    isLandscape: false,
+  /**
+   * Whether the device is in landscape orientation or not.
+   */
+  isLandscape: false,
 
-    /**
-     * Whether the keyboard event listeners have been added or not
-     */
-    isInitialized: false,
+  /**
+   * Whether the keyboard event listeners have been added or not
+   */
+  isInitialized: false,
 
-    /**
-     * Hide the keyboard, if it is open.
-     */
-    hide: function () {
-      if (keyboardHasPlugin()) {
-        cordova.plugins.Keyboard.close();
-      }
-      keyboardActiveElement && keyboardActiveElement.blur();
-    },
-
-    /**
-     * An alias for cordova.plugins.Keyboard.show(). If the keyboard plugin
-     * is installed, show the keyboard.
-     */
-    show: function () {
-      if (keyboardHasPlugin()) {
-        cordova.plugins.Keyboard.show();
-      }
-    },
-
-    /**
-     * Remove all keyboard related event listeners, effectively disabling Ionic's
-     * keyboard adjustments.
-     */
-    disable: function () {
-      if (keyboardHasPlugin()) {
-        window.removeEventListener('native.keyboardshow', debouncedKeyboardNativeShow);
-        window.removeEventListener('native.keyboardhide', keyboardFocusOut);
-      } else {
-        document.body.removeEventListener('focusout', keyboardFocusOut);
-      }
-
-      document.body.removeEventListener('ionic.focusin', debouncedKeyboardFocusIn);
-      document.body.removeEventListener('focusin', debouncedKeyboardFocusIn);
-
-      window.removeEventListener('orientationchange', keyboardOrientationChange);
-
-      if (window.navigator.msPointerEnabled) {
-        document.removeEventListener("MSPointerDown", keyboardInit);
-      } else {
-        document.removeEventListener('touchstart', keyboardInit);
-      }
-      ionic.keyboard.isInitialized = false;
-    },
-
-    /**
-     * Alias for keyboardInit, initialize all keyboard related event listeners.
-     */
-    enable: function () {
-      keyboardInit();
+  /**
+   * Hide the keyboard, if it is open.
+   */
+  hide: function () {
+    if (keyboardHasPlugin()) {
+      cordova.plugins.Keyboard.close();
     }
+    keyboardActiveElement && keyboardActiveElement.blur();
+  },
+
+  /**
+   * An alias for cordova.plugins.Keyboard.show(). If the keyboard plugin
+   * is installed, show the keyboard.
+   */
+  show: function () {
+    if (keyboardHasPlugin()) {
+      cordova.plugins.Keyboard.show();
+    }
+  },
+
+  /**
+   * Remove all keyboard related event listeners, effectively disabling Ionic's
+   * keyboard adjustments.
+   */
+  disable: function () {
+    if (keyboardHasPlugin()) {
+      window.removeEventListener('native.keyboardshow', debouncedKeyboardNativeShow);
+      window.removeEventListener('native.keyboardhide', keyboardFocusOut);
+    } else {
+      document.body.removeEventListener('focusout', keyboardFocusOut);
+    }
+
+    document.body.removeEventListener('ionic.focusin', debouncedKeyboardFocusIn);
+    document.body.removeEventListener('focusin', debouncedKeyboardFocusIn);
+
+    window.removeEventListener('orientationchange', keyboardOrientationChange);
+
+    if (window.navigator.msPointerEnabled) {
+      document.removeEventListener("MSPointerDown", keyboardInit);
+    } else {
+      document.removeEventListener('touchstart', keyboardInit);
+    }
+    ionic.keyboard.isInitialized = false;
+  },
+
+  /**
+   * Alias for keyboardInit, initialize all keyboard related event listeners.
+   */
+  enable: function () {
+    keyboardInit();
+  }
   };
 
 // Initialize the viewport height (after ionic.keyboard.height has been
@@ -3733,7 +3733,7 @@
       window.addEventListener('native.keyboardhide', keyboardFocusOut);
     } else {
       document.body.addEventListener('focusout', keyboardFocusOut);
-    }
+  }
 
     document.body.addEventListener('ionic.focusin', debouncedKeyboardFocusIn);
     document.body.addEventListener('focusin', debouncedKeyboardFocusIn);
@@ -3801,18 +3801,18 @@
       document.body.scrollTop = 0;
       scrollView.scrollTop = 0;
       ionic.requestAnimationFrame(function () {
-        document.body.scrollTop = 0;
-        scrollView.scrollTop = 0;
-      });
+      document.body.scrollTop = 0;
+      scrollView.scrollTop = 0;
+    });
 
       // any showing part of the document that isn't within the scroll the user
       // could touchmove and cause some ugly changes to the app, so disable
       // any touchmove events while the keyboard is open using e.preventDefault()
-      if (window.navigator.msPointerEnabled) {
-        document.addEventListener("MSPointerMove", keyboardPreventDefault, false);
-      } else {
-        document.addEventListener('touchmove', keyboardPreventDefault, false);
-      }
+    if (window.navigator.msPointerEnabled) {
+      document.addEventListener("MSPointerMove", keyboardPreventDefault, false);
+    } else {
+      document.addEventListener('touchmove', keyboardPreventDefault, false);
+    }
     }
 
     if (!ionic.keyboard.isOpen || ionic.keyboard.isClosing) {
@@ -3837,7 +3837,7 @@
 
     } else if (ionic.keyboard.isOpen) {
       keyboardShow();
-    }
+  }
   }
 
   /**
@@ -3852,8 +3852,8 @@
 
     if (ionic.keyboard.isOpen || ionic.keyboard.isOpening) {
       ionic.keyboard.isClosing = true;
-      ionic.keyboard.isOpening = false;
-    }
+    ionic.keyboard.isOpening = false;
+  }
 
     // Call keyboardHide with a slight delay because sometimes on focus or
     // orientation change focusin is called immediately after, so we give it time
@@ -3868,9 +3868,9 @@
             keyboardUpdateViewportHeight();
             keyboardHide();
           }, false);
-        } else {
+      } else {
           keyboardWaitForResize(keyboardHide, false);
-        }
+      }
       });
     }, 50);
   }
@@ -3898,7 +3898,7 @@
     // after the keyboard has opened, so it doesn't matter if it's open or not
     if (ionic.Platform.isIOS()) {
       keyboardUpdateViewportHeight();
-    }
+  }
 
     // On Android, if the keyboard isn't open or we aren't using the keyboard
     // plugin, update the viewport height once everything has resized. If the
@@ -3907,9 +3907,9 @@
     if (ionic.Platform.isAndroid()) {
       if (!ionic.keyboard.isOpen || !keyboardHasPlugin()) {
         keyboardWaitForResize(keyboardUpdateViewportHeight, false);
-      } else {
+    } else {
         wasOrientationChange = true;
-      }
+    }
     }
   }
 
@@ -4029,7 +4029,7 @@
 
     ionic.requestAnimationFrame(function () {
       document.body.classList.remove(KEYBOARD_OPEN_CSS);
-    });
+  });
 
     // the keyboard is gone now, remove the touchmove that disables native scroll
     if (window.navigator.msPointerEnabled) {
@@ -4062,7 +4062,7 @@
     var details = {
       keyboardHeight: keyboardGetHeight(),
       viewportHeight: keyboardCurrentViewportHeight
-    };
+  };
 
     if (keyboardActiveElement) {
       details.target = keyboardActiveElement;
@@ -4104,7 +4104,7 @@
       // should be using the plugin, no way to know how big the keyboard is, so guess
       if (ionic.Platform.isFullScreen) {
         return 275;
-      }
+    }
       // otherwise just calculate it
       var contentHeight = window.innerHeight;
       if (contentHeight < keyboardCurrentViewportHeight) {
@@ -4120,14 +4120,14 @@
     if (ionic.Platform.isIOS()) {
       if (ionic.keyboard.isLandscape) {
         return 206;
-      }
+    }
 
       if (!ionic.Platform.isWebView()) {
         return 216;
       }
 
       return 260;
-    }
+  }
 
     // safe guess
     return 275;
@@ -4277,7 +4277,7 @@
         if (props[x]) {
           keyValue = props[x].split('=');
           viewportProperties[keyValue[0]] = (keyValue.length > 1 ? keyValue[1] : '_');
-        }
+      }
       }
       viewportUpdate();
     }
@@ -4310,24 +4310,24 @@
       } else {
         // iPad <= 7.0
 
-        if (p.isWebView()) {
-          // iPad <= 7.0 WebView
+      if (p.isWebView()) {
+        // iPad <= 7.0 WebView
 
-          if (orientation == 90) {
-            // iPad <= 7.0 WebView Landscape
-            viewportProperties.height = '0';
+        if (orientation == 90) {
+          // iPad <= 7.0 WebView Landscape
+          viewportProperties.height = '0';
 
-          } else if (version == 7) {
-            // iPad <= 7.0 WebView Portait
-            viewportProperties.height = DEVICE_HEIGHT;
-          }
-        } else {
-          // iPad <= 6.1 Browser
-          if (version < 7) {
-            viewportProperties.height = '0';
-          }
+        } else if (version == 7) {
+          // iPad <= 7.0 WebView Portait
+          viewportProperties.height = DEVICE_HEIGHT;
+        }
+      } else {
+        // iPad <= 6.1 Browser
+        if (version < 7) {
+          viewportProperties.height = '0';
         }
       }
+    }
 
     } else if (p.isIOS()) {
       // iPhone
@@ -4347,7 +4347,7 @@
         } else if (version == 7) {
           //iPhone == 7.0 WebView
           viewportProperties.height = DEVICE_HEIGHT;
-        }
+      }
 
       } else {
         // iPhone Browser
@@ -4357,9 +4357,9 @@
           // if height was set it needs to get removed with this hack for <= 6.1
           if (initHeight) viewportProperties.height = '0';
         }
-      }
-
     }
+
+  }
 
     // only update the viewport tag if there was a change
     if (initWidth !== viewportProperties.width || initHeight !== viewportProperties.height) {
@@ -4397,7 +4397,7 @@
     ionic.extend(ionic.views.View.prototype, {
       initialize: function () {
       }
-    });
+  });
 
   })(window.ionic);
 
@@ -4695,8 +4695,8 @@
           if (self.__container && self.__content) {
             self.__container.scrollTop = 0;
             self.__content.scrollTop = 0;
-          }
-        });
+      }
+    });
 
         self.options = {
 
@@ -4862,11 +4862,12 @@
       },
 
 
-      /*
-       ---------------------------------------------------------------------------
-       INTERNAL FIELDS :: STATUS
-       ---------------------------------------------------------------------------
-       */
+
+  /*
+   ---------------------------------------------------------------------------
+   INTERNAL FIELDS :: STATUS
+   ---------------------------------------------------------------------------
+   */
 
       /** Whether only a single finger is used in touch handling */
       __isSingleTouch: false,
@@ -4880,7 +4881,7 @@
       /**
        * Whether a gesture zoom/rotate event is in progress. Activates when
        * a gesturestart event happens. This has higher priority than dragging.
-       */
+   */
       __isGesturing: false,
 
       /**
@@ -4890,11 +4891,11 @@
        */
       __isDragging: false,
 
-      /**
-       * Not touching and dragging anymore, and smoothly animating the
-       * touch sequence using deceleration.
-       */
-      __isDecelerating: false,
+  /**
+   * Not touching and dragging anymore, and smoothly animating the
+   * touch sequence using deceleration.
+   */
+  __isDecelerating: false,
 
       /**
        * Smoothly animating the currently configured change
@@ -5040,113 +5041,113 @@
         // save height when scroll view is shrunk so we don't need to reflow
         var scrollViewOffsetHeight;
 
-        /**
-         * Shrink the scroll view when the keyboard is up if necessary and if the
-         * focused input is below the bottom of the shrunk scroll view, scroll it
-         * into view.
-         */
-        self.scrollChildIntoView = function (e) {
-          //console.log("scrollChildIntoView at: " + Date.now());
+    /**
+     * Shrink the scroll view when the keyboard is up if necessary and if the
+     * focused input is below the bottom of the shrunk scroll view, scroll it
+     * into view.
+     */
+    self.scrollChildIntoView = function (e) {
+      //console.log("scrollChildIntoView at: " + Date.now());
 
-          // D
-          var scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
-          // D - A
-          scrollViewOffsetHeight = container.offsetHeight;
-          var alreadyShrunk = self.isShrunkForKeyboard;
+      // D
+      var scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
+      // D - A
+      scrollViewOffsetHeight = container.offsetHeight;
+      var alreadyShrunk = self.isShrunkForKeyboard;
 
-          var isModal = container.parentNode.classList.contains('modal');
-          // 680px is when the media query for 60% modal width kicks in
-          var isInsetModal = isModal && window.innerWidth >= 680;
+      var isModal = container.parentNode.classList.contains('modal');
+      // 680px is when the media query for 60% modal width kicks in
+      var isInsetModal = isModal && window.innerWidth >= 680;
 
-          /*
-           *  _______
-           * |---A---| <- top of scroll view
-           * |       |
-           * |---B---| <- keyboard
-           * |   C   | <- input
-           * |---D---| <- initial bottom of scroll view
-           * |___E___| <- bottom of viewport
-           *
-           *  All commented calculations relative to the top of the viewport (ie E
-           *  is the viewport height, not 0)
-           */
-          if (!alreadyShrunk) {
-            // shrink scrollview so we can actually scroll if the input is hidden
-            // if it isn't shrink so we can scroll to inputs under the keyboard
-            // inset modals won't shrink on Android on their own when the keyboard appears
-            if (ionic.Platform.isIOS() || ionic.Platform.isFullScreen || isInsetModal) {
-              // if there are things below the scroll view account for them and
-              // subtract them from the keyboard height when resizing
-              // E - D                         E                         D
-              var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
+      /*
+       *  _______
+       * |---A---| <- top of scroll view
+       * |       |
+       * |---B---| <- keyboard
+       * |   C   | <- input
+       * |---D---| <- initial bottom of scroll view
+       * |___E___| <- bottom of viewport
+       *
+       *  All commented calculations relative to the top of the viewport (ie E
+       *  is the viewport height, not 0)
+       */
+      if (!alreadyShrunk) {
+        // shrink scrollview so we can actually scroll if the input is hidden
+        // if it isn't shrink so we can scroll to inputs under the keyboard
+        // inset modals won't shrink on Android on their own when the keyboard appears
+        if (ionic.Platform.isIOS() || ionic.Platform.isFullScreen || isInsetModal) {
+          // if there are things below the scroll view account for them and
+          // subtract them from the keyboard height when resizing
+          // E - D                         E                         D
+          var scrollBottomOffsetToBottom = e.detail.viewportHeight - scrollBottomOffsetToTop;
 
-              // 0 or D - B if D > B           E - B                     E - D
-              var keyboardOffset = Math.max(0, e.detail.keyboardHeight - scrollBottomOffsetToBottom);
+          // 0 or D - B if D > B           E - B                     E - D
+          var keyboardOffset = Math.max(0, e.detail.keyboardHeight - scrollBottomOffsetToBottom);
 
-              ionic.requestAnimationFrame(function () {
-                // D - A or B - A if D > B       D - A             max(0, D - B)
-                scrollViewOffsetHeight = scrollViewOffsetHeight - keyboardOffset;
-                container.style.height = scrollViewOffsetHeight + "px";
-                container.style.overflow = "visible";
+          ionic.requestAnimationFrame(function () {
+            // D - A or B - A if D > B       D - A             max(0, D - B)
+            scrollViewOffsetHeight = scrollViewOffsetHeight - keyboardOffset;
+            container.style.height = scrollViewOffsetHeight + "px";
+            container.style.overflow = "visible";
 
-                //update scroll view
-                self.resize();
-              });
-            }
+            //update scroll view
+            self.resize();
+          });
+        }
 
-            self.isShrunkForKeyboard = true;
+        self.isShrunkForKeyboard = true;
+      }
+
+      /*
+       *  _______
+       * |---A---| <- top of scroll view
+       * |   *   | <- where we want to scroll to
+       * |--B-D--| <- keyboard, bottom of scroll view
+       * |   C   | <- input
+       * |       |
+       * |___E___| <- bottom of viewport
+       *
+       *  All commented calculations relative to the top of the viewport (ie E
+       *  is the viewport height, not 0)
+       */
+      // if the element is positioned under the keyboard scroll it into view
+      if (e.detail.isElementUnderKeyboard) {
+
+        ionic.requestAnimationFrame(function () {
+          container.scrollTop = 0;
+          // update D if we shrunk
+          if (self.isShrunkForKeyboard && !alreadyShrunk) {
+            scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
           }
 
-          /*
-           *  _______
-           * |---A---| <- top of scroll view
-           * |   *   | <- where we want to scroll to
-           * |--B-D--| <- keyboard, bottom of scroll view
-           * |   C   | <- input
-           * |       |
-           * |___E___| <- bottom of viewport
-           *
-           *  All commented calculations relative to the top of the viewport (ie E
-           *  is the viewport height, not 0)
-           */
-          // if the element is positioned under the keyboard scroll it into view
-          if (e.detail.isElementUnderKeyboard) {
+          // middle of the scrollview, this is where we want to scroll to
+          // (D - A) / 2
+          var scrollMidpointOffset = scrollViewOffsetHeight * 0.5;
+          //console.log("container.offsetHeight: " + scrollViewOffsetHeight);
 
-            ionic.requestAnimationFrame(function () {
-              container.scrollTop = 0;
-              // update D if we shrunk
-              if (self.isShrunkForKeyboard && !alreadyShrunk) {
-                scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
-              }
+          // middle of the input we want to scroll into view
+          // C
+          var inputMidpoint = ((e.detail.elementBottom + e.detail.elementTop) / 2);
 
-              // middle of the scrollview, this is where we want to scroll to
-              // (D - A) / 2
-              var scrollMidpointOffset = scrollViewOffsetHeight * 0.5;
-              //console.log("container.offsetHeight: " + scrollViewOffsetHeight);
+          // distance from middle of input to the bottom of the scroll view
+          // C - D                                C               D
+          var inputMidpointOffsetToScrollBottom = inputMidpoint - scrollBottomOffsetToTop;
 
-              // middle of the input we want to scroll into view
-              // C
-              var inputMidpoint = ((e.detail.elementBottom + e.detail.elementTop) / 2);
+          //C - D + (D - A)/2          C - D                     (D - A)/ 2
+          var scrollTop = inputMidpointOffsetToScrollBottom + scrollMidpointOffset;
 
-              // distance from middle of input to the bottom of the scroll view
-              // C - D                                C               D
-              var inputMidpointOffsetToScrollBottom = inputMidpoint - scrollBottomOffsetToTop;
-
-              //C - D + (D - A)/2          C - D                     (D - A)/ 2
-              var scrollTop = inputMidpointOffsetToScrollBottom + scrollMidpointOffset;
-
-              if (scrollTop > 0) {
-                if (ionic.Platform.isIOS()) ionic.tap.cloneFocusedInput(container, self);
-                self.scrollBy(0, scrollTop, true);
-                self.onScroll();
-              }
-            });
+          if (scrollTop > 0) {
+            if (ionic.Platform.isIOS()) ionic.tap.cloneFocusedInput(container, self);
+            self.scrollBy(0, scrollTop, true);
+            self.onScroll();
           }
+        });
+      }
 
-          // Only the first scrollView parent of the element that broadcasted this event
-          // (the active element that needs to be shown) should receive this event
-          e.stopPropagation();
-        };
+      // Only the first scrollView parent of the element that broadcasted this event
+      // (the active element that needs to be shown) should receive this event
+      e.stopPropagation();
+    };
 
         self.resetScrollView = function () {
           //return scrollview to original height once keyboard has hidden
@@ -5224,7 +5225,7 @@
               Math.abs(self.startCoordinates.x - currentCoordinates.x) > 20) {
               // user slid the text input's caret on its x axis, disable any future y scrolling
               self.__enableScrollY = false;
-              self.__isSelectable = true;
+          self.__isSelectable = true;
             }
 
             if (self.__enableScrollY && Math.abs(self.startCoordinates.y - currentCoordinates.y) > 10) {
@@ -5233,7 +5234,7 @@
               // hide the input which has focus, and show a cloned one that doesn't have focus
               self.__isSelectable = false;
               ionic.tap.cloneFocusedInput(container, self);
-            }
+        }
           }
 
           self.doTouchMove(getEventTouches(e), e.timeStamp, e.scale);
@@ -5256,7 +5257,7 @@
           self.__enableScrollY = true;
 
           if (!self.__isDragging && !self.__isDecelerating && !self.__isAnimating) {
-            ionic.tap.removeClonedInputs(container, self);
+        ionic.tap.removeClonedInputs(container, self);
           }
         };
 
@@ -5268,7 +5269,7 @@
             self.scrollBy(
               (e.wheelDeltaX || e.deltaX || 0) / self.options.wheelDampen,
               (-e.wheelDeltaY || e.deltaY || 0) / self.options.wheelDampen
-            );
+        );
 
             self.__fadeScrollbars('in');
             clearTimeout(self.__wheelHideBarTimeout);
@@ -5311,7 +5312,7 @@
           self.mouseDown = function (e) {
             if (ionic.tap.ignoreScrollStart(e) || e.target.tagName === 'SELECT') {
               return;
-            }
+        }
             self.doTouchStart(getEventTouches(e), e.timeStamp);
 
             if (!ionic.tap.isTextInput(e.target)) {
@@ -5568,7 +5569,7 @@
             if (self.__indicatorY.originProp !== 'center top') {
               self.__indicatorY.indicator.style[self.__transformOriginProperty] = 'center top';
               self.__indicatorY.originProp = 'center top';
-            }
+        }
 
           } else if (heightDiff > 0) {
 
@@ -5581,7 +5582,7 @@
             if (self.__indicatorY.originProp !== 'center bottom') {
               self.__indicatorY.indicator.style[self.__transformOriginProperty] = 'center bottom';
               self.__indicatorY.originProp = 'center bottom';
-            }
+        }
 
           } else {
 
@@ -5698,7 +5699,7 @@
             if (translate3d !== self.contentTransform) {
               content.style[transformProperty] = translate3d;
               self.contentTransform = translate3d;
-            }
+        }
             self.__repositionScrollbars();
             if (!wasResize) {
               self.triggerScrollEvent();
@@ -5712,7 +5713,7 @@
             self.__repositionScrollbars();
             if (!wasResize) {
               self.triggerScrollEvent();
-            }
+        }
           };
 
         } else {
@@ -5724,7 +5725,7 @@
             self.__repositionScrollbars();
             if (!wasResize) {
               self.triggerScrollEvent();
-            }
+        }
           };
 
         }
@@ -5879,7 +5880,7 @@
             self.__refreshActive = false;
             if (self.__refreshDeactivate) {
               self.__refreshDeactivate();
-            }
+        }
             if (self.__refreshHide) {
               self.__refreshHide();
             }
@@ -6250,8 +6251,8 @@
             // Recompute level based on previous scale and new scale
             level = level / self.__lastScale * scale;
 
-            // Limit level according to configuration
-            level = Math.max(Math.min(level, self.options.maxZoom), self.options.minZoom);
+        // Limit level according to configuration
+        level = Math.max(Math.min(level, self.options.maxZoom), self.options.minZoom);
 
             // Only do further compution when change happened
             if (oldLevel !== level) {
@@ -6267,7 +6268,7 @@
               // Recompute max scroll values
               self.__computeScrollMax(level);
 
-            }
+        }
           }
 
           if (self.__enableScrollX) {
@@ -6290,8 +6291,8 @@
 
                 scrollLeft = 0;
 
-              }
-            }
+          }
+        }
           }
 
           // Compute new vertical scroll position
@@ -6349,7 +6350,7 @@
               // if a positive scroll value and the refresher is still not hidden, hide it
               self.__refreshHide();
               self.__refreshHidden = true;
-            }
+        }
           }
 
           // Keep list from growing infinitely (holding min 10, max 20 measure points)
@@ -6428,7 +6429,7 @@
           if (self.__isSingleTouch && self.options.animating && (timeStamp - self.__lastTouchMove) <= 100) {
 
             // Then figure out what the scroll position was about 100ms ago
-            var positions = self.__positions;
+        var positions = self.__positions;
             var endPos = positions.length - 1;
             var startPos = endPos;
 
@@ -6459,11 +6460,11 @@
                 // Deactivate pull-to-refresh when decelerating
                 if (!self.__refreshActive) {
                   self.__startDeceleration(timeStamp);
-                }
-              }
-            } else {
-              self.__scrollingComplete();
             }
+          }
+        } else {
+              self.__scrollingComplete();
+        }
           } else if ((timeStamp - self.__lastTouchMove) > 100) {
             self.__scrollingComplete();
           }
@@ -6494,14 +6495,14 @@
 
             if (self.__refreshStart) {
               self.__refreshStart();
-            }
+        }
             // for iOS-ey style scrolling
             if (!ionic.Platform.isAndroid())self.__startDeceleration();
           } else {
 
             if (self.__interruptedAnimation || self.__isDragging) {
               self.__scrollingComplete();
-            }
+        }
             self.scrollTo(self.__scrollLeft, self.__scrollTop, true, self.__zoomLevel);
 
             // Directly signalize deactivation (nothing todo on refresh?)
@@ -6510,9 +6511,9 @@
               self.__refreshActive = false;
               if (self.__refreshDeactivate) {
                 self.__refreshDeactivate();
-              }
+          }
 
-            }
+        }
           }
         }
 
@@ -6569,12 +6570,12 @@
               self.__scrollTop = oldTop + (diffTop * percent);
               self.__zoomLevel = oldZoom + (diffZoom * percent);
 
-              // Push values out
-              if (self.__callback) {
-                self.__callback(self.__scrollLeft, self.__scrollTop, self.__zoomLevel, wasResize);
-              }
+          // Push values out
+          if (self.__callback) {
+            self.__callback(self.__scrollLeft, self.__scrollTop, self.__zoomLevel, wasResize);
+          }
 
-            }
+        }
           };
 
           var verify = function (id) {
@@ -6584,14 +6585,14 @@
           var completed = function (renderedFramesPerSecond, animationId, wasFinished) {
             if (animationId === self.__isAnimating) {
               self.__isAnimating = false;
-            }
+        }
             if (self.__didDecelerationComplete || wasFinished) {
               self.__scrollingComplete();
-            }
+        }
 
             if (self.options.zooming) {
               self.__computeScrollMax();
-            }
+        }
           };
 
           // When continuing based on previous animation we choose an ease-out animation instead of ease-in-out
@@ -6606,11 +6607,11 @@
           // Push values out
           if (self.__callback) {
             self.__callback(left, top, zoom, wasResize);
-          }
+      }
 
           // Fix max scroll ranges
           if (self.options.zooming) {
-            self.__computeScrollMax();
+        self.__computeScrollMax();
           }
         }
       },
@@ -6938,19 +6939,19 @@
           self.options[key] = options[key];
         }
 
-        /**
-         * Sets isScrolling to true, and automatically deactivates if not called again in 80ms.
-         */
-        self.onScroll = function () {
-          if (!ionic.scroll.isScrolling) {
-            ionic.scroll.isScrolling = true;
-          }
+      /**
+       * Sets isScrolling to true, and automatically deactivates if not called again in 80ms.
+       */
+      self.onScroll = function () {
+        if (!ionic.scroll.isScrolling) {
+          ionic.scroll.isScrolling = true;
+        }
 
-          clearTimeout(self.scrollTimer);
-          self.scrollTimer = setTimeout(function () {
-            ionic.scroll.isScrolling = false;
-          }, 80);
-        };
+        clearTimeout(self.scrollTimer);
+        self.scrollTimer = setTimeout(function () {
+          ionic.scroll.isScrolling = false;
+        }, 80);
+      };
 
         self.freeze = NOOP;
 
@@ -7120,10 +7121,10 @@
             fromX = self.el.scrollLeft;
 
           if (fromY === Y && fromX === X) {
-            self.resize();
+          self.resize();
             return;
             /* Prevent scrolling to the Y point if already there */
-          }
+        }
 
           // decelerating to zero velocity
           function easeOutCubic(t) {
@@ -7151,8 +7152,8 @@
             } else {
               // done
               ionic.tap.removeClonedInputs(self.__container, self);
-              self.resize();
-            }
+            self.resize();
+          }
           }
 
           // start scroll loop
@@ -7256,12 +7257,12 @@
                 container.style.height = scrollViewOffsetHeight + "px";
 
                 //update scroll view
-                self.resize();
+              self.resize();
               });
-            }
+          }
 
             self.isShrunkForKeyboard = true;
-          }
+        }
 
           /*
            *  _______
@@ -7274,7 +7275,7 @@
            *
            *  All commented calculations relative to the top of the viewport (ie E
            *  is the viewport height, not 0)
-           */
+         */
           // if the element is positioned under the keyboard scroll it into view
           if (e.detail.isElementUnderKeyboard) {
 
@@ -7282,7 +7283,7 @@
               // update D if we shrunk
               if (self.isShrunkForKeyboard && !alreadyShrunk) {
                 scrollBottomOffsetToTop = container.getBoundingClientRect().bottom;
-              }
+            }
 
               // middle of the scrollview, this is where we want to scroll to
               // (D - A) / 2
@@ -7305,13 +7306,13 @@
                   //just shrank scroll view, give it some breathing room before scrolling
                   setTimeout(function () {
                     ionic.tap.cloneFocusedInput(container, self);
-                    self.scrollBy(0, scrollTop, true);
-                    self.onScroll();
+                  self.scrollBy(0, scrollTop, true);
+                  self.onScroll();
                   }, 32);
                 } else {
                   self.scrollBy(0, scrollTop, true);
                   self.onScroll();
-                }
+              }
               }
             });
           }
@@ -7392,7 +7393,7 @@
       end: function () {
       },
       isSameItem: function () {
-        return false;
+      return false;
       }
     };
 
@@ -7445,7 +7446,7 @@
         buttonsWidth: buttonsWidth,
         content: content,
         startOffsetX: offsetX
-      };
+    };
     };
 
     /**
@@ -7507,7 +7508,7 @@
         if (newX < -buttonsWidth) {
           // Calculate the new X position, capped at the top of the buttons
           newX = Math.min(-buttonsWidth, -buttonsWidth + (((e.gesture.deltaX + buttonsWidth) * 0.4)));
-        }
+      }
 
         this._currentDrag.content.$$ionicOptionsOpen = newX !== 0;
 
@@ -7539,7 +7540,7 @@
 
         } else if (e.gesture.direction == "right") {
           restingPoint = 0;
-        }
+      }
 
       }
 
@@ -7569,7 +7570,7 @@
 
         // We are done, notify caller
         doneCallback && doneCallback();
-      });
+    });
     };
 
     var ReorderDrag = function (opts) {
@@ -7623,7 +7624,7 @@
         placeholder: placeholder,
         scrollHeight: scroll,
         list: placeholder.parentNode
-      };
+    };
 
       this._moveElement(e);
     };
@@ -7655,16 +7656,16 @@
           ionic.requestAnimationFrame(function () {
             self.drag(e);
           });
-        }
+      }
         if (e.gesture.deltaY > 0 && pixelsPastBottom > 0) {
           if (scrollY < this.scrollView.getScrollMax().top) {
             this.scrollView.scrollBy(null, pixelsPastBottom);
-            //Trigger another drag so the scrolling keeps going
+          //Trigger another drag so the scrolling keeps going
             ionic.requestAnimationFrame(function () {
-              self.drag(e);
-            });
-          }
+            self.drag(e);
+          });
         }
+      }
       }
 
       // Check if we should start dragging. Check if we've dragged past the threshold,
@@ -7697,8 +7698,8 @@
         el = siblings[i];
         if (i === len - 1) {
           if (dragOffsetTop > el.offsetTop) {
-            return i;
-          }
+          return i;
+        }
         } else if (i === 0) {
           if (dragOffsetTop < el.offsetTop + el.offsetHeight) {
             return i;
@@ -7706,14 +7707,14 @@
         } else if (dragOffsetTop > el.offsetTop - el.offsetHeight / 2 &&
           dragOffsetTop < el.offsetTop + el.offsetHeight) {
           return i;
-        }
+      }
       }
       return self._currentDrag.startIndex;
     };
 
     ReorderDrag.prototype.end = function (e, doneCallback) {
       if (!this._currentDrag) {
-        doneCallback && doneCallback();
+      doneCallback && doneCallback();
         return;
       }
 
@@ -7732,7 +7733,7 @@
       this._currentDrag = {
         placeholder: null,
         content: null
-      };
+    };
       this._currentDrag = null;
       doneCallback && doneCallback();
     };
@@ -7763,11 +7764,11 @@
         }
 
         self.onRefresh = opts.onRefresh || function () {
-        };
+          };
         self.onRefreshOpening = opts.onRefreshOpening || function () {
-        };
+          };
         self.onRefreshHolding = opts.onRefreshHolding || function () {
-        };
+          };
 
         var gestureOpts = {};
         // don't prevent native scrolling
@@ -7786,17 +7787,17 @@
         self._initDrag();
       },
 
-      /**
-       * Be sure to cleanup references.
-       */
-      deregister: function () {
-        this.el = this.listEl = this.scrollEl = this.scrollView = null;
+    /**
+     * Be sure to cleanup references.
+     */
+    deregister: function () {
+      this.el = this.listEl = this.scrollEl = this.scrollView = null;
 
-        // ensure no scrolls have been left frozen
-        if (this.isScrollFreeze) {
-          self.scrollView.freeze(false);
-        }
-      },
+      // ensure no scrolls have been left frozen
+      if (this.isScrollFreeze) {
+        self.scrollView.freeze(false);
+      }
+    },
 
       /**
        * Called to tell the list to stop refreshing. This is useful
@@ -7848,7 +7849,7 @@
           for (var i = 0; i < this._virtualItemsToRemove.length; i++) {
             //el.parentNode.removeChild(el);
             this.didHideItem && this.didHideItem(i);
-          }
+        }
           // Once scrolling stops, check if we need to remove old items
 
         }
@@ -7880,7 +7881,7 @@
         while (target) {
           if (target.classList && target.classList.contains(ITEM_CLASS)) {
             return target;
-          }
+        }
           target = target.parentNode;
         }
         return null;
@@ -7957,34 +7958,34 @@
         }
 
         self._dragOp.end(e, function () {
-          self._initDrag();
+        self._initDrag();
         });
       },
 
-      /**
-       * Process the drag event to move the item to the left or right.
-       */
-      _handleDrag: function (e) {
-        var self = this;
+    /**
+     * Process the drag event to move the item to the left or right.
+     */
+    _handleDrag: function (e) {
+      var self = this;
 
-        if (Math.abs(e.gesture.deltaY) > 5) {
-          self._didDragUpOrDown = true;
-        }
-
-        // If we get a drag event, make sure we aren't in another drag, then check if we should
-        // start one
-        if (!self.isDragging && !self._dragOp) {
-          self._startDrag(e);
-        }
-
-        // No drag still, pass it up
-        if (!self._dragOp) {
-          return;
-        }
-
-        e.gesture.srcEvent.preventDefault();
-        self._dragOp.drag(e);
+      if (Math.abs(e.gesture.deltaY) > 5) {
+        self._didDragUpOrDown = true;
       }
+
+      // If we get a drag event, make sure we aren't in another drag, then check if we should
+      // start one
+      if (!self.isDragging && !self._dragOp) {
+        self._startDrag(e);
+      }
+
+      // No drag still, pass it up
+      if (!self._dragOp) {
+        return;
+      }
+
+      e.gesture.srcEvent.preventDefault();
+      self._dragOp.drag(e);
+    }
 
     });
 
@@ -8026,7 +8027,7 @@
           window.setTimeout(function () {
             for (var i = 0; i < inputs.length; i++) {
               inputs[i].blur && inputs[i].blur();
-            }
+          }
           });
         }
       }
@@ -8041,7 +8042,7 @@
      * The side menu view handles one of the side menu's in a Side Menu Controller
      * configuration.
      * It takes a DOM reference to that side menu element.
-     */
+   */
     ionic.views.SideMenu = ionic.views.View.inherit({
       initialize: function (opts) {
         this.el = opts.el;
@@ -8191,7 +8192,7 @@
             if (browser.transitions) {
               slide.style.left = (pos * -width) + 'px';
               move(pos, index > pos ? -width : (index < pos ? width : 0), 0);
-            }
+        }
 
           }
 
@@ -8247,7 +8248,7 @@
               // if going backward but to > index, use to = -slides.length + to
               if (direction !== naturalDirection) to = -direction * slides.length + to;
 
-            }
+        }
 
             var diff = Math.abs(index - to) - 1;
 
@@ -8326,7 +8327,7 @@
               clearInterval(timer);
               return;
 
-            }
+        }
 
             element.style.left = (( (to - from) * (Math.floor((timeElap / speed) * 100) / 100) ) + from) + 'px';
 
@@ -8366,7 +8367,7 @@
                 pageX: event.pageX,
                 pageY: event.pageY
               }];
-            }
+        }
 
             switch (event.type) {
               case 'mousedown':
@@ -8475,7 +8476,7 @@
                 translate(index, delta.x + slidePos[index], 0);
                 translate(circle(index + 1), delta.x + slidePos[circle(index + 1)], 0);
 
-              } else {
+          } else {
 
                 delta.x =
                   delta.x /
@@ -8528,15 +8529,15 @@
                     move(circle(index - 1), -width, 0);
                     move(circle(index + 2), width, 0);
 
-                  } else {
+              } else {
                     move(index - 1, -width, 0);
-                  }
+              }
 
                   move(index, slidePos[index] - width, speed);
                   move(circle(index + 1), slidePos[circle(index + 1)] - width, speed);
                   index = circle(index + 1);
 
-                } else {
+            } else {
                   if (options.continuous) { // we need to get the next in this direction in place
 
                     move(circle(index + 1), width, 0);
@@ -8550,11 +8551,11 @@
                   move(circle(index - 1), slidePos[circle(index - 1)] + width, speed);
                   index = circle(index - 1);
 
-                }
+            }
 
                 options.callback && options.callback(index, slides[index]);
 
-              } else {
+          } else {
 
                 if (options.continuous) {
 
@@ -8569,7 +8570,7 @@
                   move(index + 1, width, speed);
                 }
 
-              }
+          }
 
             }
 
@@ -8589,7 +8590,7 @@
 
             if (parseInt(event.target.getAttribute('data-index'), 10) == index) {
 
-              if (delay) begin();
+          if (delay) begin();
 
               options.transitionEnd && options.transitionEnd.call(event, index, slides[index]);
 
@@ -8655,7 +8656,7 @@
           } else {
             delay = newDelay;
             begin();
-          }
+      }
         };
 
         this.currentIndex = this.selected = function () {
@@ -8715,7 +8716,7 @@
               element.addEventListener('touchstart', events, false);
             } else {
               element.addEventListener('mousedown', events, false);
-            }
+        }
 
             if (browser.transitions) {
               element.addEventListener('webkitTransitionEnd', events, false);
@@ -8755,7 +8756,7 @@
         this.handle = opts.handle;
         this.openPercent = -1;
         this.onChange = opts.onChange || function () {
-        };
+          };
 
         this.triggerThreshold = opts.triggerThreshold || 20;
 
@@ -8832,7 +8833,7 @@
               self.setOpenPercent(0);
             } else if (px > self._dragInfo.triggerX) {
               self.setOpenPercent(100);
-            }
+          }
           } else {
             // The initial state was off, so "tend towards" off
             if (px < self._dragInfo.triggerX) {
@@ -8840,7 +8841,7 @@
             } else if (px > mx) {
               self.setOpenPercent(100);
             }
-          }
+        }
         });
       },
 
@@ -8870,8 +8871,8 @@
             var openPixel = Math.round((openPercent / 100) * this.track.offsetWidth - (this.handle.offsetWidth));
             openPixel = (openPixel < 1 ? 0 : openPixel);
             this.handle.style[ionic.CSS.TRANSFORM] = 'translate3d(' + openPixel + 'px,0,0)';
-          }
         }
+      }
       },
 
       val: function (value) {
@@ -9186,7 +9187,7 @@
 
     if (obj.nodeType === NODE_TYPE_ELEMENT && length) {
       return true;
-    }
+  }
 
     return isString(obj) || isArray(obj) || length === 0 ||
       typeof length === 'number' && length > 0 && (length - 1) in obj;
@@ -9236,14 +9237,14 @@
           // as on IE8 the result of querySelectorAll is an object without a hasOwnProperty function
           if (key != 'prototype' && key != 'length' && key != 'name' && (!obj.hasOwnProperty || obj.hasOwnProperty(key))) {
             iterator.call(context, obj[key], key, obj);
-          }
+        }
         }
       } else if (isArray(obj) || isArrayLike(obj)) {
         var isPrimitive = typeof obj !== 'object';
         for (key = 0, length = obj.length; key < length; key++) {
           if (isPrimitive || key in obj) {
             iterator.call(context, obj[key], key, obj);
-          }
+        }
         }
       } else if (obj.forEach && obj.forEach !== forEach) {
         obj.forEach(iterator, context, obj);
@@ -9256,18 +9257,18 @@
         // Slow path for objects inheriting Object.prototype, hasOwnProperty check needed
         for (key in obj) {
           if (obj.hasOwnProperty(key)) {
-            iterator.call(context, obj[key], key, obj);
-          }
+          iterator.call(context, obj[key], key, obj);
         }
-      } else {
+      }
+    } else {
         // Slow path for objects which do not have a method `hasOwnProperty`
         for (key in obj) {
           if (hasOwnProperty.call(obj, key)) {
             iterator.call(context, obj[key], key, obj);
           }
         }
-      }
     }
+  }
     return obj;
   }
 
@@ -9334,15 +9335,15 @@
         if (deep && isObject(src)) {
           if (isDate(src)) {
             dst[key] = new Date(src.valueOf());
-          } else {
+        } else {
             if (!isObject(dst[key])) dst[key] = isArray(src) ? [] : {};
             baseExtend(dst[key], [src], true);
-          }
+        }
         } else {
           dst[key] = src;
-        }
       }
     }
+  }
 
     setHashKey(dst, h);
     return dst;
@@ -9712,7 +9713,7 @@
     var obj = {}, items = str.split(","), i;
     for (i = 0; i < items.length; i++) {
       obj[items[i]] = true;
-    }
+  }
     return obj;
   }
 
@@ -9729,7 +9730,7 @@
     var index = array.indexOf(value);
     if (index >= 0) {
       array.splice(index, 1);
-    }
+  }
     return index;
   }
 
@@ -9807,7 +9808,7 @@
         var index;
         if (stackSource && (index = stackSource.indexOf(source)) !== -1) {
           return stackDest[index];
-        }
+      }
 
         // TypedArray, Date and RegExp have specific copy functionality and must be
         // pushed onto the stack before returning.
@@ -9828,9 +9829,9 @@
         }
 
         if (stackDest) {
-          stackSource.push(source);
-          stackDest.push(destination);
-        }
+        stackSource.push(source);
+        stackDest.push(destination);
+      }
       }
     } else {
       if (source === destination) throw ngMinErr('cpi',
@@ -9853,8 +9854,8 @@
       } else {
         var h = destination.$$hashKey;
         if (isArray(destination)) {
-          destination.length = 0;
-        } else {
+        destination.length = 0;
+      } else {
           forEach(destination, function (value, key) {
             delete destination[key];
           });
@@ -9863,25 +9864,25 @@
           // createMap() fast path --- Safe to avoid hasOwnProperty check because prototype chain is empty
           for (key in source) {
             destination[key] = copy(source[key], null, stackSource, stackDest);
-          }
+        }
         } else if (source && typeof source.hasOwnProperty === 'function') {
           // Slow path, which must rely on hasOwnProperty
           for (key in source) {
             if (source.hasOwnProperty(key)) {
-              destination[key] = copy(source[key], null, stackSource, stackDest);
-            }
+            destination[key] = copy(source[key], null, stackSource, stackDest);
+          }
           }
         } else {
           // Slowest path --- hasOwnProperty can't be called as a method
           for (key in source) {
             if (hasOwnProperty.call(source, key)) {
               destination[key] = copy(source[key], null, stackSource, stackDest);
-            }
           }
         }
-        setHashKey(destination, h);
       }
+        setHashKey(destination, h);
     }
+  }
     return destination;
   }
 
@@ -9903,9 +9904,9 @@
       for (var key in src) {
         if (!(key.charAt(0) === '$' && key.charAt(1) === '$')) {
           dst[key] = src[key];
-        }
       }
     }
+  }
 
     return dst || src;
   }
@@ -9951,8 +9952,8 @@
           if (!isArray(o2)) return false;
           if ((length = o1.length) == o2.length) {
             for (key = 0; key < length; key++) {
-              if (!equals(o1[key], o2[key])) return false;
-            }
+            if (!equals(o1[key], o2[key])) return false;
+          }
             return true;
           }
         } else if (isDate(o1)) {
@@ -9973,11 +9974,11 @@
             if (!(key in keySet) &&
               key.charAt(0) !== '$' &&
               o2[key] !== undefined && !isFunction(o2[key])) return false;
-          }
-          return true;
         }
+          return true;
       }
     }
+  }
     return false;
   }
 
@@ -9994,7 +9995,7 @@
         /* jshint +W031, +W054 */
       } catch (e) {
         active = true;
-      }
+    }
     }
 
     return (csp.isActive_ = active);
@@ -10047,7 +10048,7 @@
       if (el = document.querySelector('[' + prefix.replace(':', '\\:') + 'jq]')) {
         name = el.getAttribute(prefix + 'jq');
         break;
-      }
+    }
     }
 
     return (jq.name_ = name);
@@ -10098,7 +10099,7 @@
     } else {
       // in IE, native methods are not functions so they cannot be bound (note: they don't need to be)
       return fn;
-    }
+  }
   }
 
 
@@ -10113,7 +10114,7 @@
       val = '$DOCUMENT';
     } else if (isScope(value)) {
       val = '$SCOPE';
-    }
+  }
 
     return val;
   }
@@ -10138,7 +10139,7 @@
     if (typeof obj === 'undefined') return undefined;
     if (!isNumber(pretty)) {
       pretty = pretty ? 2 : null;
-    }
+  }
     return JSON.stringify(obj, toJsonReplacer, pretty);
   }
 
@@ -10203,7 +10204,7 @@
           });
     } catch (e) {
       return lowercase(elemHtml);
-    }
+  }
 
   }
 
@@ -10223,7 +10224,7 @@
       return decodeURIComponent(value);
     } catch (e) {
       // Ignore any invalid uri component
-    }
+  }
   }
 
 
@@ -10245,8 +10246,8 @@
             obj[key].push(val);
           } else {
             obj[key] = [obj[key], val];
-          }
         }
+      }
       }
     });
     return obj;
@@ -10257,12 +10258,12 @@
     forEach(obj, function (value, key) {
       if (isArray(value)) {
         forEach(value, function (arrayValue) {
-          parts.push(encodeUriQuery(key, true) +
+        parts.push(encodeUriQuery(key, true) +
           (arrayValue === true ? '' : '=' + encodeUriQuery(arrayValue, true)));
         });
       } else {
         parts.push(encodeUriQuery(key, true) +
-        (value === true ? '' : '=' + encodeUriQuery(value, true)));
+          (value === true ? '' : '=' + encodeUriQuery(value, true)));
       }
     });
     return parts.length ? parts.join('&') : '';
@@ -10317,8 +10318,8 @@
       attr = ngAttrPrefixes[i] + ngAttr;
       if (isString(attr = element.getAttribute(attr))) {
         return attr;
-      }
     }
+  }
     return null;
   }
 
@@ -10470,12 +10471,12 @@
       if (!appElement && (candidate = element.querySelector('[' + name.replace(':', '\\:') + ']'))) {
         appElement = candidate;
         module = candidate.getAttribute(name);
-      }
+    }
     });
     if (appElement) {
       config.strictDi = getNgAttribute(appElement, "strict-di") !== null;
       bootstrap(appElement, module ? [module] : [], config);
-    }
+  }
   }
 
   /**
@@ -10555,8 +10556,8 @@
         // Pushing so that this overrides `debugInfoEnabled` setting defined in user's `modules`.
         modules.push(['$compileProvider', function ($compileProvider) {
           $compileProvider.debugInfoEnabled(true);
-        }]);
-      }
+      }]);
+    }
 
       modules.unshift('ng');
       var injector = createInjector(modules, config.strictDi);
@@ -10577,11 +10578,11 @@
     if (window && NG_ENABLE_DEBUG_INFO.test(window.name)) {
       config.debugInfoEnabled = true;
       window.name = window.name.replace(NG_ENABLE_DEBUG_INFO, '');
-    }
+  }
 
     if (window && !NG_DEFER_BOOTSTRAP.test(window.name)) {
       return doBootstrap();
-    }
+  }
 
     window.name = window.name.replace(NG_DEFER_BOOTSTRAP, '');
     angular.resumeBootstrap = function (extraModules) {
@@ -10593,7 +10594,7 @@
 
     if (isFunction(angular.resumeDeferredBootstrap)) {
       angular.resumeDeferredBootstrap();
-    }
+  }
   }
 
   /**
@@ -10624,7 +10625,7 @@
     if (!injector) {
       throw ngMinErr('test',
         'no injector found for element argument to getTestability');
-    }
+  }
     return injector.get('$$testability');
   }
 
@@ -10679,8 +10680,8 @@
             events = jQuery._data(elem, "events");
             if (events && events.$destroy) {
               jQuery(elem).triggerHandler('$destroy');
-            }
           }
+        }
         } else {
           skipDestroyOnNextJQueryCleanData = false;
         }
@@ -10702,17 +10703,17 @@
   function assertArg(arg, name, reason) {
     if (!arg) {
       throw ngMinErr('areq', "Argument '{0}' is {1}", (name || '?'), (reason || "required"));
-    }
+  }
     return arg;
   }
 
   function assertArgFn(arg, name, acceptArrayAnnotation) {
     if (acceptArrayAnnotation && isArray(arg)) {
       arg = arg[arg.length - 1];
-    }
+  }
 
     assertArg(isFunction(arg), name, 'not a function, got ' +
-    (arg && typeof arg === 'object' ? arg.constructor.name || 'Object' : typeof arg));
+      (arg && typeof arg === 'object' ? arg.constructor.name || 'Object' : typeof arg));
     return arg;
   }
 
@@ -10724,7 +10725,7 @@
   function assertNotHasOwnProperty(name, context) {
     if (name === 'hasOwnProperty') {
       throw ngMinErr('badname', "hasOwnProperty is not a valid {0} name", context);
-    }
+  }
   }
 
   /**
@@ -10746,8 +10747,8 @@
       key = keys[i];
       if (obj) {
         obj = (lastInstance = obj)[key];
-      }
     }
+  }
     if (!bindFnToScope && isFunction(obj)) {
       return bind(lastInstance, obj);
     }
@@ -10890,9 +10891,9 @@
         return ensure(modules, name, function () {
           if (!requires) {
             throw $injectorMinErr('nomod', "Module '{0}' is not available! You either misspelled " +
-            "the module name or forgot to load it. If registering a module ensure that you " +
-            "specify the dependencies as the second argument.", name);
-          }
+              "the module name or forgot to load it. If registering a module ensure that you " +
+              "specify the dependencies as the second argument.", name);
+        }
 
           /** @type {!Array.<Array.<*>>} */
           var invokeQueue = [];
@@ -11080,33 +11081,33 @@
              */
             directive: invokeLaterAndSetModuleName('$compileProvider', 'directive'),
 
-            /**
-             * @ngdoc method
-             * @name angular.Module#config
-             * @module ng
-             * @param {Function} configFn Execute this function on module load. Useful for service
-             *    configuration.
-             * @description
-             * Use this method to register work which needs to be performed on module loading.
-             * For more about how to configure services, see
-             * {@link providers#provider-recipe Provider Recipe}.
-             */
-            config: config,
+          /**
+           * @ngdoc method
+           * @name angular.Module#config
+           * @module ng
+           * @param {Function} configFn Execute this function on module load. Useful for service
+           *    configuration.
+           * @description
+           * Use this method to register work which needs to be performed on module loading.
+           * For more about how to configure services, see
+           * {@link providers#provider-recipe Provider Recipe}.
+           */
+          config: config,
 
-            /**
-             * @ngdoc method
-             * @name angular.Module#run
-             * @module ng
-             * @param {Function} initializationFn Execute this function after injector creation.
-             *    Useful for application initialization.
-             * @description
-             * Use this method to register work which should be performed when the injector is done
-             * loading all modules.
-             */
-            run: function (block) {
-              runBlocks.push(block);
-              return this;
-            }
+          /**
+           * @ngdoc method
+           * @name angular.Module#run
+           * @module ng
+           * @param {Function} initializationFn Execute this function after injector creation.
+           *    Useful for application initialization.
+           * @description
+           * Use this method to register work which should be performed when the injector is done
+           * loading all modules.
+           */
+          run: function (block) {
+            runBlocks.push(block);
+            return this;
+          }
           };
 
           if (configFn) {
@@ -11159,7 +11160,7 @@
         if (seen.indexOf(val) >= 0) return '<<already seen>>';
 
         seen.push(val);
-      }
+    }
       return val;
     });
   }
@@ -11171,7 +11172,7 @@
       return 'undefined';
     } else if (typeof obj !== 'string') {
       return serializeObject(obj);
-    }
+  }
     return obj;
   }
 
@@ -11617,7 +11618,7 @@
   function jqLiteHasData(node) {
     for (var key in jqCache[node.ng339]) {
       return true;
-    }
+  }
     return false;
   }
 
@@ -11640,13 +11641,13 @@
       i = wrap[0];
       while (i--) {
         tmp = tmp.lastChild;
-      }
+    }
 
       nodes = concat(nodes, tmp.childNodes);
 
       tmp = fragment.firstChild;
       tmp.textContent = "";
-    }
+  }
 
     // Remove wrapper from fragment
     fragment.textContent = "";
@@ -11664,7 +11665,7 @@
 
     if ((parsed = SINGLE_TAG_REGEXP.exec(html))) {
       return [context.createElement(parsed[1])];
-    }
+  }
 
     if ((parsed = jqLiteBuildFragment(html, context))) {
       return parsed.childNodes;
@@ -11688,15 +11689,15 @@
     if (!(this instanceof JQLite)) {
       if (argIsString && element.charAt(0) != '<') {
         throw jqLiteMinErr('nosel', 'Looking up elements via selectors is not supported by jqLite! See: http://docs.angularjs.org/api/angular.element');
-      }
-      return new JQLite(element);
     }
+      return new JQLite(element);
+  }
 
     if (argIsString) {
       jqLiteAddNodes(this, jqLiteParseHTML(element));
     } else {
       jqLiteAddNodes(this, element);
-    }
+  }
   }
 
   function jqLiteClone(element) {
@@ -11710,8 +11711,8 @@
       var descendants = element.querySelectorAll('*');
       for (var i = 0, l = descendants.length; i < l; i++) {
         jqLiteRemoveData(descendants[i]);
-      }
     }
+  }
   }
 
   function jqLiteOff(element, type, fn, unsupported) {
@@ -11726,8 +11727,8 @@
     if (!type) {
       for (type in events) {
         if (type !== '$destroy') {
-          removeEventListenerFn(element, type, handle);
-        }
+        removeEventListenerFn(element, type, handle);
+      }
         delete events[type];
       }
     } else {
@@ -11737,8 +11738,8 @@
           arrayRemove(listenerFns || [], fn);
           if (listenerFns && listenerFns.length > 0) {
             return;
-          }
         }
+      }
 
         removeEventListenerFn(element, type, handle);
         delete events[type];
@@ -11754,7 +11755,7 @@
       if (name) {
         delete expandoStore.data[name];
         return;
-      }
+    }
 
       if (expandoStore.handle) {
         if (expandoStore.events.$destroy) {
@@ -11764,7 +11765,7 @@
       }
       delete jqCache[expandoId];
       element.ng339 = undefined; // don't delete DOM expandos. IE and Chrome don't like it
-    }
+  }
   }
 
 
@@ -11775,7 +11776,7 @@
     if (createIfNecessary && !expandoStore) {
       element.ng339 = expandoId = jqNextId();
       expandoStore = jqCache[expandoId] = {events: {}, data: {}, handle: undefined};
-    }
+  }
 
     return expandoStore;
   }
@@ -11795,16 +11796,16 @@
       } else {
         if (massGetter) {  // data()
           return data;
-        } else {
+      } else {
           if (isSimpleGetter) { // data('key')
             // don't force creation of expandoStore if it doesn't exist yet
             return data && data[key];
           } else { // mass-setter: data({key1: val1, key2: val2})
             extend(data, key);
-          }
         }
       }
     }
+  }
   }
 
   function jqLiteHasClass(element, selector) {
@@ -11822,7 +11823,7 @@
               .replace(" " + trim(cssClass) + " ", " "))
         );
       });
-    }
+  }
   }
 
   function jqLiteAddClass(element, cssClasses) {
@@ -11838,7 +11839,7 @@
       });
 
       element.setAttribute('class', trim(existingClasses));
-    }
+  }
   }
 
 
@@ -11859,12 +11860,12 @@
             for (var i = 0; i < length; i++) {
               root[root.length++] = elements[i];
             }
-          }
-        } else {
-          root[root.length++] = elements;
         }
+        } else {
+        root[root.length++] = elements;
       }
     }
+  }
   }
 
 
@@ -11877,26 +11878,26 @@
     // this makes $(document).scope() possible
     if (element.nodeType == NODE_TYPE_DOCUMENT) {
       element = element.documentElement;
-    }
+  }
     var names = isArray(name) ? name : [name];
 
     while (element) {
       for (var i = 0, ii = names.length; i < ii; i++) {
         if ((value = jqLite.data(element, names[i])) !== undefined) return value;
-      }
+    }
 
       // If dealing with a document fragment node with a host element, and no parent, use the host
       // element as the parent. This enables directives within a Shadow DOM or polyfilled Shadow DOM
       // to lookup parent controllers.
       element = element.parentNode || (element.nodeType === NODE_TYPE_DOCUMENT_FRAGMENT && element.host);
-    }
+  }
   }
 
   function jqLiteEmpty(element) {
     jqLiteDealoc(element, true);
     while (element.firstChild) {
       element.removeChild(element.firstChild);
-    }
+  }
   }
 
   function jqLiteRemove(element, keepData) {
@@ -11916,7 +11917,7 @@
     } else {
       // No need to unbind this handler as load is only ever called once
       jqLite(win).on('load', action);
-    }
+  }
   }
 
 //////////////////////////////////////////
@@ -12046,20 +12047,20 @@
       }
       var lowercasedName = lowercase(name);
       if (BOOLEAN_ATTR[lowercasedName]) {
-        if (isDefined(value)) {
-          if (!!value) {
-            element[name] = true;
-            element.setAttribute(name, lowercasedName);
-          } else {
-            element[name] = false;
-            element.removeAttribute(lowercasedName);
-          }
+      if (isDefined(value)) {
+        if (!!value) {
+          element[name] = true;
+          element.setAttribute(name, lowercasedName);
         } else {
-          return (element[name] ||
-          (element.attributes.getNamedItem(name) || noop).specified)
-            ? lowercasedName
-            : undefined;
+          element[name] = false;
+          element.removeAttribute(lowercasedName);
         }
+      } else {
+        return (element[name] ||
+        (element.attributes.getNamedItem(name) || noop).specified)
+          ? lowercasedName
+          : undefined;
+      }
       } else if (isDefined(value)) {
         element.setAttribute(name, value);
       } else if (element.getAttribute) {
@@ -12084,10 +12085,10 @@
       return getText;
 
       function getText(element, value) {
-        if (isUndefined(value)) {
-          var nodeType = element.nodeType;
-          return (nodeType === NODE_TYPE_ELEMENT || nodeType === NODE_TYPE_TEXT) ? element.textContent : '';
-        }
+      if (isUndefined(value)) {
+        var nodeType = element.nodeType;
+        return (nodeType === NODE_TYPE_ELEMENT || nodeType === NODE_TYPE_TEXT) ? element.textContent : '';
+      }
         element.textContent = value;
       }
     })(),
@@ -12102,7 +12103,7 @@
             }
           });
           return result.length === 0 ? null : result;
-        }
+      }
         return element.value;
       }
       element.value = value;
@@ -12133,18 +12134,18 @@
         if (isObject(arg1)) {
 
           // we are a write, but the object properties are the key/values
-          for (i = 0; i < nodeCount; i++) {
-            if (fn === jqLiteData) {
-              // data() takes the whole object in jQuery
-              fn(this[i], arg1);
-            } else {
-              for (key in arg1) {
-                fn(this[i], key, arg1[key]);
-              }
+        for (i = 0; i < nodeCount; i++) {
+          if (fn === jqLiteData) {
+            // data() takes the whole object in jQuery
+            fn(this[i], arg1);
+          } else {
+            for (key in arg1) {
+              fn(this[i], key, arg1[key]);
             }
           }
-          // return self for chaining
-          return this;
+        }
+        // return self for chaining
+        return this;
         } else {
           // we are a read, so read the first child.
           // TODO: do we still need this?
@@ -12156,7 +12157,7 @@
             value = value ? value + nodeValue : nodeValue;
           }
           return value;
-        }
+      }
       } else {
         // we are a write, so apply to all children
         for (i = 0; i < nodeCount; i++) {
@@ -12173,7 +12174,7 @@
       // jQuery specific api
       event.isDefaultPrevented = function () {
         return event.defaultPrevented;
-      };
+    };
 
       var eventFns = events[type || event.type];
       var eventFnsLength = eventFns ? eventFns.length : 0;
@@ -12207,7 +12208,7 @@
       for (var i = 0; i < eventFnsLength; i++) {
         if (!event.isImmediatePropagationStopped()) {
           eventFns[i].call(element, event);
-        }
+      }
       }
     };
 
@@ -12263,16 +12264,16 @@
               // NB: No relatedTarget if the mouse left/entered the browser window
               if (!related || (related !== target && !target.contains(related))) {
                 handle(event, type);
-              }
+            }
             });
 
-          } else {
+        } else {
             if (type !== '$destroy') {
               addEventListenerFn(element, type, handle);
             }
-          }
-          eventFns = events[type];
         }
+          eventFns = events[type];
+      }
         eventFns.push(fn);
       }
     },
@@ -12297,10 +12298,10 @@
       jqLiteDealoc(element);
       forEach(new JQLite(replaceNode), function (node) {
         if (index) {
-          parent.insertBefore(node, index.nextSibling);
+        parent.insertBefore(node, index.nextSibling);
         } else {
           parent.replaceChild(node, element);
-        }
+      }
         index = node;
       });
     },
@@ -12310,7 +12311,7 @@
       forEach(element.childNodes, function (element) {
         if (element.nodeType === NODE_TYPE_ELEMENT) {
           children.push(element);
-        }
+      }
       });
       return children;
     },
@@ -12375,7 +12376,7 @@
           var classCondition = condition;
           if (isUndefined(classCondition)) {
             classCondition = !jqLiteHasClass(element, className);
-          }
+        }
           (classCondition ? jqLiteAddClass : jqLiteRemoveClass)(element, className);
         });
       }
@@ -12431,7 +12432,7 @@
         // If a custom event was provided then extend our dummy event with it
         if (event.type) {
           dummyEvent = extend(dummyEvent, event);
-        }
+      }
 
         // Copy event handlers in case event handlers array is modified during execution.
         eventFnsCopy = shallowCopy(eventFns);
@@ -12442,7 +12443,7 @@
             fn.apply(element, handlerArgs);
           }
         });
-      }
+    }
     }
   }, function (fn, name) {
     /**
@@ -12457,10 +12458,10 @@
           if (isDefined(value)) {
             // any function which returns a value needs to be wrapped
             value = jqLite(value);
-          }
+        }
         } else {
           jqLiteAddNodes(value, fn(this[i], arg1, arg2, arg3));
-        }
+      }
       }
       return isDefined(value) ? value : this;
     };
@@ -12486,7 +12487,7 @@
         removeClass: function (node, classes) {
           if (node.attr) node = node[0];
           return jqLiteRemoveClass(node, classes);
-        }
+      }
       });
     };
   }
@@ -12510,15 +12511,15 @@
       if (typeof key === 'function') {
         key = obj.$$hashKey();
       }
-      return key;
-    }
+    return key;
+  }
 
     var objType = typeof obj;
     if (objType == 'function' || (objType == 'object' && obj !== null)) {
       key = obj.$$hashKey = objType + ':' + (nextUidFn || nextUid)();
     } else {
       key = objType + ':' + obj;
-    }
+  }
 
     return key;
   }
@@ -12568,7 +12569,7 @@
   var $$HashMapProvider = [function () {
     this.$get = [function () {
       return HashMap;
-    }];
+  }];
   }];
 
   /**
@@ -12646,7 +12647,7 @@
       args = fnText.match(FN_ARGS);
     if (args) {
       return 'function(' + (args[1] || '').replace(/[\s\r\n]+/, ' ') + ')';
-    }
+  }
     return 'fn';
   }
 
@@ -12663,10 +12664,10 @@
           if (strictDi) {
             if (!isString(name) || !name) {
               name = fn.name || anonFn(fn);
-            }
+          }
             throw $injectorMinErr('strictdi',
               '{0} is not using explicit annotation and cannot be invoked in strict mode', name);
-          }
+        }
           fnText = fn.toString().replace(STRIP_COMMENTS, '');
           argDecl = fnText.match(FN_ARGS);
           forEach(argDecl[1].split(FN_ARG_SPLIT), function (arg) {
@@ -12674,16 +12675,16 @@
               $inject.push(name);
             });
           });
-        }
-        fn.$inject = $inject;
       }
+        fn.$inject = $inject;
+    }
     } else if (isArray(fn)) {
       last = fn.length - 1;
       assertArgFn(fn[last], 'fn');
       $inject = fn.slice(0, last);
     } else {
       assertArgFn(fn, 'fn', true);
-    }
+  }
     return $inject;
   }
 
@@ -13258,7 +13259,7 @@
     function factory(name, factoryFn, enforce) {
       return provider(name, {
         $get: enforce !== false ? enforceReturnValue(name, factoryFn) : factoryFn
-      });
+    });
     }
 
     function service(name, constructor) {
@@ -13303,7 +13304,7 @@
               provider = providerInjector.get(invokeArgs[0]);
 
             provider[invokeArgs[1]].apply(provider, invokeArgs[2]);
-          }
+        }
         }
 
         try {
@@ -13352,19 +13353,19 @@
           }
           return cache[serviceName];
         } else {
-          try {
-            path.unshift(serviceName);
-            cache[serviceName] = INSTANTIATING;
-            return cache[serviceName] = factory(serviceName, caller);
-          } catch (err) {
-            if (cache[serviceName] === INSTANTIATING) {
-              delete cache[serviceName];
-            }
-            throw err;
-          } finally {
-            path.shift();
+        try {
+          path.unshift(serviceName);
+          cache[serviceName] = INSTANTIATING;
+          return cache[serviceName] = factory(serviceName, caller);
+        } catch (err) {
+          if (cache[serviceName] === INSTANTIATING) {
+            delete cache[serviceName];
           }
+          throw err;
+        } finally {
+          path.shift();
         }
+      }
       }
 
       function invoke(fn, self, locals, serviceName) {
@@ -13383,13 +13384,13 @@
           if (typeof key !== 'string') {
             throw $injectorMinErr('itkn',
               'Incorrect injection token! Expected service name as string, got {0}', key);
-          }
+        }
           args.push(
             locals && locals.hasOwnProperty(key)
               ? locals[key]
               : getService(key, serviceName)
           );
-        }
+      }
         if (isArray(fn)) {
           fn = fn[length];
         }
@@ -13407,7 +13408,7 @@
         var returnedValue = invoke(Type, instance, locals, serviceName);
 
         return isObject(returnedValue) || isFunction(returnedValue) ? returnedValue : instance;
-      }
+    }
 
       return {
         invoke: invoke,
@@ -13418,7 +13419,7 @@
           return providerCache.hasOwnProperty(name + providerSuffix) || cache.hasOwnProperty(name);
         }
       };
-    }
+  }
   }
 
   createInjector.$$annotate = annotate;
@@ -13435,22 +13436,22 @@
 
     var autoScrollingEnabled = true;
 
-    /**
-     * @ngdoc method
-     * @name $anchorScrollProvider#disableAutoScrolling
-     *
-     * @description
-     * By default, {@link ng.$anchorScroll $anchorScroll()} will automatically detect changes to
-     * {@link ng.$location#hash $location.hash()} and scroll to the element matching the new hash.<br />
-     * Use this method to disable automatic scrolling.
-     *
-     * If automatic scrolling is disabled, one must explicitly call
-     * {@link ng.$anchorScroll $anchorScroll()} in order to scroll to the element related to the
-     * current hash.
-     */
-    this.disableAutoScrolling = function () {
-      autoScrollingEnabled = false;
-    };
+  /**
+   * @ngdoc method
+   * @name $anchorScrollProvider#disableAutoScrolling
+   *
+   * @description
+   * By default, {@link ng.$anchorScroll $anchorScroll()} will automatically detect changes to
+   * {@link ng.$location#hash $location.hash()} and scroll to the element matching the new hash.<br />
+   * Use this method to disable automatic scrolling.
+   *
+   * If automatic scrolling is disabled, one must explicitly call
+   * {@link ng.$anchorScroll $anchorScroll()} in order to scroll to the element related to the
+   * current hash.
+   */
+  this.disableAutoScrolling = function () {
+    autoScrollingEnabled = false;
+  };
 
     /**
      * @ngdoc service
@@ -13620,13 +13621,13 @@
           var elem = offset[0];
           var style = $window.getComputedStyle(elem);
           if (style.position !== 'fixed') {
-            offset = 0;
-          } else {
+          offset = 0;
+        } else {
             offset = elem.getBoundingClientRect().bottom;
-          }
+        }
         } else if (!isNumber(offset)) {
           offset = 0;
-        }
+      }
 
         return offset;
       }
@@ -13656,7 +13657,7 @@
           }
         } else {
           $window.scrollTo(0, 0);
-        }
+      }
       }
 
       function scroll(hash) {
@@ -13688,7 +13689,7 @@
 
             jqLiteDocumentLoaded(function () {
               $rootScope.$evalAsync(scroll);
-            });
+          });
           });
       }
 
@@ -13714,14 +13715,14 @@
       var elm = element[i];
       if (elm.nodeType === ELEMENT_NODE) {
         return elm;
-      }
     }
+  }
   }
 
   function splitClasses(classes) {
     if (isString(classes)) {
       classes = classes.split(' ');
-    }
+  }
 
     // Use createMap() to prevent class assumptions involving property names in
     // Object.prototype
@@ -13768,7 +13769,7 @@
               resolve();
             });
           }).then(pass, fail);
-        }
+      }
       };
       return AnimateRunner;
     }];
@@ -13816,7 +13817,7 @@
             forEach(add.split(' '), function (className) {
               if (className) {
                 data[className] = true;
-              }
+          }
             });
           }
 
@@ -13832,7 +13833,7 @@
 
           $rootScope.$$postDigest(function () {
             forEach(postDigestElements, function (element) {
-              var data = postDigestQueue.get(element);
+          var data = postDigestQueue.get(element);
               if (data) {
                 var existing = splitClasses(element.attr('class'));
                 var toAdd = '';
@@ -13845,15 +13846,15 @@
                     } else {
                       toRemove += (toRemove.length ? ' ' : '') + className;
                     }
-                  }
-                });
+              }
+            });
 
                 forEach(element, function (elm) {
                   toAdd && jqLiteAddClass(elm, toAdd);
                   toRemove && jqLiteRemoveClass(elm, toRemove);
-                });
+            });
                 postDigestQueue.remove(element);
-              }
+          }
             });
 
             postDigestElements.length = 0;
@@ -13882,17 +13883,17 @@
     /**
      * @ngdoc method
      * @name $animateProvider#register
-     *
-     * @description
+   *
+   * @description
      * Registers a new injectable animation factory function. The factory function produces the
      * animation object which contains callback functions for each event that is expected to be
      * animated.
-     *
+   *
      *   * `eventFn`: `function(element, ... , doneFunction, options)`
      *   The element to animate, the `doneFunction` and the options fed into the animation. Depending
      *   on the type of animation additional arguments will be injected into the animation function. The
      *   list below explains the function signatures for the different animation methods:
-     *
+   *
      *   - setClass: function(element, addedClasses, removedClasses, doneFunction, options)
      *   - addClass: function(element, addedClasses, doneFunction, options)
      *   - removeClass: function(element, removedClasses, doneFunction, options)
@@ -13951,7 +13952,7 @@
             throw $animateMinErr('nongcls', '$animateProvider.classNameFilter(regex) prohibits accepting a regex value which matches/contains the "{0}" CSS class.', NG_ANIMATE_CLASSNAME);
 
           }
-        }
+      }
       }
       return this.$$classNameFilter;
     };
@@ -13970,56 +13971,56 @@
         afterElement ? afterElement.after(element) : parentElement.prepend(element);
       }
 
-      /**
-       * @ngdoc service
-       * @name $animate
-       * @description The $animate service exposes a series of DOM utility methods that provide support
-       * for animation hooks. The default behavior is the application of DOM operations, however,
-       * when an animation is detected (and animations are enabled), $animate will do the heavy lifting
-       * to ensure that animation runs with the triggered DOM operation.
-       *
-       * By default $animate doesn't trigger an animations. This is because the `ngAnimate` module isn't
-       * included and only when it is active then the animation hooks that `$animate` triggers will be
-       * functional. Once active then all structural `ng-` directives will trigger animations as they perform
-       * their DOM-related operations (enter, leave and move). Other directives such as `ngClass`,
-       * `ngShow`, `ngHide` and `ngMessages` also provide support for animations.
-       *
-       * It is recommended that the`$animate` service is always used when executing DOM-related procedures within directives.
-       *
-       * To learn more about enabling animation support, click here to visit the
-       * {@link ngAnimate ngAnimate module page}.
-       */
+    /**
+     * @ngdoc service
+     * @name $animate
+     * @description The $animate service exposes a series of DOM utility methods that provide support
+     * for animation hooks. The default behavior is the application of DOM operations, however,
+     * when an animation is detected (and animations are enabled), $animate will do the heavy lifting
+     * to ensure that animation runs with the triggered DOM operation.
+     *
+     * By default $animate doesn't trigger an animations. This is because the `ngAnimate` module isn't
+     * included and only when it is active then the animation hooks that `$animate` triggers will be
+     * functional. Once active then all structural `ng-` directives will trigger animations as they perform
+     * their DOM-related operations (enter, leave and move). Other directives such as `ngClass`,
+     * `ngShow`, `ngHide` and `ngMessages` also provide support for animations.
+     *
+     * It is recommended that the`$animate` service is always used when executing DOM-related procedures within directives.
+     *
+     * To learn more about enabling animation support, click here to visit the
+     * {@link ngAnimate ngAnimate module page}.
+     */
       return {
         // we don't call it directly since non-existant arguments may
         // be interpreted as null within the sub enabled function
 
-        /**
-         *
-         * @ngdoc method
-         * @name $animate#on
-         * @kind function
-         * @description Sets up an event listener to fire whenever the animation event (enter, leave, move, etc...)
-         *    has fired on the given element or among any of its children. Once the listener is fired, the provided callback
-         *    is fired with the following params:
-         *
-         * ```js
-         * $animate.on('enter', container,
-         *    function callback(element, phase) {
+      /**
+       *
+       * @ngdoc method
+       * @name $animate#on
+       * @kind function
+       * @description Sets up an event listener to fire whenever the animation event (enter, leave, move, etc...)
+       *    has fired on the given element or among any of its children. Once the listener is fired, the provided callback
+       *    is fired with the following params:
+       *
+       * ```js
+       * $animate.on('enter', container,
+       *    function callback(element, phase) {
        *      // cool we detected an enter animation within the container
        *    }
-         * );
-         * ```
-         *
-         * @param {string} event the animation event that will be captured (e.g. enter, leave, move, addClass, removeClass, etc...)
-         * @param {DOMElement} container the container element that will capture each of the animation events that are fired on itself
-         *     as well as among its children
-         * @param {Function} callback the callback function that will be fired when the listener is triggered
-         *
-         * The arguments present in the callback function are:
-         * * `element` - The captured DOM element that the animation was fired on.
-         * * `phase` - The phase of the animation. The two possible phases are **start** (when the animation starts) and **close** (when it ends).
-         */
-        on: $$animateQueue.on,
+       * );
+       * ```
+       *
+       * @param {string} event the animation event that will be captured (e.g. enter, leave, move, addClass, removeClass, etc...)
+       * @param {DOMElement} container the container element that will capture each of the animation events that are fired on itself
+       *     as well as among its children
+       * @param {Function} callback the callback function that will be fired when the listener is triggered
+       *
+       * The arguments present in the callback function are:
+       * * `element` - The captured DOM element that the animation was fired on.
+       * * `phase` - The phase of the animation. The two possible phases are **start** (when the animation starts) and **close** (when it ends).
+       */
+      on: $$animateQueue.on,
 
         /**
          *
@@ -14282,7 +14283,7 @@
           className = className || 'ng-inline-animate';
           options.tempClasses = mergeClasses(options.tempClasses, className);
           return $$animateQueue.push(element, 'animate', options);
-        }
+      }
       };
     }];
   }];
@@ -14351,15 +14352,15 @@
         fn.apply(null, sliceArgs(arguments, 1));
       } finally {
         outstandingRequestCount--;
-        if (outstandingRequestCount === 0) {
-          while (outstandingRequestCallbacks.length) {
-            try {
-              outstandingRequestCallbacks.pop()();
-            } catch (e) {
-              $log.error(e);
-            }
+      if (outstandingRequestCount === 0) {
+        while (outstandingRequestCallbacks.length) {
+          try {
+            outstandingRequestCallbacks.pop()();
+          } catch (e) {
+            $log.error(e);
           }
         }
+      }
       }
     }
 
@@ -14488,7 +14489,7 @@
       urlChangeInit = false;
 
     function cacheStateAndFireUrlChange() {
-      cacheState();
+    cacheState();
       fireUrlChange();
     }
 
@@ -14521,11 +14522,11 @@
       }
 
       lastBrowserUrl = self.url();
-      lastHistoryState = cachedState;
+    lastHistoryState = cachedState;
       forEach(urlChangeListeners, function (listener) {
         listener(self.url(), cachedState);
       });
-    }
+  }
 
     /**
      * @name $browser#onUrlChange
@@ -14814,7 +14815,7 @@
            * @param {*} value the value to store alongside the key. If it is undefined, the key
            *    will not be stored.
            * @returns {*} the value stored.
-           */
+         */
           put: function (key, value) {
             if (isUndefined(value)) return;
             if (capacity < Number.MAX_VALUE) {
@@ -14901,73 +14902,73 @@
           },
 
 
-          /**
-           * @ngdoc method
-           * @name $cacheFactory.Cache#destroy
-           * @kind function
-           *
-           * @description
-           * Destroys the {@link $cacheFactory.Cache Cache} object entirely,
-           * removing it from the {@link $cacheFactory $cacheFactory} set.
-           */
-          destroy: function () {
-            data = null;
-            stats = null;
-            lruHash = null;
-            delete caches[cacheId];
-          },
+        /**
+         * @ngdoc method
+         * @name $cacheFactory.Cache#destroy
+         * @kind function
+         *
+         * @description
+         * Destroys the {@link $cacheFactory.Cache Cache} object entirely,
+         * removing it from the {@link $cacheFactory $cacheFactory} set.
+         */
+        destroy: function () {
+          data = null;
+          stats = null;
+          lruHash = null;
+          delete caches[cacheId];
+        },
 
 
-          /**
-           * @ngdoc method
-           * @name $cacheFactory.Cache#info
-           * @kind function
-           *
-           * @description
-           * Retrieve information regarding a particular {@link $cacheFactory.Cache Cache}.
-           *
-           * @returns {object} an object with the following properties:
-           *   <ul>
-           *     <li>**id**: the id of the cache instance</li>
-           *     <li>**size**: the number of entries kept in the cache instance</li>
-           *     <li>**...**: any additional properties from the options object when creating the
-           *       cache.</li>
-           *   </ul>
-           */
-          info: function () {
-            return extend({}, stats, {size: size});
-          }
+        /**
+         * @ngdoc method
+         * @name $cacheFactory.Cache#info
+         * @kind function
+         *
+         * @description
+         * Retrieve information regarding a particular {@link $cacheFactory.Cache Cache}.
+         *
+         * @returns {object} an object with the following properties:
+         *   <ul>
+         *     <li>**id**: the id of the cache instance</li>
+         *     <li>**size**: the number of entries kept in the cache instance</li>
+         *     <li>**...**: any additional properties from the options object when creating the
+         *       cache.</li>
+         *   </ul>
+         */
+        info: function () {
+          return extend({}, stats, {size: size});
+        }
         };
 
 
-        /**
-         * makes the `entry` the freshEnd of the LRU linked list
-         */
-        function refresh(entry) {
-          if (entry != freshEnd) {
-            if (!staleEnd) {
-              staleEnd = entry;
-            } else if (staleEnd == entry) {
-              staleEnd = entry.n;
-            }
-
-            link(entry.n, entry.p);
-            link(entry, freshEnd);
-            freshEnd = entry;
-            freshEnd.n = null;
+      /**
+       * makes the `entry` the freshEnd of the LRU linked list
+       */
+      function refresh(entry) {
+        if (entry != freshEnd) {
+          if (!staleEnd) {
+            staleEnd = entry;
+          } else if (staleEnd == entry) {
+            staleEnd = entry.n;
           }
+
+          link(entry.n, entry.p);
+          link(entry, freshEnd);
+          freshEnd = entry;
+          freshEnd.n = null;
         }
+      }
 
 
-        /**
-         * bidirectionally links two entries of the LRU linked list
-         */
-        function link(nextEntry, prevEntry) {
-          if (nextEntry != prevEntry) {
-            if (nextEntry) nextEntry.p = prevEntry; //p stands for previous, 'prev' didn't minify
-            if (prevEntry) prevEntry.n = nextEntry; //n stands for next, 'next' didn't minify
-          }
+      /**
+       * bidirectionally links two entries of the LRU linked list
+       */
+      function link(nextEntry, prevEntry) {
+        if (nextEntry != prevEntry) {
+          if (nextEntry) nextEntry.p = prevEntry; //p stands for previous, 'prev' didn't minify
+          if (prevEntry) prevEntry.n = nextEntry; //n stands for next, 'next' didn't minify
         }
+      }
       }
 
 
@@ -14986,22 +14987,22 @@
           info[cacheId] = cache.info();
         });
         return info;
-      };
+    };
 
 
-      /**
-       * @ngdoc method
-       * @name $cacheFactory#get
-       *
-       * @description
-       * Get access to a cache object by the `cacheId` used when it was created.
-       *
-       * @param {string} cacheId Name or id of a cache to access.
-       * @returns {object} Cache object identified by the cacheId or undefined if no such cache.
-       */
-      cacheFactory.get = function (cacheId) {
-        return caches[cacheId];
-      };
+  /**
+   * @ngdoc method
+   * @name $cacheFactory#get
+   *
+   * @description
+   * Get access to a cache object by the `cacheId` used when it was created.
+   *
+   * @param {string} cacheId Name or id of a cache to access.
+   * @returns {object} Cache object identified by the cacheId or undefined if no such cache.
+   */
+  cacheFactory.get = function (cacheId) {
+    return caches[cacheId];
+  };
 
 
       return cacheFactory;
@@ -15814,7 +15815,7 @@
           collection: match[2] === '*',
           optional: match[3] === '?',
           attrName: match[4] || scopeName
-        };
+      };
       });
 
       return bindings;
@@ -15833,7 +15834,7 @@
         } else {
           bindings.isolateScope = parseIsolateBindings(directive.scope,
             directiveName, false);
-        }
+      }
       }
       if (isObject(directive.bindToController)) {
         bindings.bindToController =
@@ -15852,8 +15853,8 @@
           throw $compileMinErr('noident',
             "Cannot bind to controller without identifier for directive '{0}'.",
             directiveName);
-        }
       }
+    }
       return bindings;
     }
 
@@ -15861,7 +15862,7 @@
       var letter = name.charAt(0);
       if (!letter || letter !== lowercase(letter)) {
         throw $compileMinErr('baddir', "Directive name '{0}' is invalid. The first character must be a lowercase letter", name);
-      }
+    }
       if (name !== name.trim()) {
         throw $compileMinErr('baddir',
           "Directive name '{0}' is invalid. The name should not contain leading or trailing whitespaces",
@@ -15911,13 +15912,13 @@
                     parseDirectiveBindings(directive, directive.name);
                   if (isObject(bindings.isolateScope)) {
                     directive.$$isolateBindings = bindings.isolateScope;
-                  }
+                }
                   directive.$$moduleName = directiveFactory.$$moduleName;
                   directives.push(directive);
-                } catch (e) {
-                  $exceptionHandler(e);
-                }
-              });
+              } catch (e) {
+                $exceptionHandler(e);
+              }
+            });
               return directives;
             }]);
         }
@@ -16155,7 +16156,7 @@
               attrName = this.$attr[key];
               if (!attrName) {
                 this.$attr[key] = attrName = snake_case(key, '-');
-              }
+          }
             }
 
             nodeName = nodeName_(this.$$element);
@@ -16211,11 +16212,11 @@
             // fire observers
             var $$observers = this.$$observers;
             $$observers && forEach($$observers[observer], function (fn) {
-              try {
-                fn(value);
-              } catch (e) {
-                $exceptionHandler(e);
-              }
+          try {
+            fn(value);
+          } catch (e) {
+            $exceptionHandler(e);
+          }
             });
           },
 
@@ -16343,7 +16344,7 @@
 
             if (!namespace) {
               namespace = detectNamespaceForChildElements(futureParentElement);
-            }
+        }
             var $linkNode;
             if (namespace !== 'html') {
               // When using a directive with replace:true and templateUrl the $compileNodes
@@ -16365,8 +16366,8 @@
             if (transcludeControllers) {
               for (var controllerName in transcludeControllers) {
                 $linkNode.data('$' + controllerName + 'Controller', transcludeControllers[controllerName].instance);
-              }
-            }
+          }
+        }
 
             compile.$$addScopeInfo($linkNode, scope);
 
@@ -16420,7 +16421,7 @@
 
             if (nodeLinkFn && nodeLinkFn.scope) {
               compile.$$addScopeClass(attrs.$$element);
-            }
+        }
 
             childLinkFn = (nodeLinkFn && nodeLinkFn.terminal || !(childNodes = nodeList[i].childNodes) || !childNodes.length)
               ? null
@@ -16433,7 +16434,7 @@
               linkFns.push(i, nodeLinkFn, childLinkFn);
               linkFnFound = true;
               nodeLinkFnFound = nodeLinkFnFound || nodeLinkFn;
-            }
+        }
 
             //use the previous context only for the first element in the virtual group
             previousCompileContext = null;
@@ -16457,10 +16458,10 @@
               for (i = 0; i < linkFns.length; i += 3) {
                 idx = linkFns[i];
                 stableNodeList[idx] = nodeList[idx];
-              }
+          }
             } else {
               stableNodeList = nodeList;
-            }
+        }
 
             for (i = 0, ii = linkFns.length; i < ii;) {
               node = stableNodeList[linkFns[i++]];
@@ -16475,10 +16476,10 @@
                   if (destroyBindings) {
                     nodeLinkFn.$$destroyBindings = null;
                     childScope.$on('$destroyed', destroyBindings);
-                  }
+              }
                 } else {
                   childScope = scope;
-                }
+            }
 
                 if (nodeLinkFn.transcludeOnThisElement) {
                   childBoundTranscludeFn = createBoundTranscludeFn(
@@ -16492,7 +16493,7 @@
 
                 } else {
                   childBoundTranscludeFn = null;
-                }
+            }
 
                 nodeLinkFn(childLinkFn, childScope, node, $rootElement, childBoundTranscludeFn,
                   nodeLinkFn);
@@ -16561,7 +16562,7 @@
                   name = name.replace(PREFIX_REGEXP, '')
                     .substr(8).replace(/_(.)/g, function (match, letter) {
                       return letter.toUpperCase();
-                    });
+                });
                 }
 
                 var directiveNName = ngAttrName.replace(/(Start|End)$/, '');
@@ -16579,8 +16580,8 @@
                   attrs[nName] = value;
                   if (getBooleanAttrName(node, nName)) {
                     attrs[nName] = true; // presence means true
-                  }
                 }
+            }
                 addAttrInterpolateDirective(node, directives, value, nName, isNgAttr);
                 addDirective(directives, nName, 'A', maxPriority, ignoreDirective, attrStartName,
                   attrEndName);
@@ -16599,7 +16600,7 @@
                     attrs[nName] = trim(match[3]);
                   }
                   className = className.substr(match.index + match[0].length);
-                }
+            }
               }
               break;
             case NODE_TYPE_TEXT: /* Text Node */
@@ -16650,7 +16651,7 @@
                 throw $compileMinErr('uterdir',
                   "Unterminated attribute, found '{0}' but no matching '{1}' found.",
                   attrStart, attrEnd);
-              }
+          }
               if (node.nodeType == NODE_TYPE_ELEMENT) {
                 if (node.hasAttribute(attrStart)) depth++;
                 if (node.hasAttribute(attrEnd)) depth--;
@@ -16758,8 +16759,8 @@
                   // Check that there is no isolated scope already
                   assertNoDuplicate('new/isolated scope', newIsolateScopeDirective, directive,
                     $compileNode);
-                }
-              }
+            }
+          }
 
               newScopeDirective = newScopeDirective || directive;
             }
@@ -16791,7 +16792,7 @@
                 $template = $compileNode;
                 $compileNode = templateAttrs.$$element =
                   jqLite(document.createComment(' ' + directiveName + ': ' +
-                  templateAttrs[directiveName] + ' '));
+                    templateAttrs[directiveName] + ' '));
                 compileNode = $compileNode[0];
                 replaceWith(jqCollection, sliceArgs($template), compileNode);
 
@@ -16810,7 +16811,7 @@
                 $template = jqLite(jqLiteClone(compileNode)).contents();
                 $compileNode.empty(); // clear contents
                 childTranscludeFn = compile($template, transcludeFn);
-              }
+          }
             }
 
             if (directive.template) {
@@ -16830,14 +16831,14 @@
                   $template = [];
                 } else {
                   $template = removeComments(wrapTemplate(directive.templateNamespace, trim(directiveValue)));
-                }
+            }
                 compileNode = $template[0];
 
                 if ($template.length != 1 || compileNode.nodeType !== NODE_TYPE_ELEMENT) {
                   throw $compileMinErr('tplrt',
                     "Template for directive '{0}' must have exactly one root element. {1}",
                     directiveName, '');
-                }
+            }
 
                 replaceWith(jqCollection, $compileNode, compileNode);
 
@@ -16851,9 +16852,9 @@
                 var templateDirectives = collectDirectives(compileNode, [], newTemplateAttrs);
                 var unprocessedDirectives = directives.splice(i + 1, directives.length - (i + 1));
 
-                if (newIsolateScopeDirective) {
-                  markDirectivesAsIsolate(templateDirectives);
-                }
+            if (newIsolateScopeDirective) {
+              markDirectivesAsIsolate(templateDirectives);
+            }
                 directives = directives.concat(templateDirectives).concat(unprocessedDirectives);
                 mergeTemplateAttributes(templateAttrs, newTemplateAttrs);
 
@@ -16888,7 +16889,7 @@
                   addLinkFns(null, linkFn, attrStart, attrEnd);
                 } else if (linkFn) {
                   addLinkFns(linkFn.pre, linkFn.post, attrStart, attrEnd);
-                }
+            }
               } catch (e) {
                 $exceptionHandler(e, startingTag($compileNode));
               }
@@ -17058,7 +17059,7 @@
                   thisLinkFn.$$destroyBindings =
                     initializeDirectiveBindings(scope, attrs, controller.instance,
                       bindings, scopeDirective);
-                }
+            }
               }
               for (i in elementControllers) {
                 controller = elementControllers[i];
@@ -17074,8 +17075,8 @@
                     thisLinkFn.$$destroyBindings();
                     thisLinkFn.$$destroyBindings =
                       initializeDirectiveBindings(scope, attrs, controllerResult, bindings, scopeDirective);
-                  }
-                }
+              }
+            }
               }
             }
 
@@ -17122,16 +17123,16 @@
                 futureParentElement = cloneAttachFn;
                 cloneAttachFn = scope;
                 scope = undefined;
-              }
+          }
 
               if (hasElementTranscludeDirective) {
                 transcludeControllers = elementControllers;
-              }
+          }
               if (!futureParentElement) {
                 futureParentElement = hasElementTranscludeDirective ? $element.parent() : $element;
               }
               return boundTranscludeFn(scope, cloneAttachFn, transcludeControllers, futureParentElement, scopeToChild);
-            }
+        }
           }
         }
 
@@ -17169,14 +17170,14 @@
                   directive.restrict.indexOf(location) != -1) {
                   if (startAttrName) {
                     directive = inherit(directive, {$$start: startAttrName, $$end: endAttrName});
-                  }
+              }
                   tDirectives.push(directive);
                   match = directive;
-                }
+            }
               } catch (e) {
                 $exceptionHandler(e);
               }
-            }
+        }
           }
           return match;
         }
@@ -17197,8 +17198,8 @@
               directive = directives[i];
               if (directive.multiElement) {
                 return true;
-              }
-            }
+          }
+        }
           }
           return false;
         }
@@ -17240,7 +17241,7 @@
             } else if (key.charAt(0) != '$' && !dst.hasOwnProperty(key)) {
               dst[key] = value;
               dstAttr[key] = srcAttr[key];
-            }
+        }
           });
         }
 
@@ -17324,7 +17325,7 @@
                     origAsyncDirective.replace)) {
                     // it was cloned therefore we have to clone as well.
                     linkNode = jqLiteClone(compileNode);
-                  }
+              }
                   replaceWith(linkRootElement, jqLite(beforeTemplateLinkNode), linkNode);
 
                   // Copy in CSS classes from original node
@@ -17405,9 +17406,9 @@
                   compile.$$addBindingInfo(parent, interpolateFn.expressions);
                   scope.$watch(interpolateFn, function interpolateFnWatchAction(value) {
                     node[0].nodeValue = value;
-                  });
+              });
                 };
-              }
+          }
             });
           }
         }
@@ -17469,7 +17470,7 @@
                     throw $compileMinErr('nodomevents',
                       "Interpolations for HTML DOM event attributes are disallowed.  Please use the " +
                       "ng- versions (such as ng-click instead of onclick) instead.");
-                  }
+                }
 
                   // If the attribute has changed since last $interpolate()ed
                   var newValue = attr[name];
@@ -17479,7 +17480,7 @@
                     // ensure unset/empty values make interpolateFn falsy
                     interpolateFn = newValue && $interpolate(newValue, true, trustedContext, allOrNothing);
                     value = newValue;
-                  }
+                }
 
                   // if attribute was updated so that there is no interpolation going on we don't want to
                   // register any observers
@@ -17501,9 +17502,9 @@
                       //the CSS classes are the non-interpolated values
                       if (name === 'class' && newValue != oldValue) {
                         attr.$updateClass(newValue, oldValue);
-                      } else {
+                    } else {
                         attr.$set(name, newValue);
-                      }
+                    }
                     });
                 }
               };
@@ -17664,12 +17665,12 @@
                   };
                 }
                 parentSet = parentGet.assign || function () {
-                  // reset the change, or we will throw this exception on every $digest
-                  lastValue = destination[scopeName] = parentGet(scope);
-                  throw $compileMinErr('nonassign',
-                    "Expression '{0}' used with directive '{1}' is non-assignable!",
-                    attrs[attrName], directive.name);
-                };
+                    // reset the change, or we will throw this exception on every $digest
+                    lastValue = destination[scopeName] = parentGet(scope);
+                    throw $compileMinErr('nonassign',
+                      "Expression '{0}' used with directive '{1}' is non-assignable!",
+                      attrs[attrName], directive.name);
+                  };
                 lastValue = destination[scopeName] = parentGet(scope);
                 var parentValueWatch = function parentValueWatch(parentValue) {
                   if (!compare(parentValue, destination[scopeName])) {
@@ -17677,10 +17678,10 @@
                     if (!compare(parentValue, lastValue)) {
                       // parent changed and it has precedence
                       destination[scopeName] = parentValue;
-                    } else {
+                } else {
                       // if the parent can be assigned then do so
                       parentSet(scope, parentValue = destination[scopeName]);
-                    }
+                }
                   }
                   return lastValue = parentValue;
                 };
@@ -17705,7 +17706,7 @@
                   return parentGet(scope, locals);
                 };
                 break;
-            }
+        }
           });
           var destroyBindings = onNewScopeDestroyed ? function destroyBindings() {
             for (var i = 0, ii = onNewScopeDestroyed.length; i < ii; ++i) {
@@ -17800,7 +17801,7 @@
           if (token == tokens2[j]) continue outer;
         }
         values += (values.length > 0 ? ' ' : '') + token;
-      }
+  }
     return values;
   }
 
@@ -17809,15 +17810,15 @@
     var i = jqNodes.length;
 
     if (i <= 1) {
-      return jqNodes;
-    }
+    return jqNodes;
+  }
 
     while (i--) {
       var node = jqNodes[i];
       if (node.nodeType === NODE_TYPE_COMMENT) {
         splice.call(jqNodes, i, 1);
-      }
     }
+  }
     return jqNodes;
   }
 
@@ -17878,33 +17879,33 @@
 
     this.$get = ['$injector', '$window', function ($injector, $window) {
 
-      /**
-       * @ngdoc service
-       * @name $controller
-       * @requires $injector
-       *
-       * @param {Function|string} constructor If called with a function then it's considered to be the
-       *    controller constructor function. Otherwise it's considered to be a string which is used
-       *    to retrieve the controller constructor using the following steps:
-       *
-       *    * check if a controller with given name is registered via `$controllerProvider`
-       *    * check if evaluating the string on the current scope returns a constructor
-       *    * if $controllerProvider#allowGlobals, check `window[constructor]` on the global
-       *      `window` object (not recommended)
-       *
-       *    The string can use the `controller as property` syntax, where the controller instance is published
-       *    as the specified property on the `scope`; the `scope` must be injected into `locals` param for this
-       *    to work correctly.
-       *
-       * @param {Object} locals Injection locals for Controller.
-       * @return {Object} Instance of given controller.
-       *
-       * @description
-       * `$controller` service is responsible for instantiating controllers.
-       *
-       * It's just a simple call to {@link auto.$injector $injector}, but extracted into
-       * a service, so that one can override this service with [BC version](https://gist.github.com/1649788).
-       */
+    /**
+     * @ngdoc service
+     * @name $controller
+     * @requires $injector
+     *
+     * @param {Function|string} constructor If called with a function then it's considered to be the
+     *    controller constructor function. Otherwise it's considered to be a string which is used
+     *    to retrieve the controller constructor using the following steps:
+     *
+     *    * check if a controller with given name is registered via `$controllerProvider`
+     *    * check if evaluating the string on the current scope returns a constructor
+     *    * if $controllerProvider#allowGlobals, check `window[constructor]` on the global
+     *      `window` object (not recommended)
+     *
+     *    The string can use the `controller as property` syntax, where the controller instance is published
+     *    as the specified property on the `scope`; the `scope` must be injected into `locals` param for this
+     *    to work correctly.
+     *
+     * @param {Object} locals Injection locals for Controller.
+     * @return {Object} Instance of given controller.
+     *
+     * @description
+     * `$controller` service is responsible for instantiating controllers.
+     *
+     * It's just a simple call to {@link auto.$injector $injector}, but extracted into
+     * a service, so that one can override this service with [BC version](https://gist.github.com/1649788).
+     */
       return function (expression, locals, later, ident) {
         // PRIVATE API:
         //   param `later` --- indicates that the controller's constructor is invoked at a later time.
@@ -17917,7 +17918,7 @@
         later = later === true;
         if (ident && isString(ident)) {
           identifier = ident;
-        }
+      }
 
         if (isString(expression)) {
           match = expression.match(CNTRL_REG);
@@ -17925,7 +17926,7 @@
             throw $controllerMinErr('ctrlfmt',
               "Badly formed controller string '{0}'. " +
               "Must match `__name__ as __id__` or `__name__`.", expression);
-          }
+        }
           constructor = match[1],
             identifier = identifier || match[3];
           expression = controllers.hasOwnProperty(constructor)
@@ -17951,9 +17952,9 @@
             expression[expression.length - 1] : expression).prototype;
           instance = Object.create(controllerPrototype || null);
 
-          if (identifier) {
-            addIdentifier(locals, identifier, instance, constructor || expression.name);
-          }
+        if (identifier) {
+          addIdentifier(locals, identifier, instance, constructor || expression.name);
+        }
 
           var instantiate;
           return instantiate = extend(function () {
@@ -17976,7 +17977,7 @@
 
         if (identifier) {
           addIdentifier(locals, identifier, instance, constructor || expression.name);
-        }
+      }
 
         return instance;
       };
@@ -18084,7 +18085,7 @@
   function serializeValue(v) {
     if (isObject(v)) {
       return isDate(v) ? v.toISOString() : toJson(v);
-    }
+  }
     return v;
   }
 
@@ -18123,7 +18124,7 @@
 
         return parts.join('&');
       };
-    };
+  };
   }
 
   function $HttpParamSerializerJQLikeProvider() {
@@ -18186,15 +18187,15 @@
           } else if (isObject(toSerialize) && !isDate(toSerialize)) {
             forEachSorted(toSerialize, function (value, key) {
               serialize(value, prefix +
-              (topLevel ? '' : '[') +
-              key +
-              (topLevel ? '' : ']'));
+                (topLevel ? '' : '[') +
+                key +
+                (topLevel ? '' : ']'));
             });
           } else {
             parts.push(encodeUriQuery(prefix) + '=' + encodeUriQuery(serializeValue(toSerialize)));
-          }
         }
-      };
+        }
+    };
     };
   }
 
@@ -18207,9 +18208,9 @@
         var contentType = headers('Content-Type');
         if ((contentType && (contentType.indexOf(APPLICATION_JSON) === 0)) || isJsonLike(tempData)) {
           data = fromJson(tempData);
-        }
       }
     }
+  }
 
     return data;
   }
@@ -18231,7 +18232,7 @@
     function fillInParsed(key, val) {
       if (key) {
         parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
-      }
+    }
     }
 
     if (isString(headers)) {
@@ -18243,7 +18244,7 @@
       forEach(headers, function (headerVal, headerKey) {
         fillInParsed(lowercase(headerKey), trim(headerVal));
       });
-    }
+  }
 
     return parsed;
   }
@@ -18271,7 +18272,7 @@
         var value = headersObj[lowercase(name)];
         if (value === void 0) {
           value = null;
-        }
+      }
         return value;
       }
 
@@ -18316,63 +18317,63 @@
    * Use `$httpProvider` to change the default behavior of the {@link ng.$http $http} service.
    * */
   function $HttpProvider() {
-    /**
-     * @ngdoc property
-     * @name $httpProvider#defaults
-     * @description
-     *
-     * Object containing default values for all {@link ng.$http $http} requests.
-     *
-     * - **`defaults.cache`** - {Object} - an object built with {@link ng.$cacheFactory `$cacheFactory`}
-     * that will provide the cache for all requests who set their `cache` property to `true`.
-     * If you set the `defaults.cache = false` then only requests that specify their own custom
-     * cache object will be cached. See {@link $http#caching $http Caching} for more information.
-     *
-     * - **`defaults.xsrfCookieName`** - {string} - Name of cookie containing the XSRF token.
-     * Defaults value is `'XSRF-TOKEN'`.
-     *
-     * - **`defaults.xsrfHeaderName`** - {string} - Name of HTTP header to populate with the
-     * XSRF token. Defaults value is `'X-XSRF-TOKEN'`.
-     *
-     * - **`defaults.headers`** - {Object} - Default headers for all $http requests.
-     * Refer to {@link ng.$http#setting-http-headers $http} for documentation on
-     * setting default headers.
-     *     - **`defaults.headers.common`**
-     *     - **`defaults.headers.post`**
-     *     - **`defaults.headers.put`**
-     *     - **`defaults.headers.patch`**
-     *
-     *
-     * - **`defaults.paramSerializer`** - `{string|function(Object<string,string>):string}` - A function
-     *  used to the prepare string representation of request parameters (specified as an object).
-     *  If specified as string, it is interpreted as a function registered with the {@link auto.$injector $injector}.
-     *  Defaults to {@link ng.$httpParamSerializer $httpParamSerializer}.
-     *
-     **/
-    var defaults = this.defaults = {
-      // transform incoming response data
-      transformResponse: [defaultHttpResponseTransform],
+  /**
+   * @ngdoc property
+   * @name $httpProvider#defaults
+   * @description
+   *
+   * Object containing default values for all {@link ng.$http $http} requests.
+   *
+   * - **`defaults.cache`** - {Object} - an object built with {@link ng.$cacheFactory `$cacheFactory`}
+   * that will provide the cache for all requests who set their `cache` property to `true`.
+   * If you set the `defaults.cache = false` then only requests that specify their own custom
+   * cache object will be cached. See {@link $http#caching $http Caching} for more information.
+   *
+   * - **`defaults.xsrfCookieName`** - {string} - Name of cookie containing the XSRF token.
+   * Defaults value is `'XSRF-TOKEN'`.
+   *
+   * - **`defaults.xsrfHeaderName`** - {string} - Name of HTTP header to populate with the
+   * XSRF token. Defaults value is `'X-XSRF-TOKEN'`.
+   *
+   * - **`defaults.headers`** - {Object} - Default headers for all $http requests.
+   * Refer to {@link ng.$http#setting-http-headers $http} for documentation on
+   * setting default headers.
+   *     - **`defaults.headers.common`**
+   *     - **`defaults.headers.post`**
+   *     - **`defaults.headers.put`**
+   *     - **`defaults.headers.patch`**
+   *
+   *
+   * - **`defaults.paramSerializer`** - `{string|function(Object<string,string>):string}` - A function
+   *  used to the prepare string representation of request parameters (specified as an object).
+   *  If specified as string, it is interpreted as a function registered with the {@link auto.$injector $injector}.
+   *  Defaults to {@link ng.$httpParamSerializer $httpParamSerializer}.
+   *
+   **/
+  var defaults = this.defaults = {
+    // transform incoming response data
+    transformResponse: [defaultHttpResponseTransform],
 
-      // transform outgoing request data
-      transformRequest: [function (d) {
-        return isObject(d) && !isFile(d) && !isBlob(d) && !isFormData(d) ? toJson(d) : d;
-      }],
+    // transform outgoing request data
+    transformRequest: [function (d) {
+      return isObject(d) && !isFile(d) && !isBlob(d) && !isFormData(d) ? toJson(d) : d;
+    }],
 
-      // default headers
-      headers: {
-        common: {
-          'Accept': 'application/json, text/plain, */*'
-        },
-        post: shallowCopy(CONTENT_TYPE_APPLICATION_JSON),
-        put: shallowCopy(CONTENT_TYPE_APPLICATION_JSON),
-        patch: shallowCopy(CONTENT_TYPE_APPLICATION_JSON)
+    // default headers
+    headers: {
+      common: {
+        'Accept': 'application/json, text/plain, */*'
       },
+      post: shallowCopy(CONTENT_TYPE_APPLICATION_JSON),
+      put: shallowCopy(CONTENT_TYPE_APPLICATION_JSON),
+      patch: shallowCopy(CONTENT_TYPE_APPLICATION_JSON)
+    },
 
-      xsrfCookieName: 'XSRF-TOKEN',
-      xsrfHeaderName: 'X-XSRF-TOKEN',
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
 
-      paramSerializer: '$httpParamSerializer'
-    };
+    paramSerializer: '$httpParamSerializer'
+  };
 
     var useApplyAsync = false;
     /**
@@ -18994,8 +18995,8 @@
               forEach(headers, function (value, header) {
                 if (lowercase(header) === 'content-type') {
                   delete headers[header];
-                }
-              });
+            }
+          });
             }
 
             if (isUndefined(config.withCredentials) && !isUndefined(defaults.withCredentials)) {
@@ -19092,10 +19093,10 @@
                   if (lowercase(reqHeaderName) === lowercaseDefHeaderName) {
                     continue defaultHeadersIteration;
                   }
-                }
+          }
 
                 reqHeaders[defHeaderName] = defHeaders[defHeaderName];
-              }
+        }
 
             // execute if header value is a function for merged headers
             return executeHeaderFns(reqHeaders, shallowCopy(config));
@@ -19270,10 +19271,10 @@
                 // serving from cache
                 if (isArray(cachedResp)) {
                   resolvePromise(cachedResp[1], cachedResp[0], shallowCopy(cachedResp[2]), cachedResp[3]);
-                } else {
+            } else {
                   resolvePromise(cachedResp, 200, {}, 'OK');
-                }
-              }
+            }
+          }
             } else {
               // put the promise for the non-transformed response into cache as a placeholder
               cache.put(url, promise);
@@ -19468,9 +19469,9 @@
             // parsed on the client-side regardless.
             if (responseType !== 'json') {
               throw e;
-            }
           }
         }
+      }
 
         xhr.send(post);
       }
@@ -19491,7 +19492,7 @@
         // cancel timeout and subsequent timeout promise resolution
         if (timeoutId !== undefined) {
           $browserDefer.cancel(timeoutId);
-        }
+      }
         jsonpDone = xhr = null;
 
         callback(status, response, headersString, statusText);
@@ -19519,21 +19520,21 @@
         if (event) {
           if (event.type === "load" && !callbacks[callbackId].called) {
             event = {type: "error"};
-          }
+        }
           text = event.type;
           status = event.type === "error" ? 404 : 200;
         }
 
         if (done) {
           done(status, text);
-        }
-      };
+      }
+    };
 
       addEventListenerFn(script, "load", callback);
       addEventListenerFn(script, "error", callback);
       rawDocument.body.appendChild(script);
       return callback;
-    }
+  }
   }
 
   var $interpolateMinErr = angular.$interpolateMinErr = minErr('$interpolate');
@@ -19642,7 +19643,7 @@
       function stringify(value) {
         if (value == null) { // null || undefined
           return '';
-        }
+      }
         switch (typeof value) {
           case 'string':
             break;
@@ -19767,7 +19768,7 @@
             ((endIndex = text.indexOf(endSymbol, startIndex + startSymbolLength)) != -1)) {
             if (index !== startIndex) {
               concat.push(unescapeText(text.substring(index, startIndex)));
-            }
+          }
             exp = text.substring(startIndex + startSymbolLength, endIndex);
             expressions.push(exp);
             parseFns.push($parse(exp, parseStringifyInterceptor));
@@ -19780,7 +19781,7 @@
               concat.push(unescapeText(text.substring(index)));
             }
             break;
-          }
+        }
         }
 
         // Concatenating expressions makes it hard to reason about whether some combination of
@@ -19836,7 +19837,7 @@
                 }
                 lastValue = currValue;
               });
-            }
+          }
           });
         }
 
@@ -19846,8 +19847,8 @@
             return allOrNothing && !isDefined(value) ? value : stringify(value);
           } catch (err) {
             $exceptionHandler($interpolateMinErr.interr(text, err));
-          }
         }
+      }
       }
 
 
@@ -19858,8 +19859,8 @@
        * Symbol to denote the start of expression in the interpolated string. Defaults to `{{`.
      *
      * Use {@link ng.$interpolateProvider#startSymbol `$interpolateProvider.startSymbol`} to change
-       * the symbol.
-       *
+     * the symbol.
+     *
        * @returns {string} start symbol.
        */
       $interpolate.startSymbol = function () {
@@ -20040,7 +20041,7 @@
               deferred.resolve(iteration);
               clearInterval(promise.$$intervalId);
               delete intervals[promise.$$intervalId];
-            }
+        }
 
             if (!skipApply) $rootScope.$apply();
 
@@ -20115,7 +20116,7 @@
               negSuf: ')',
               gSize: 3,
               lgSize: 3
-            }
+          }
           ],
           CURRENCY_SYM: '$'
         },
@@ -20148,10 +20149,10 @@
         pluralCat: function (num) {
           if (num === 1) {
             return 'one';
-          }
+        }
           return 'other';
         }
-      };
+    };
     };
   }
 
@@ -20172,7 +20173,7 @@
 
     while (i--) {
       segments[i] = encodeUriSegment(segments[i]);
-    }
+  }
 
     return segments.join('/');
   }
@@ -20200,7 +20201,7 @@
     // make sure path starts with '/';
     if (locationObj.$$path && locationObj.$$path.charAt(0) != '/') {
       locationObj.$$path = '/' + locationObj.$$path;
-    }
+  }
   }
 
 
@@ -20214,7 +20215,7 @@
   function beginsWith(begin, whole) {
     if (whole.indexOf(begin) === 0) {
       return whole.substr(begin.length);
-    }
+  }
   }
 
 
@@ -20302,7 +20303,7 @@
           rewrittenUrl = appBaseNoFile + (beginsWith('/', appUrl) || appUrl);
         } else {
           rewrittenUrl = appBase + prevAppUrl;
-        }
+      }
       } else if ((appUrl = beginsWith(appBaseNoFile, url)) !== undefined) {
         rewrittenUrl = appBaseNoFile + appUrl;
       } else if (appBaseNoFile == url + '/') {
@@ -20331,80 +20332,80 @@
     parseAbsoluteUrl(appBase, this);
 
 
-    /**
-     * Parse given hashbang url into properties
-     * @param {string} url Hashbang url
-     * @private
-     */
-    this.$$parse = function (url) {
-      var withoutBaseUrl = beginsWith(appBase, url) || beginsWith(appBaseNoFile, url);
-      var withoutHashUrl;
+  /**
+   * Parse given hashbang url into properties
+   * @param {string} url Hashbang url
+   * @private
+   */
+  this.$$parse = function (url) {
+    var withoutBaseUrl = beginsWith(appBase, url) || beginsWith(appBaseNoFile, url);
+    var withoutHashUrl;
 
-      if (!isUndefined(withoutBaseUrl) && withoutBaseUrl.charAt(0) === '#') {
+    if (!isUndefined(withoutBaseUrl) && withoutBaseUrl.charAt(0) === '#') {
 
-        // The rest of the url starts with a hash so we have
-        // got either a hashbang path or a plain hash fragment
-        withoutHashUrl = beginsWith(hashPrefix, withoutBaseUrl);
-        if (isUndefined(withoutHashUrl)) {
-          // There was no hashbang prefix so we just have a hash fragment
-          withoutHashUrl = withoutBaseUrl;
-        }
+      // The rest of the url starts with a hash so we have
+      // got either a hashbang path or a plain hash fragment
+      withoutHashUrl = beginsWith(hashPrefix, withoutBaseUrl);
+      if (isUndefined(withoutHashUrl)) {
+        // There was no hashbang prefix so we just have a hash fragment
+        withoutHashUrl = withoutBaseUrl;
+      }
 
+    } else {
+      // There was no hashbang path nor hash fragment:
+      // If we are in HTML5 mode we use what is left as the path;
+      // Otherwise we ignore what is left
+      if (this.$$html5) {
+        withoutHashUrl = withoutBaseUrl;
       } else {
-        // There was no hashbang path nor hash fragment:
-        // If we are in HTML5 mode we use what is left as the path;
-        // Otherwise we ignore what is left
-        if (this.$$html5) {
-          withoutHashUrl = withoutBaseUrl;
-        } else {
-          withoutHashUrl = '';
-          if (isUndefined(withoutBaseUrl)) {
-            appBase = url;
-            this.replace();
-          }
+        withoutHashUrl = '';
+        if (isUndefined(withoutBaseUrl)) {
+          appBase = url;
+          this.replace();
         }
       }
+    }
 
-      parseAppUrl(withoutHashUrl, this);
+    parseAppUrl(withoutHashUrl, this);
 
-      this.$$path = removeWindowsDriveName(this.$$path, withoutHashUrl, appBase);
+    this.$$path = removeWindowsDriveName(this.$$path, withoutHashUrl, appBase);
 
-      this.$$compose();
+    this.$$compose();
 
+    /*
+     * In Windows, on an anchor node on documents loaded from
+     * the filesystem, the browser will return a pathname
+     * prefixed with the drive name ('/C:/path') when a
+     * pathname without a drive is set:
+     *  * a.setAttribute('href', '/foo')
+     *   * a.pathname === '/C:/foo' //true
+     *
+     * Inside of Angular, we're always using pathnames that
+     * do not include drive names for routing.
+     */
+    function removeWindowsDriveName(path, url, base) {
       /*
-       * In Windows, on an anchor node on documents loaded from
-       * the filesystem, the browser will return a pathname
-       * prefixed with the drive name ('/C:/path') when a
-       * pathname without a drive is set:
-       *  * a.setAttribute('href', '/foo')
-       *   * a.pathname === '/C:/foo' //true
-       *
-       * Inside of Angular, we're always using pathnames that
-       * do not include drive names for routing.
+       Matches paths for file protocol on windows,
+       such as /C:/foo/bar, and captures only /foo/bar.
        */
-      function removeWindowsDriveName(path, url, base) {
-        /*
-         Matches paths for file protocol on windows,
-         such as /C:/foo/bar, and captures only /foo/bar.
-         */
-        var windowsFilePathExp = /^\/[A-Z]:(\/.*)/;
+      var windowsFilePathExp = /^\/[A-Z]:(\/.*)/;
 
-        var firstPathSegmentMatch;
+      var firstPathSegmentMatch;
 
-        //Get the relative path from the input URL.
-        if (url.indexOf(base) === 0) {
-          url = url.replace(base, '');
-        }
-
-        // The input URL intentionally contains a first path segment that ends with a colon.
-        if (windowsFilePathExp.exec(url)) {
-          return path;
-        }
-
-        firstPathSegmentMatch = windowsFilePathExp.exec(path);
-        return firstPathSegmentMatch ? firstPathSegmentMatch[1] : path;
+      //Get the relative path from the input URL.
+      if (url.indexOf(base) === 0) {
+        url = url.replace(base, '');
       }
-    };
+
+      // The input URL intentionally contains a first path segment that ends with a colon.
+      if (windowsFilePathExp.exec(url)) {
+        return path;
+      }
+
+      firstPathSegmentMatch = windowsFilePathExp.exec(path);
+      return firstPathSegmentMatch ? firstPathSegmentMatch[1] : path;
+    }
+  };
 
     /**
      * Compose hashbang url and update `absUrl` property
@@ -20813,7 +20814,7 @@
   function locationGetterSetter(property, preprocess) {
     return function (value) {
       if (isUndefined(value)) {
-        return this[property];
+      return this[property];
       }
 
       this[property] = preprocess(value);
@@ -20907,7 +20908,7 @@
 
         if (isBoolean(mode.enabled)) {
           html5Mode.enabled = mode.enabled;
-        }
+      }
 
         if (isBoolean(mode.requireBase)) {
           html5Mode.requireBase = mode.requireBase;
@@ -20997,7 +20998,7 @@
             // Make sure $location.state() returns referentially identical (not just deeply equal)
             // state object; this makes possible quick checking if the state changed in the digest
             // loop. Checking deep equality would be too expensive.
-            $location.$$state = $browser.state();
+        $location.$$state = $browser.state();
           } catch (e) {
             // Restore old values if pushState fails
             $location.url(oldUrl);
@@ -21111,15 +21112,15 @@
 
               if (defaultPrevented) {
                 $location.$$parse(oldUrl);
-                $location.$$state = oldState;
+            $location.$$state = oldState;
               } else {
                 if (urlOrStateChanged) {
                   setBrowserUrlWithFallback(newUrl, currentReplace,
                     oldState === $location.$$state ? null : $location.$$state);
-                }
+            }
                 afterLocationChange(oldUrl, oldState);
-              }
-            });
+          }
+        });
           }
 
           $location.$$replace = false;
@@ -21255,7 +21256,7 @@
             }
           };
         }())
-      };
+    };
 
       function formatError(arg) {
         if (arg instanceof Error) {
@@ -21265,8 +21266,8 @@
               : arg.stack;
           } else if (arg.sourceURL) {
             arg = arg.message + '\n' + arg.sourceURL + ':' + arg.line;
-          }
         }
+      }
         return arg;
       }
 
@@ -21289,8 +21290,8 @@
               args.push(formatError(arg));
             });
             return logFn.apply(console, args);
-          };
-        }
+        };
+      }
 
         // we are IE which either doesn't have window.console => this is noop and we do nothing,
         // or we are IE where console.log doesn't have apply so we log at least first 2 args
@@ -21345,7 +21346,7 @@
       throw $parseMinErr('isecfld',
         'Attempting to access a disallowed field in Angular expressions! '
         + 'Expression: {0}', fullExpression);
-    }
+  }
     return name;
   }
 
@@ -21371,8 +21372,8 @@
         throw $parseMinErr('isecobj',
           'Referencing Object in Angular expressions is disallowed! Expression: {0}',
           fullExpression);
-      }
     }
+  }
     return obj;
   }
 
@@ -21390,8 +21391,8 @@
         throw $parseMinErr('isecff',
           'Referencing call, apply or bind in Angular expressions is disallowed! Expression: {0}',
           fullExpression);
-      }
     }
+  }
   }
 
   var OPERATORS = createMap();
@@ -21442,10 +21443,10 @@
             var token = op3 ? ch3 : (op2 ? ch2 : ch);
             this.tokens.push({index: this.index, text: token, operator: true});
             this.index += token.length;
-          } else {
+        } else {
             this.throwError('Unexpected next character ', this.index, this.index + 1);
-          }
         }
+      }
       }
       return this.tokens;
     },
@@ -21498,7 +21499,7 @@
         } else {
           var peekCh = this.peek();
           if (ch == 'e' && this.isExpOperator(peekCh)) {
-            number += ch;
+          number += ch;
           } else if (this.isExpOperator(ch) &&
             peekCh && this.isNumber(peekCh) &&
             number.charAt(number.length - 1) == 'e') {
@@ -21508,9 +21509,9 @@
             number.charAt(number.length - 1) == 'e') {
             this.throwError('Invalid exponent');
           } else {
-            break;
-          }
+          break;
         }
+      }
         this.index++;
       }
       this.tokens.push({
@@ -21528,7 +21529,7 @@
         if (!(this.isIdent(ch) || this.isNumber(ch))) {
           break;
         }
-        this.index++;
+      this.index++;
       }
       this.tokens.push({
         index: start,
@@ -21551,18 +21552,18 @@
             var hex = this.text.substring(this.index + 1, this.index + 5);
             if (!hex.match(/[\da-f]{4}/i)) {
               this.throwError('Invalid unicode escape [\\u' + hex + ']');
-            }
+          }
             this.index += 4;
             string += String.fromCharCode(parseInt(hex, 16));
-          } else {
+        } else {
             var rep = ESCAPE[ch];
             string = string + (rep || ch);
-          }
+        }
           escape = false;
         } else if (ch === '\\') {
           escape = true;
         } else if (ch === quote) {
-          this.index++;
+        this.index++;
           this.tokens.push({
             index: start,
             text: rawString,
@@ -21572,9 +21573,9 @@
           return;
         } else {
           string += ch;
-        }
-        this.index++;
       }
+        this.index++;
+    }
       this.throwError('Unterminated quote', start);
     }
   };
@@ -21624,7 +21625,7 @@
           body.push(this.expressionStatement());
         if (!this.expect(';')) {
           return {type: AST.Program, body: body};
-        }
+      }
       }
     },
 
@@ -21662,7 +21663,7 @@
         if (this.consume(':')) {
           consequent = this.expression();
           return {type: AST.ConditionalExpression, test: test, alternate: alternate, consequent: consequent};
-        }
+      }
       }
       return test;
     },
@@ -21751,15 +21752,15 @@
       while ((next = this.expect('(', '[', '.'))) {
         if (next.text === '(') {
           primary = {type: AST.CallExpression, callee: primary, arguments: this.parseArguments()};
-          this.consume(')');
+        this.consume(')');
         } else if (next.text === '[') {
           primary = {type: AST.MemberExpression, object: primary, property: this.expression(), computed: true};
           this.consume(']');
         } else if (next.text === '.') {
           primary = {type: AST.MemberExpression, object: primary, property: this.identifier(), computed: false};
-        } else {
+      } else {
           this.throwError('IMPOSSIBLE');
-        }
+      }
       }
       return primary;
     },
@@ -21779,7 +21780,7 @@
       var args = [];
       if (this.peekToken().text !== ')') {
         do {
-          args.push(this.expression());
+        args.push(this.expression());
         } while (this.expect(','));
       }
       return args;
@@ -21875,8 +21876,8 @@
         var t = token.text;
         if (t === e1 || t === e2 || t === e3 || t === e4 ||
           (!e1 && !e2 && !e3 && !e4)) {
-          return token;
-        }
+        return token;
+      }
       }
       return false;
     },
@@ -21886,7 +21887,7 @@
       if (token) {
         this.tokens.shift();
         return token;
-      }
+    }
       return false;
     },
 
@@ -21900,7 +21901,7 @@
       'null': {type: AST.Literal, value: null},
       'undefined': {type: AST.Literal, value: undefined},
       'this': {type: AST.ThisExpression}
-    }
+  }
   };
 
   function ifDefined(v, d) {
@@ -21966,7 +21967,7 @@
         findConstantAndWatchExpressions(ast.object, $filter);
         if (ast.computed) {
           findConstantAndWatchExpressions(ast.property, $filter);
-        }
+    }
         ast.constant = ast.object.constant && (!ast.computed || ast.property.constant);
         ast.toWatch = [ast];
         break;
@@ -22019,7 +22020,7 @@
         ast.constant = false;
         ast.toWatch = [];
         break;
-    }
+  }
   }
 
   function getInputs(body) {
@@ -22042,7 +22043,7 @@
         right: {type: AST.NGValueParameter},
         operator: '='
       };
-    }
+  }
   }
 
   function isLiteral(ast) {
@@ -22196,7 +22197,7 @@
             } else {
               self.return_(right);
             }
-          });
+      });
           break;
         case AST.Literal:
           expression = this.escape(ast.value);
@@ -22224,7 +22225,7 @@
             expression = this.ifDefined(left, 0) + ast.operator + this.ifDefined(right, 0);
           } else {
             expression = '(' + left + ')' + ast.operator + '(' + right + ')';
-          }
+      }
           this.assign(intoId, expression);
           recursionFn(expression);
           break;
@@ -22255,9 +22256,9 @@
                   self.if_(
                     self.not(self.nonComputedMember('s', ast.name)),
                     self.lazyAssign(self.nonComputedMember('s', ast.name), '{}'));
-                }
+            }
                 self.assign(intoId, self.nonComputedMember('s', ast.name));
-              });
+          });
             }, intoId && self.lazyAssign(intoId, self.nonComputedMember('l', ast.name))
           );
           if (self.state.expensiveChecks || isPossiblyDangerousMemberName(ast.name)) {
@@ -22271,7 +22272,7 @@
           self.recurse(ast.object, left, undefined, function () {
             self.if_(self.notNull(left), function () {
               if (ast.computed) {
-                right = self.nextId();
+            right = self.nextId();
                 self.recurse(ast.property, right);
                 self.addEnsureSafeMemberName(right);
                 if (create && create !== 1) {
@@ -22327,8 +22328,8 @@
                 forEach(ast.arguments, function (expr) {
                   self.recurse(expr, self.nextId(), undefined, function (argument) {
                     args.push(self.ensureSafeObject(argument));
-                  });
-                });
+              });
+            });
                 if (left.name) {
                   if (!self.state.expensiveChecks) {
                     self.addEnsureSafeObject(left.context);
@@ -22341,7 +22342,7 @@
                 self.assign(intoId, expression);
               }, function () {
                 self.assign(intoId, 'undefined');
-              });
+          });
               recursionFn(intoId);
             });
           }
@@ -22378,8 +22379,8 @@
           forEach(ast.properties, function (property) {
             self.recurse(property.value, self.nextId(), undefined, function (expr) {
               args.push(self.escape(
-                property.key.type === AST.Identifier ? property.key.name :
-                  ('' + property.key.value)) +
+                  property.key.type === AST.Identifier ? property.key.name :
+                    ('' + property.key.value)) +
               ':' + expr);
             });
           });
@@ -22443,8 +22444,8 @@
         if (consequent) {
           body.push('else{');
           consequent();
-          body.push('}');
-        }
+        body.push('}');
+      }
       }
     },
 
@@ -22528,13 +22529,13 @@
       var id = 'v' + (this.state.nextId++);
       if (!skip) {
         this.current().vars.push(id + (init ? '=' + init : ''));
-      }
+    }
       return id;
     },
 
     current: function () {
       return this.state[this.state.computing];
-    }
+  }
   };
 
 
@@ -22629,7 +22630,7 @@
           if (!ast.computed) {
             ensureSafeMemberName(ast.property.name, self.expression);
             right = ast.property.name;
-          }
+      }
           if (ast.computed) right = this.recurse(ast.property);
           return ast.computed ?
             this.computedMember(left, right, context, create, self.expression) :
@@ -22638,7 +22639,7 @@
           args = [];
           forEach(ast.arguments, function (expr) {
             args.push(self.recurse(expr));
-          });
+      });
           if (ast.filter) right = this.$filter(ast.callee.name);
           if (!ast.filter) right = this.recurse(ast.callee, true);
           return ast.filter ?
@@ -22663,17 +22664,17 @@
                 value = ensureSafeObject(rhs.value.apply(rhs.context, values), self.expression);
               }
               return context ? {value: value} : value;
-            };
+        };
         case AST.AssignmentExpression:
           left = this.recurse(ast.left, true, 1);
           right = this.recurse(ast.right);
           return function (scope, locals, assign, inputs) {
-            var lhs = left(scope, locals, assign, inputs);
-            var rhs = right(scope, locals, assign, inputs);
+        var lhs = left(scope, locals, assign, inputs);
+        var rhs = right(scope, locals, assign, inputs);
             ensureSafeObject(lhs.value, self.expression);
             lhs.context[lhs.name] = rhs;
             return context ? {value: rhs} : rhs;
-          };
+      };
         case AST.ArrayExpression:
           args = [];
           forEach(ast.elements, function (expr) {
@@ -22683,9 +22684,9 @@
             var value = [];
             for (var i = 0; i < args.length; ++i) {
               value.push(args[i](scope, locals, assign, inputs));
-            }
+        }
             return context ? {value: value} : value;
-          };
+      };
         case AST.ObjectExpression:
           args = [];
           forEach(ast.properties, function (property) {
@@ -22700,18 +22701,18 @@
             var value = {};
             for (var i = 0; i < args.length; ++i) {
               value[args[i].key] = args[i].value(scope, locals, assign, inputs);
-            }
+        }
             return context ? {value: value} : value;
-          };
+      };
         case AST.ThisExpression:
           return function (scope) {
             return context ? {value: scope} : scope;
-          };
+      };
         case AST.NGValueParameter:
           return function (scope, locals, assign, inputs) {
             return context ? {value: assign} : assign;
-          };
-      }
+      };
+    }
     },
 
     'unary+': function (argument, context) {
@@ -22939,14 +22940,14 @@
 
     var element = path.split('.'), key;
     for (var i = 0; element.length > 1; i++) {
-      key = ensureSafeMemberName(element.shift(), fullExp);
+    key = ensureSafeMemberName(element.shift(), fullExp);
       var propertyObj = ensureSafeObject(obj[key], fullExp);
       if (!propertyObj) {
         propertyObj = {};
         obj[key] = propertyObj;
       }
       obj = propertyObj;
-    }
+  }
     key = ensureSafeMemberName(element.shift(), fullExp);
     ensureSafeObject(obj[key], fullExp);
     obj[key] = setValue;
@@ -23058,7 +23059,7 @@
                   oneTimeLiteralWatchDelegate : oneTimeWatchDelegate;
               } else if (parsedExpression.inputs) {
                 parsedExpression.$$watchDelegate = inputsWatchDelegate;
-              }
+            }
               cache[cacheKey] = parsedExpression;
             }
             return addInterceptor(parsedExpression, interceptorFn);
@@ -23084,13 +23085,13 @@
           //             be cheaply dirty-checked
           newValue = getValueOf(newValue);
 
-          if (typeof newValue === 'object') {
-            // objects/arrays are not supported - deep-watching them would be too expensive
-            return false;
-          }
+        if (typeof newValue === 'object') {
+          // objects/arrays are not supported - deep-watching them would be too expensive
+          return false;
+        }
 
           // fall-through to the primitive equality check
-        }
+      }
 
         //Primitive or NaN
         return newValue === oldValueOfValue || (newValue !== newValue && oldValueOfValue !== oldValueOfValue);
@@ -23108,17 +23109,17 @@
             if (!expressionInputDirtyCheck(newInputValue, oldInputValueOf)) {
               lastResult = parsedExpression(scope, undefined, undefined, [newInputValue]);
               oldInputValueOf = newInputValue && getValueOf(newInputValue);
-            }
-            return lastResult;
-          }, listener, objectEquality, prettyPrintExpression);
-        }
+          }
+          return lastResult;
+        }, listener, objectEquality, prettyPrintExpression);
+      }
 
         var oldInputValueOfValues = [];
         var oldInputValues = [];
         for (var i = 0, ii = inputExpressions.length; i < ii; i++) {
           oldInputValueOfValues[i] = expressionInputDirtyCheck; // init to something unique so that equals check fails
           oldInputValues[i] = null;
-        }
+      }
 
         return scope.$watch(function expressionInputsWatch(scope) {
           var changed = false;
@@ -23128,7 +23129,7 @@
             if (changed || (changed = !expressionInputDirtyCheck(newInputValue, oldInputValueOfValues[i]))) {
               oldInputValues[i] = newInputValue;
               oldInputValueOfValues[i] = newInputValue && getValueOf(newInputValue);
-            }
+          }
           }
 
           if (changed) {
@@ -23153,8 +23154,8 @@
               if (isDefined(lastValue)) {
                 unwatch();
               }
-            });
-          }
+          });
+        }
         }, objectEquality);
       }
 
@@ -23180,7 +23181,7 @@
             if (!isDefined(val)) allDefined = false;
           });
           return allDefined;
-        }
+      }
       }
 
       function constantWatchDelegate(scope, listener, objectEquality, parsedExpression) {
@@ -23223,7 +23224,7 @@
           // we treat filters - it is assumed to be a pure function unless flagged with $stateful
           fn.$$watchDelegate = inputsWatchDelegate;
           fn.inputs = parsedExpression.inputs ? parsedExpression.inputs : [parsedExpression];
-        }
+      }
 
         return fn;
       }
@@ -23480,8 +23481,8 @@
           if (called) return;
           called = true;
           fn.call(self, value);
-        };
-      }
+      };
+    }
 
       return [wrap(resolveFn), wrap(rejectFn)];
     }
@@ -23525,7 +23526,7 @@
         }, function (error) {
           return handleCallback(error, false, callback);
         }, progressBack);
-      }
+    }
     };
 
     //Faster, more basic than angular.bind http://jsperf.com/angular-bind-vs-custom-vs-native
@@ -23549,9 +23550,9 @@
             deferred.resolve(fn(state.value));
           } else if (state.status === 1) {
             deferred.resolve(state.value);
-          } else {
+        } else {
             deferred.reject(state.value);
-          }
+        }
         } catch (e) {
           deferred.reject(e);
           exceptionHandler(e);
@@ -23602,7 +23603,7 @@
             this.promise.$$state.value = val;
             this.promise.$$state.status = 1;
             scheduleProcessQueue(this.promise.$$state);
-          }
+        }
         } catch (e) {
           fns[1](e);
           exceptionHandler(e);
@@ -23633,10 +23634,10 @@
                 result.notify(isFunction(callback) ? callback(progress) : progress);
               } catch (e) {
                 exceptionHandler(e);
-              }
+            }
             }
           });
-        }
+      }
       }
     };
 
@@ -23685,7 +23686,7 @@
     var makePromise = function makePromise(value, resolved) {
       var result = new Deferred();
       if (resolved) {
-        result.resolve(value);
+      result.resolve(value);
       } else {
         result.reject(value);
       }
@@ -23773,7 +23774,7 @@
           if (!(--counter)) deferred.resolve(results);
         }, function (reason) {
           if (results.hasOwnProperty(key)) return;
-          deferred.reject(reason);
+        deferred.reject(reason);
         });
       });
 
@@ -23782,7 +23783,7 @@
       }
 
       return deferred.promise;
-    }
+  }
 
     var $Q = function Q(resolver) {
       if (!isFunction(resolver)) {
@@ -23840,7 +23841,7 @@
         return function () {
           $timeout.cancel(timer);
         };
-      };
+        };
 
       queueFn.supported = rafSupported;
 
@@ -23856,7 +23857,7 @@
             taskQueue[i] = null;
             task();
           }
-        }
+      }
         taskCount = taskQueue.length = 0;
       }
 
@@ -23881,7 +23882,7 @@
               taskQueue.length = 0;
             }
           }
-        };
+      };
       }
     }];
   }
@@ -23975,7 +23976,7 @@
         this.$$watchersCount = 0;
         this.$id = nextUid();
         this.$$ChildScope = null;
-      }
+    }
 
       ChildScope.prototype = parent;
       return ChildScope;
@@ -24348,7 +24349,7 @@
                 if (!changeReactionScheduled) {
                   changeReactionScheduled = true;
                   self.$evalAsync(watchGroupAction);
-                }
+            }
               });
               deregisterFns.push(unwatchFn);
             });
@@ -24501,16 +24502,16 @@
                     oldItem = oldValue[key];
 
                     if (key in oldValue) {
-                      bothNaN = (oldItem !== oldItem) && (newItem !== newItem);
-                      if (!bothNaN && (oldItem !== newItem)) {
-                        changeDetected++;
-                        oldValue[key] = newItem;
-                      }
+                  bothNaN = (oldItem !== oldItem) && (newItem !== newItem);
+                  if (!bothNaN && (oldItem !== newItem)) {
+                    changeDetected++;
+                    oldValue[key] = newItem;
+                  }
                     } else {
                       oldLength++;
                       oldValue[key] = newItem;
-                      changeDetected++;
-                    }
+                  changeDetected++;
+                }
                   }
                 }
                 if (oldLength > newLength) {
@@ -24520,9 +24521,9 @@
                     if (!newValue.hasOwnProperty(key)) {
                       oldLength--;
                       delete oldValue[key];
-                    }
-                  }
                 }
+              }
+            }
               }
               return changeDetected;
             }
@@ -24550,9 +24551,9 @@
                   for (var key in newValue) {
                     if (hasOwnProperty.call(newValue, key)) {
                       veryOldValue[key] = newValue[key];
-                    }
-                  }
                 }
+              }
+            }
               }
             }
 
@@ -24642,8 +24643,8 @@
                   asyncTask.scope.$eval(asyncTask.expression, asyncTask.locals);
                 } catch (e) {
                   $exceptionHandler(e);
-                }
-                lastDirtyWatch = null;
+            }
+            lastDirtyWatch = null;
               }
 
               traverseScopesLoop:
@@ -24652,39 +24653,39 @@
                     // process our watches
                     length = watchers.length;
                     while (length--) {
-                      try {
-                        watch = watchers[length];
-                        // Most common watches are on primitives, in which case we can short
-                        // circuit it with === operator, only when === fails do we use .equals
-                        if (watch) {
-                          if ((value = watch.get(current)) !== (last = watch.last) && !(watch.eq
-                              ? equals(value, last)
-                              : (typeof value === 'number' && typeof last === 'number'
-                            && isNaN(value) && isNaN(last)))) {
-                            dirty = true;
-                            lastDirtyWatch = watch;
-                            watch.last = watch.eq ? copy(value, null) : value;
-                            watch.fn(value, ((last === initWatchVal) ? value : last), current);
-                            if (ttl < 5) {
-                              logIdx = 4 - ttl;
-                              if (!watchLog[logIdx]) watchLog[logIdx] = [];
-                              watchLog[logIdx].push({
-                                msg: isFunction(watch.exp) ? 'fn: ' + (watch.exp.name || watch.exp.toString()) : watch.exp,
-                                newVal: value,
-                                oldVal: last
-                              });
-                            }
-                          } else if (watch === lastDirtyWatch) {
-                            // If the most recently dirty watcher is now clean, short circuit since the remaining watchers
-                            // have already been tested.
-                            dirty = false;
-                            break traverseScopesLoop;
-                          }
-                        }
-                      } catch (e) {
-                        $exceptionHandler(e);
+                try {
+                  watch = watchers[length];
+                  // Most common watches are on primitives, in which case we can short
+                  // circuit it with === operator, only when === fails do we use .equals
+                  if (watch) {
+                    if ((value = watch.get(current)) !== (last = watch.last) && !(watch.eq
+                        ? equals(value, last)
+                        : (typeof value === 'number' && typeof last === 'number'
+                      && isNaN(value) && isNaN(last)))) {
+                      dirty = true;
+                      lastDirtyWatch = watch;
+                      watch.last = watch.eq ? copy(value, null) : value;
+                      watch.fn(value, ((last === initWatchVal) ? value : last), current);
+                      if (ttl < 5) {
+                        logIdx = 4 - ttl;
+                        if (!watchLog[logIdx]) watchLog[logIdx] = [];
+                        watchLog[logIdx].push({
+                          msg: isFunction(watch.exp) ? 'fn: ' + (watch.exp.name || watch.exp.toString()) : watch.exp,
+                          newVal: value,
+                          oldVal: last
+                        });
                       }
+                    } else if (watch === lastDirtyWatch) {
+                      // If the most recently dirty watcher is now clean, short circuit since the remaining watchers
+                      // have already been tested.
+                      dirty = false;
+                      break traverseScopesLoop;
                     }
+                  }
+                } catch (e) {
+                  $exceptionHandler(e);
+                }
+              }
                   }
 
                   // Insanity Warning: scope depth-first traversal
@@ -24694,14 +24695,14 @@
                     (current !== target && current.$$nextSibling)))) {
                     while (current !== target && !(next = current.$$nextSibling)) {
                       current = current.$parent;
-                    }
+              }
                   }
                 } while ((current = next));
 
               // `break traverseScopesLoop;` takes us to here
 
               if ((dirty || asyncQueue.length) && !(ttl--)) {
-                clearPhase();
+            clearPhase();
                 throw $rootScopeMinErr('infdig',
                   '{0} $digest() iterations reached. Aborting!\n' +
                   'Watchers fired in the last 5 iterations: {1}',
@@ -24869,7 +24870,7 @@
               $browser.defer(function () {
                 if (asyncQueue.length) {
                   $rootScope.$digest();
-                }
+            }
               });
             }
 
@@ -25017,8 +25018,8 @@
               if (indexOfListener !== -1) {
                 namedListeners[indexOfListener] = null;
                 decrementListenerCount(self, 1, name);
-              }
-            };
+          }
+        };
           },
 
 
@@ -25081,7 +25082,7 @@
                 } catch (e) {
                   $exceptionHandler(e);
                 }
-              }
+          }
               //if any listener on the current scope stops propagation, prevent bubbling
               if (stopPropagation) {
                 event.currentScope = null;
@@ -25149,12 +25150,12 @@
                   continue;
                 }
 
-                try {
-                  listeners[i].apply(null, listenerArgs);
-                } catch (e) {
-                  $exceptionHandler(e);
-                }
-              }
+            try {
+              listeners[i].apply(null, listenerArgs);
+            } catch (e) {
+              $exceptionHandler(e);
+            }
+          }
 
               // Insanity Warning: scope depth-first traversal
               // yes, this code is a bit crazy, but it works and we have tests to prove it!
@@ -25165,13 +25166,13 @@
                 while (current !== target && !(next = current.$$nextSibling)) {
                   current = current.$parent;
                 }
-              }
-            }
+          }
+        }
 
             event.currentScope = null;
             return event;
-          }
-        };
+      }
+    };
 
         var $rootScope = new Scope();
 
@@ -25211,12 +25212,12 @@
           } while ((current = current.$parent));
         }
 
-        /**
-         * function used as an initial value for watchers.
-         * because it's unique we can easily tell it apart from other values
-         */
-        function initWatchVal() {
-        }
+    /**
+     * function used as an initial value for watchers.
+     * because it's unique we can easily tell it apart from other values
+     */
+    function initWatchVal() {
+    }
 
         function flushApplyAsync() {
           while (applyAsyncQueue.length) {
@@ -25224,7 +25225,7 @@
               applyAsyncQueue.shift()();
             } catch (e) {
               $exceptionHandler(e);
-            }
+        }
           }
           applyAsyncId = null;
         }
@@ -25269,7 +25270,7 @@
         return this;
       }
       return aHrefSanitizationWhitelist;
-    };
+  };
 
 
     /**
@@ -25358,7 +25359,7 @@
     } else {
       throw $sceMinErr('imatcher',
         'Matchers may only be "self", string patterns or RegExp objects');
-    }
+  }
   }
 
 
@@ -25368,7 +25369,7 @@
       forEach(matchers, function (matcher) {
         adjustedMatchers.push(adjustMatcher(matcher));
       });
-    }
+  }
     return adjustedMatchers;
   }
 
@@ -25514,7 +25515,7 @@
 
       var htmlSanitizer = function htmlSanitizer(html) {
         throw $sceMinErr('unsafe', 'Attempting to use an unsafe value in a safe context.');
-      };
+    };
 
       if ($injector.has('$sanitize')) {
         htmlSanitizer = $injector.get('$sanitize');
@@ -25527,7 +25528,7 @@
         } else {
           // definitely a regex.  See adjustMatchers()
           return !!matcher.exec(parsedUrl.href);
-        }
+      }
       }
 
       function isResourceUrlAllowedByPolicy(url) {
@@ -25538,17 +25539,17 @@
           if (matchUrl(resourceUrlWhitelist[i], parsedUrl)) {
             allowed = true;
             break;
-          }
         }
+      }
         if (allowed) {
           // Ensure that no item from the blacklist blocked this url.
           for (i = 0, n = resourceUrlBlacklist.length; i < n; i++) {
             if (matchUrl(resourceUrlBlacklist[i], parsedUrl)) {
               allowed = false;
-              break;
-            }
+            break;
           }
         }
+      }
         return allowed;
       }
 
@@ -25556,11 +25557,11 @@
         var holderType = function TrustedValueHolderType(trustedValue) {
           this.$$unwrapTrustedValue = function () {
             return trustedValue;
-          };
+        };
         };
         if (Base) {
           holderType.prototype = new Base();
-        }
+      }
         holderType.prototype.valueOf = function sceValueOf() {
           return this.$$unwrapTrustedValue();
         };
@@ -25612,7 +25613,7 @@
           throw $sceMinErr('itype',
             'Attempted to trust a non-string value in a content requiring a string: Context: {0}',
             type);
-        }
+      }
         return new Constructor(trustedValue);
       }
 
@@ -25639,7 +25640,7 @@
           return maybeTrusted.$$unwrapTrustedValue();
         } else {
           return maybeTrusted;
-        }
+      }
       }
 
       /**
@@ -25670,15 +25671,15 @@
         // 2. throw an exception.
         if (type === SCE_CONTEXTS.RESOURCE_URL) {
           if (isResourceUrlAllowedByPolicy(maybeTrusted)) {
-            return maybeTrusted;
+          return maybeTrusted;
           } else {
             throw $sceMinErr('insecurl',
               'Blocked loading resource from url not allowed by $sceDelegate policy.  URL: {0}',
               maybeTrusted.toString());
-          }
+        }
         } else if (type === SCE_CONTEXTS.HTML) {
           return htmlSanitizer(maybeTrusted);
-        }
+      }
         throw $sceMinErr('unsafe', 'Attempting to use an unsafe value in a safe context.');
       }
 
@@ -25979,13 +25980,13 @@
      * @ngdoc method
      * @name $sceProvider#enabled
      * @kind function
-     *
+   *
      * @param {boolean=} value If provided, then enables/disables SCE.
      * @return {boolean} true if SCE is enabled, false otherwise.
      *
      * @description
      * Enables/disables SCE and returns the current value.
-     */
+   */
     this.enabled = function (value) {
       if (arguments.length) {
         enabled = !!value;
@@ -26052,20 +26053,20 @@
 
       var sce = shallowCopy(SCE_CONTEXTS);
 
-      /**
-       * @ngdoc method
-       * @name $sce#isEnabled
-       * @kind function
-       *
-       * @return {Boolean} true if SCE is enabled, false otherwise.  If you want to set the value, you
-       * have to do it at module config time on {@link ng.$sceProvider $sceProvider}.
-       *
-       * @description
-       * Returns a boolean indicating if SCE is enabled.
-       */
-      sce.isEnabled = function () {
-        return enabled;
-      };
+    /**
+     * @ngdoc method
+     * @name $sce#isEnabled
+     * @kind function
+     *
+     * @return {Boolean} true if SCE is enabled, false otherwise.  If you want to set the value, you
+     * have to do it at module config time on {@link ng.$sceProvider $sceProvider}.
+     *
+     * @description
+     * Returns a boolean indicating if SCE is enabled.
+     */
+    sce.isEnabled = function () {
+      return enabled;
+    };
       sce.trustAs = $sceDelegate.trustAs;
       sce.getTrusted = $sceDelegate.getTrusted;
       sce.valueOf = $sceDelegate.valueOf;
@@ -26080,7 +26081,7 @@
       /**
        * @ngdoc method
        * @name $sce#parseAs
-       *
+     *
        * @description
        * Converts Angular {@link guide/expression expression} into a function.  This is like {@link
         * ng.$parse $parse} and is identical when the expression is a literal constant.  Otherwise, it
@@ -26405,7 +26406,7 @@
             vendorPrefix = match[0];
             vendorPrefix = vendorPrefix.substr(0, 1).toUpperCase() + vendorPrefix.substr(1);
             break;
-          }
+        }
         }
 
         if (!vendorPrefix) {
@@ -26418,7 +26419,7 @@
         if (android && (!transitions || !animations)) {
           transitions = isString(bodyStyle.webkitTransition);
           animations = isString(bodyStyle.webkitAnimation);
-        }
+      }
       }
 
 
@@ -26506,7 +26507,7 @@
         var httpOptions = {
           cache: $templateCache,
           transformResponse: transformResponse
-        };
+      };
 
         return $http.get(tpl, httpOptions)
           ['finally'](function () {
@@ -26521,9 +26522,9 @@
           if (!ignoreRequestError) {
             throw $compileMinErr('tpload', 'Failed to load template: {0} (HTTP status: {1} {2})',
               tpl, resp.status, resp.statusText);
-          }
-          return $q.reject(resp);
         }
+          return $q.reject(resp);
+      }
       }
 
       handleRequestFn.totalPendingRequests = 0;
@@ -26573,8 +26574,8 @@
                   if (bindingName.indexOf(expression) != -1) {
                     matches.push(binding);
                   }
-                }
-              });
+            }
+          });
             }
           });
           return matches;
@@ -26909,7 +26910,7 @@
         return decodeURIComponent(str);
       } catch (e) {
         return str;
-      }
+    }
     }
 
     return function () {
@@ -26931,9 +26932,9 @@
             // follow are for less specific paths.
             if (lastCookies[name] === undefined) {
               lastCookies[name] = safeDecodeURIComponent(cookie.substring(index + 1));
-            }
           }
         }
+      }
       }
       return lastCookies;
     };
@@ -27062,7 +27063,7 @@
      *    </div>
      * @returns {Object} Registered filter instance, or if a map of filters was provided then a map
      *    of the registered filter instances.
-     */
+   */
     function register(name, factory) {
       if (isObject(name)) {
         var filters = {};
@@ -27072,8 +27073,8 @@
         return filters;
       } else {
         return $provide.factory(name + suffix, factory);
-      }
     }
+  }
 
     this.register = register;
 
@@ -27242,17 +27243,17 @@
           return array;
         } else {
           throw minErr('filter')('notarray', 'Expected array but received: {0}', array);
-        }
+      }
       }
 
       var expressionType = getTypeForFilter(expression);
-      var predicateFn;
+    var predicateFn;
       var matchAgainstAnyProp;
 
       switch (expressionType) {
-        case 'function':
-          predicateFn = expression;
-          break;
+      case 'function':
+        predicateFn = expression;
+        break;
         case 'boolean':
         case 'null':
         case 'number':
@@ -27263,8 +27264,8 @@
           //jshint +W086
           predicateFn = createPredicateFn(expression, comparator, matchAgainstAnyProp);
           break;
-        default:
-          return array;
+      default:
+        return array;
       }
 
       return Array.prototype.filter.call(array, predicateFn);
@@ -27348,14 +27349,14 @@
           }
           return true;
         } else {
-          return comparator(actual, expected);
+        return comparator(actual, expected);
         }
         break;
       case 'function':
         return false;
       default:
         return comparator(actual, expected);
-    }
+  }
   }
 
 // Used for easily differentiating between `null` and actual `object`
@@ -27527,7 +27528,7 @@
       } else {
         formatedText = numStr;
         hasExponent = true;
-      }
+    }
     }
 
     if (!isInfinity && !hasExponent) {
@@ -27555,23 +27556,23 @@
         pos = whole.length - lgroup;
         for (i = 0; i < pos; i++) {
           if ((pos - i) % group === 0 && i !== 0) {
-            formatedText += groupSep;
-          }
-          formatedText += whole.charAt(i);
+          formatedText += groupSep;
         }
+        formatedText += whole.charAt(i);
+      }
       }
 
       for (i = pos; i < whole.length; i++) {
         if ((whole.length - i) % lgroup === 0 && i !== 0) {
           formatedText += groupSep;
-        }
-        formatedText += whole.charAt(i);
       }
+        formatedText += whole.charAt(i);
+    }
 
       // format fraction part.
       while (fraction.length < fractionSize) {
         fraction += '0';
-      }
+    }
 
       if (fractionSize && fractionSize !== "0") formatedText += decimalSep + fraction.substr(0, fractionSize);
     } else {
@@ -27579,11 +27580,11 @@
         formatedText = number.toFixed(fractionSize);
         number = parseFloat(formatedText);
       }
-    }
+  }
 
     if (number === 0) {
       isNegative = false;
-    }
+  }
 
     parts.push(isNegative ? pattern.negPre : pattern.posPre,
       formatedText,
@@ -27596,7 +27597,7 @@
     if (num < 0) {
       neg = '-';
       num = -num;
-    }
+  }
     num = '' + num;
     while (num.length < digits) num = '0' + num;
     if (trim) {
@@ -27632,7 +27633,7 @@
     var paddedZone = (zone >= 0) ? "+" : "";
 
     paddedZone += padNumber(Math[zone > 0 ? 'floor' : 'ceil'](zone / 60), 2) +
-    padNumber(Math.abs(zone % 60), 2);
+      padNumber(Math.abs(zone % 60), 2);
 
     return paddedZone;
   }
@@ -27797,10 +27798,10 @@
          expect(element(by.binding("1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'")).getText()).
             toMatch(/2010\-10\-2\d \d{2}:\d{2}:\d{2} (\-|\+)?\d{4}/);
          expect(element(by.binding("'1288323623006' | date:'MM/dd/yyyy @ h:mma'")).getText()).
-   toMatch(/10\/2\d\/2010 @ \d{1,2}:\d{2}(AM|PM)/);
-   expect(element(by.binding("'1288323623006' | date:\"MM/dd/yyyy 'at' h:mma\"")).getText()).
-   toMatch(/10\/2\d\/2010 at \d{1,2}:\d{2}(AM|PM)/);
-   });
+            toMatch(/10\/2\d\/2010 @ \d{1,2}:\d{2}(AM|PM)/);
+         expect(element(by.binding("'1288323623006' | date:\"MM/dd/yyyy 'at' h:mma\"")).getText()).
+            toMatch(/10\/2\d\/2010 at \d{1,2}:\d{2}(AM|PM)/);
+       });
    </file>
    </example>
    */
@@ -27822,7 +27823,7 @@
         if (match[9]) {
           tzHour = toInt(match[9] + match[10]);
           tzMin = toInt(match[9] + match[11]);
-        }
+      }
         dateSetter.call(date, toInt(match[1]), toInt(match[2]) - 1, toInt(match[3]));
         var h = toInt(match[4] || 0) - tzHour;
         var m = toInt(match[5] || 0) - tzMin;
@@ -27830,7 +27831,7 @@
         var ms = Math.round(parseFloat('0.' + (match[7] || 0)) * 1000);
         timeSetter.call(date, h, m, s, ms);
         return date;
-      }
+    }
       return string;
     }
 
@@ -27862,7 +27863,7 @@
         } else {
           parts.push(format);
           format = null;
-        }
+      }
       }
 
       var dateTimezoneOffset = date.getTimezoneOffset();
@@ -28061,9 +28062,9 @@
       } else {
         if (begin === 0) {
           return input.slice(limit, input.length);
-        } else {
+      } else {
           return input.slice(Math.max(0, begin + limit), begin);
-        }
+      }
       }
     };
   }
@@ -28274,16 +28275,16 @@
             return getPredicateValue(predicate.get(value), index);
           })
         };
-      }
+    }
 
       function doComparison(v1, v2) {
-        var result = 0;
+      var result = 0;
         for (var index = 0, length = predicates.length; index < length; ++index) {
           result = compare(v1.predicateValues[index], v2.predicateValues[index]) * predicates[index].descending;
           if (result) break;
-        }
-        return result;
       }
+      return result;
+    }
     };
 
     function processPredicates(sortPredicate, reverseOrder) {
@@ -28310,7 +28311,7 @@
         }
         return {get: get, descending: descending * reverseOrder};
       });
-    }
+  }
 
     function isPrimitive(value) {
       switch (typeof value) {
@@ -28404,9 +28405,9 @@
               event.preventDefault();
             }
           });
-        };
-      }
+      };
     }
+  }
   });
 
   /**
@@ -28789,7 +28790,7 @@
         restrict: 'A',
         priority: 100,
         link: linkFn
-      };
+    };
     };
   });
 
@@ -28806,14 +28807,14 @@
             if (match) {
               attr.$set("ngPattern", new RegExp(match[1], match[2]));
               return;
-            }
           }
+        }
 
           scope.$watch(attr[ngAttr], function ngAttrAliasWatchAction(value) {
             attr.$set(ngAttr, value);
           });
         }
-      };
+    };
     };
   });
 
@@ -28832,7 +28833,7 @@
             name = 'xlinkHref';
             attr.$attr[name] = 'xlink:href';
             propName = null;
-          }
+        }
 
           attr.$observe(normalized, function (value) {
             if (!value) {
@@ -28851,7 +28852,7 @@
             if (msie && propName) element.prop(propName, attr[name]);
           });
         }
-      };
+    };
     };
   });
 
@@ -29097,45 +29098,45 @@
      */
     form.$setPristine = function () {
       $animate.setClass(element, PRISTINE_CLASS, DIRTY_CLASS + ' ' + SUBMITTED_CLASS);
-      form.$dirty = false;
-      form.$pristine = true;
-      form.$submitted = false;
+    form.$dirty = false;
+    form.$pristine = true;
+    form.$submitted = false;
       forEach(controls, function (control) {
         control.$setPristine();
-      });
+    });
     };
 
-    /**
-     * @ngdoc method
-     * @name form.FormController#$setUntouched
-     *
-     * @description
-     * Sets the form to its untouched state.
-     *
-     * This method can be called to remove the 'ng-touched' class and set the form controls to their
-     * untouched state (ng-untouched class).
-     *
-     * Setting a form controls back to their untouched state is often useful when setting the form
-     * back to its pristine state.
-     */
-    form.$setUntouched = function () {
-      forEach(controls, function (control) {
-        control.$setUntouched();
-      });
-    };
+  /**
+   * @ngdoc method
+   * @name form.FormController#$setUntouched
+   *
+   * @description
+   * Sets the form to its untouched state.
+   *
+   * This method can be called to remove the 'ng-touched' class and set the form controls to their
+   * untouched state (ng-untouched class).
+   *
+   * Setting a form controls back to their untouched state is often useful when setting the form
+   * back to its pristine state.
+   */
+  form.$setUntouched = function () {
+    forEach(controls, function (control) {
+      control.$setUntouched();
+    });
+  };
 
-    /**
-     * @ngdoc method
-     * @name form.FormController#$setSubmitted
-     *
-     * @description
-     * Sets the form to its submitted state.
-     */
-    form.$setSubmitted = function () {
-      $animate.addClass(element, SUBMITTED_CLASS);
-      form.$submitted = true;
-      parentForm.$setSubmitted();
-    };
+  /**
+   * @ngdoc method
+   * @name form.FormController#$setSubmitted
+   *
+   * @description
+   * Sets the form to its submitted state.
+   */
+  form.$setSubmitted = function () {
+    $animate.addClass(element, SUBMITTED_CLASS);
+    form.$submitted = true;
+    parentForm.$setSubmitted();
+  };
   }
 
   /**
@@ -29329,7 +29330,7 @@
                   scope.$apply(function () {
                     controller.$commitViewValue();
                     controller.$setSubmitted();
-                  });
+                });
 
                   event.preventDefault();
                 };
@@ -29353,9 +29354,9 @@
                   if (controller.$name === newValue) return;
                   setter(scope, controller.$name, undefined, controller.$name);
                   parentFormCtrl.$$renameControl(controller, newValue);
-                  setter(scope, controller.$name, controller, controller.$name);
-                });
-              }
+                setter(scope, controller.$name, controller, controller.$name);
+              });
+            }
               formElement.on('$destroy', function () {
                 parentFormCtrl.$removeControl(controller);
                 if (nameAttr) {
@@ -30230,8 +30231,8 @@
      .controller('ExampleController', ['$scope', function($scope) {
                $scope.email = {
                  text: 'me@example.com'
-     };
-     }]);
+               };
+             }]);
      </script>
      <form name="myForm" ng-controller="ExampleController">
      <label>Email:
@@ -30258,8 +30259,8 @@
 
      it('should initialize to model', function() {
             expect(text.getText()).toContain('me@example.com');
-     expect(valid.getText()).toContain('true');
-     });
+            expect(valid.getText()).toContain('true');
+          });
 
      it('should be invalid if empty', function() {
             input.clear();
@@ -30444,7 +30445,7 @@
       if (timeout) {
         $browser.defer.cancel(timeout);
         timeout = null;
-      }
+    }
       if (composing) return;
       var value = element.val(),
         event = ev && ev.type;
@@ -30479,8 +30480,8 @@
               listener(ev);
             }
           });
-        }
-      };
+      }
+    };
 
       element.on('keydown', function (event) {
         var key = event.keyCode;
@@ -30495,7 +30496,7 @@
       // if user modifies input value using context menu in IE, we need "paste" and "cut" events to catch it
       if ($sniffer.hasEvent('paste')) {
         element.on('paste cut', deferListener);
-      }
+    }
     }
 
     // if user paste into input using mouse on older browser
@@ -30510,7 +30511,7 @@
   function weekParser(isoWeek, existingDate) {
     if (isDate(isoWeek)) {
       return isoWeek;
-    }
+  }
 
     if (isString(isoWeek)) {
       WEEK_REGEXP.lastIndex = 0;
@@ -30574,7 +30575,7 @@
             };
           } else {
             map = {yyyy: 1970, MM: 1, dd: 1, HH: 0, mm: 0, ss: 0, sss: 0};
-          }
+        }
 
           forEach(parts, function (part, index) {
             if (index < mapping.length) {
@@ -30582,17 +30583,17 @@
             }
           });
           return new Date(map.yyyy, map.MM - 1, map.dd, map.HH, map.mm, map.ss || 0, map.sss * 1000 || 0);
-        }
       }
+    }
 
-      return NaN;
+    return NaN;
     };
   }
 
   function createDateInputType(type, regexp, parseDate, format) {
     return function dynamicDateInputType(scope, element, attr, ctrl, $sniffer, $browser, $filter) {
-      badInputChecker(scope, element, attr, ctrl);
-      baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
+    badInputChecker(scope, element, attr, ctrl);
+    baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
       var timezone = ctrl && ctrl.$options && ctrl.$options.timezone;
       var previousDate;
 
@@ -30609,8 +30610,8 @@
           }
           return parsedDate;
         }
-        return undefined;
-      });
+      return undefined;
+    });
 
       ctrl.$formatters.push(function (value) {
         if (value && !isDate(value)) {
@@ -30620,35 +30621,35 @@
           previousDate = value;
           if (previousDate && timezone) {
             previousDate = convertTimezoneToLocal(previousDate, timezone, true);
-          }
+        }
           return $filter('date')(value, format, timezone);
         } else {
           previousDate = null;
           return '';
-        }
+      }
+    });
+
+    if (isDefined(attr.min) || attr.ngMin) {
+      var minVal;
+      ctrl.$validators.min = function (value) {
+        return !isValidDate(value) || isUndefined(minVal) || parseDate(value) >= minVal;
+      };
+      attr.$observe('min', function (val) {
+        minVal = parseObservedDateValue(val);
+        ctrl.$validate();
       });
+    }
 
-      if (isDefined(attr.min) || attr.ngMin) {
-        var minVal;
-        ctrl.$validators.min = function (value) {
-          return !isValidDate(value) || isUndefined(minVal) || parseDate(value) >= minVal;
-        };
-        attr.$observe('min', function (val) {
-          minVal = parseObservedDateValue(val);
-          ctrl.$validate();
-        });
-      }
-
-      if (isDefined(attr.max) || attr.ngMax) {
-        var maxVal;
-        ctrl.$validators.max = function (value) {
-          return !isValidDate(value) || isUndefined(maxVal) || parseDate(value) <= maxVal;
-        };
-        attr.$observe('max', function (val) {
-          maxVal = parseObservedDateValue(val);
-          ctrl.$validate();
-        });
-      }
+    if (isDefined(attr.max) || attr.ngMax) {
+      var maxVal;
+      ctrl.$validators.max = function (value) {
+        return !isValidDate(value) || isUndefined(maxVal) || parseDate(value) <= maxVal;
+      };
+      attr.$observe('max', function (val) {
+        maxVal = parseObservedDateValue(val);
+        ctrl.$validate();
+      });
+    }
 
       function isValidDate(value) {
         // Invalid Date: getTime() returns NaN
@@ -30673,7 +30674,7 @@
         // - can ignore this case as we can still read out the erroneous email...
         return validity.badInput && !validity.typeMismatch ? undefined : value;
       });
-    }
+  }
   }
 
   function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
@@ -30693,7 +30694,7 @@
           throw $ngModelMinErr('numfmt', 'Expected `{0}` to be a number', value);
         }
         value = value.toString();
-      }
+    }
       return value;
     });
 
@@ -30701,7 +30702,7 @@
       var minVal;
       ctrl.$validators.min = function (value) {
         return ctrl.$isEmpty(value) || isUndefined(minVal) || value >= minVal;
-      };
+    };
 
       attr.$observe('min', function (val) {
         if (isDefined(val) && !isNumber(val)) {
@@ -30717,7 +30718,7 @@
       var maxVal;
       ctrl.$validators.max = function (value) {
         return ctrl.$isEmpty(value) || isUndefined(maxVal) || value <= maxVal;
-      };
+    };
 
       attr.$observe('max', function (val) {
         if (isDefined(val) && !isNumber(val)) {
@@ -30727,7 +30728,7 @@
         // TODO(matsko): implement validateLater to reduce number of validations
         ctrl.$validate();
       });
-    }
+  }
   }
 
   function urlInputType(scope, element, attr, ctrl, $sniffer, $browser) {
@@ -30765,7 +30766,7 @@
     var listener = function (ev) {
       if (element[0].checked) {
         ctrl.$setViewValue(attr.value, ev && ev.type);
-      }
+    }
     };
 
     element.on('click', listener);
@@ -30784,10 +30785,10 @@
       parseFn = $parse(expression);
       if (!parseFn.constant) {
         throw minErr('ngModel')('constexpr', 'Expected constant expression for `{0}`, but saw ' +
-        '`{1}`.', name, expression);
+          '`{1}`.', name, expression);
       }
       return parseFn(context);
-    }
+  }
     return fallback;
   }
 
@@ -31005,7 +31006,7 @@
             if (ctrls[0]) {
               (inputType[lowercase(attr.type)] || inputType.text)(scope, element, attr, ctrls[0], $sniffer,
                 $browser, $filter, $parse);
-            }
+        }
           }
         }
       };
@@ -31085,9 +31086,9 @@
               attr.$set('value', value);
             });
           };
-        }
       }
-    };
+      }
+  };
   };
 
   /**
@@ -31290,7 +31291,7 @@
             // we re-evaluate the expr because we want a TrustedValueHolderType
             // for $sce, not a string
             element.html($sce.getTrustedHtml(ngBindHtmlGetter(scope)) || '');
-          });
+        });
         };
       }
     };
@@ -31370,7 +31371,7 @@
       ctrl.$viewChangeListeners.push(function () {
         scope.$eval(attr.ngChange);
       });
-    }
+  }
   });
 
   function classDirective(name, selector) {
@@ -31917,7 +31918,7 @@
  *      this.contacts = [
  *        {type: 'phone', value: '408 555 1212'},
  *        {type: 'email', value: 'john.smith@example.org'} ];
-   *    }
+ *    }
    *
    *    SettingsController1.prototype.greet = function() {
  *      alert(this.name);
@@ -31925,7 +31926,7 @@
    *
    *    SettingsController1.prototype.addContact = function() {
  *      this.contacts.push({type: 'email', value: 'yourname@example.org'});
-   *    };
+ *    };
    *
    *    SettingsController1.prototype.removeContact = function(contactToRemove) {
  *     var index = this.contacts.indexOf(contactToRemove);
@@ -31953,19 +31954,19 @@
  *
  *       expect(secondRepeat.element(by.model('contact.value')).getAttribute('value'))
  *           .toBe('john.smith@example.org');
-   *
-   *       firstRepeat.element(by.buttonText('clear')).click();
-   *
-   *       expect(firstRepeat.element(by.model('contact.value')).getAttribute('value'))
-   *           .toBe('');
-   *
-   *       container.element(by.buttonText('add')).click();
-   *
-   *       expect(container.element(by.repeater('contact in settings.contacts').row(2))
-   *           .element(by.model('contact.value'))
-   *           .getAttribute('value'))
-   *           .toBe('yourname@example.org');
-   *     });
+ *
+ *       firstRepeat.element(by.buttonText('clear')).click();
+ *
+ *       expect(firstRepeat.element(by.model('contact.value')).getAttribute('value'))
+ *           .toBe('');
+ *
+ *       container.element(by.buttonText('add')).click();
+ *
+ *       expect(container.element(by.repeater('contact in settings.contacts').row(2))
+ *           .element(by.model('contact.value'))
+ *           .getAttribute('value'))
+ *           .toBe('yourname@example.org');
+ *     });
    *   </file>
    * </example>
    *
@@ -32000,25 +32001,25 @@
  *     $scope.contacts = [
  *       {type:'phone', value:'408 555 1212'},
  *       {type:'email', value:'john.smith@example.org'} ];
-   *
-   *     $scope.greet = function() {
+ *
+ *     $scope.greet = function() {
  *       alert($scope.name);
  *     };
-   *
-   *     $scope.addContact = function() {
+ *
+ *     $scope.addContact = function() {
  *       $scope.contacts.push({type:'email', value:'yourname@example.org'});
-   *     };
-   *
-   *     $scope.removeContact = function(contactToRemove) {
+ *     };
+ *
+ *     $scope.removeContact = function(contactToRemove) {
  *       var index = $scope.contacts.indexOf(contactToRemove);
  *       $scope.contacts.splice(index, 1);
  *     };
-   *
-   *     $scope.clearContact = function(contact) {
+ *
+ *     $scope.clearContact = function(contact) {
  *       contact.type = 'phone';
  *       contact.value = '';
  *     };
-   *   }
+ *   }
    *  </file>
    *  <file name="protractor.js" type="protractor">
    *    it('should check controller', function() {
@@ -32036,19 +32037,19 @@
  *          .toBe('408 555 1212');
  *      expect(secondRepeat.element(by.model('contact.value')).getAttribute('value'))
  *          .toBe('john.smith@example.org');
-   *
-   *      firstRepeat.element(by.buttonText('clear')).click();
-   *
-   *      expect(firstRepeat.element(by.model('contact.value')).getAttribute('value'))
-   *          .toBe('');
-   *
-   *      container.element(by.buttonText('add')).click();
-   *
-   *      expect(container.element(by.repeater('contact in contacts').row(2))
-   *          .element(by.model('contact.value'))
-   *          .getAttribute('value'))
-   *          .toBe('yourname@example.org');
-   *    });
+ *
+ *      firstRepeat.element(by.buttonText('clear')).click();
+ *
+ *      expect(firstRepeat.element(by.model('contact.value')).getAttribute('value'))
+ *          .toBe('');
+ *
+ *      container.element(by.buttonText('add')).click();
+ *
+ *      expect(container.element(by.repeater('contact in contacts').row(2))
+ *          .element(by.model('contact.value'))
+ *          .getAttribute('value'))
+ *          .toBe('yourname@example.org');
+ *    });
    *  </file>
    *</example>
 
@@ -33053,7 +33054,7 @@
               if (currentElement) {
                 $animate.leave(currentElement).then(function () {
                   previousElement = null;
-                });
+            });
                 previousElement = currentElement;
                 currentElement = null;
               }
@@ -33064,7 +33065,7 @@
                 if (isDefined(autoScrollExp) && (!autoScrollExp || scope.$eval(autoScrollExp))) {
                   $anchorScroll();
                 }
-              };
+          };
               var thisChangeId = ++changeCounter;
 
               if (src) {
@@ -33103,7 +33104,7 @@
                 ctrl.template = null;
               }
             });
-          };
+      };
         }
       };
     }];
@@ -33130,7 +33131,7 @@
                 $element.append(clone);
               }, {futureParentElement: $element});
             return;
-          }
+        }
 
           $element.html(ctrl.template);
           $compile($element.contents())(scope);
@@ -33330,7 +33331,7 @@
           return !value || !value.length;
         };
       }
-    };
+  };
   };
 
   /* global VALID_CLASS: true,
@@ -33590,9 +33591,9 @@
             var modelValue = parsedNgModel($scope);
             if (isFunction(modelValue)) {
               modelValue = invokeModelGetter($scope);
-            }
+        }
             return modelValue;
-          };
+      };
           ngModelSet = function ($scope, newValue) {
             if (isFunction(parsedNgModel($scope))) {
               invokeModelSetter($scope, {$$$p: ctrl.$modelValue});
@@ -34161,7 +34162,7 @@
           }
           if (ctrl.$viewValue !== viewValue) {
             ctrl.$viewValue = ctrl.$$lastCommittedViewValue = viewValue;
-            ctrl.$render();
+        ctrl.$render();
 
             ctrl.$$runValidators(modelValue, viewValue, noop);
           }
@@ -34366,7 +34367,7 @@
             attr.$observe('name', function (newValue) {
               if (modelCtrl.$name !== newValue) {
                 formCtrl.$$renameControl(modelCtrl, newValue);
-              }
+            }
             });
 
             scope.$on('$destroy', function () {
@@ -34378,8 +34379,8 @@
             if (modelCtrl.$options && modelCtrl.$options.updateOn) {
               element.on(modelCtrl.$options.updateOn, function (ev) {
                 modelCtrl.$$debounceViewValueCommit(ev && ev.type);
-              });
-            }
+            });
+          }
 
             element.on('blur', function (ev) {
               if (modelCtrl.$touched) return;
@@ -34576,8 +34577,9 @@
           this.$options.updateOnDefault = true;
         }
       }]
-    };
   };
+  };
+
 
 
 // helper methods
@@ -34605,12 +34607,12 @@
         unset(ctrl.$$success, validationErrorKey, controller);
       } else {
         if (state) {
-          unset(ctrl.$error, validationErrorKey, controller);
+        unset(ctrl.$error, validationErrorKey, controller);
           set(ctrl.$$success, validationErrorKey, controller);
         } else {
           set(ctrl.$error, validationErrorKey, controller);
-          unset(ctrl.$$success, validationErrorKey, controller);
-        }
+        unset(ctrl.$$success, validationErrorKey, controller);
+      }
       }
       if (ctrl.$pending) {
         cachedToggleClass(PENDING_CLASS, true);
@@ -34636,7 +34638,7 @@
         combinedState = true;
       } else {
         combinedState = null;
-      }
+    }
 
       toggleValidationCss(validationErrorKey, combinedState);
       parentForm.$setValidity(validationErrorKey, combinedState, ctrl);
@@ -34645,14 +34647,14 @@
     function createAndSet(name, value, controller) {
       if (!ctrl[name]) {
         ctrl[name] = {};
-      }
+    }
       set(ctrl[name], value, controller);
     }
 
     function unsetAndCleanup(name, value, controller) {
       if (ctrl[name]) {
         unset(ctrl[name], value, controller);
-      }
+    }
       if (isObjectEmpty(ctrl[name])) {
         ctrl[name] = undefined;
       }
@@ -34665,7 +34667,7 @@
       } else if (!switchValue && classCache[className]) {
         $animate.removeClass($element, className);
         classCache[className] = false;
-      }
+    }
     }
 
     function toggleValidationCss(validationErrorKey, isValid) {
@@ -34673,7 +34675,7 @@
 
       cachedToggleClass(VALID_CLASS + validationErrorKey, isValid === true);
       cachedToggleClass(INVALID_CLASS + validationErrorKey, isValid === false);
-    }
+  }
   }
 
   function isObjectEmpty(obj) {
@@ -34681,9 +34683,9 @@
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
           return false;
-        }
       }
     }
+  }
     return true;
   }
 
@@ -35028,9 +35030,9 @@
           for (var itemKey in optionValues) {
             if (optionValues.hasOwnProperty(itemKey) && itemKey.charAt(0) !== '$') {
               optionValuesKeys.push(itemKey);
-            }
           }
         }
+      }
         return optionValuesKeys;
       }
 
@@ -35056,7 +35058,7 @@
 
             // Only need to watch the displayFn if there is a specific label expression
             if (match[2] || match[1]) {
-              var label = displayFn(scope, locals);
+            var label = displayFn(scope, locals);
               watchedArray.push(label);
             }
 
@@ -35064,7 +35066,7 @@
             if (match[4]) {
               var disableWhen = disableWhenFn(scope, locals);
               watchedArray.push(disableWhen);
-            }
+          }
           }
           return watchedArray;
         }),
@@ -35093,7 +35095,7 @@
 
             optionItems.push(optionItem);
             selectValueMap[selectValue] = optionItem;
-          }
+        }
 
           return {
             items: optionItems,
@@ -35137,7 +35139,7 @@
           if (children[i].value === '') {
             emptyOption = children.eq(i);
             break;
-          }
+        }
         }
 
         var providedEmptyOption = !!emptyOption;
@@ -35196,10 +35198,10 @@
               if (value === null || providedEmptyOption) {
                 removeUnknownOption();
                 renderEmptyOption();
-              } else {
-                removeEmptyOption();
+            } else {
+              removeEmptyOption();
                 renderUnknownOption();
-              }
+            }
             }
           };
 
@@ -35211,7 +35213,7 @@
               removeEmptyOption();
               removeUnknownOption();
               return options.getViewValueFromOption(selectedOption);
-            }
+          }
             return null;
           };
 
@@ -35244,7 +35246,7 @@
               value.forEach(function (item) {
                 var option = options.getOptionFromViewValue(item);
                 if (option && !option.disabled) option.element.selected = true;
-              });
+            });
             }
           };
 
@@ -35330,8 +35332,8 @@
             } else {
               // The next element is not a group so insert the new one
               parent.insertBefore(element, current);
-            }
           }
+        }
           return element;
         }
 
@@ -35371,9 +35373,9 @@
           var currentElement = selectElement[0].firstChild;
 
           // Ensure that the empty option is always there if it was explicitly provided
-          if (providedEmptyOption) {
-            selectElement.prepend(emptyOption);
-          }
+        if (providedEmptyOption) {
+          selectElement.prepend(emptyOption);
+        }
 
           currentElement = skipEmptyAndUnknownOptions(currentElement);
 
@@ -35418,7 +35420,7 @@
               // Move to the next element
               group.currentOptionElement = optionElement.nextSibling;
 
-            } else {
+          } else {
 
               // This option is not in a group
               optionElement = addOrReuseElement(selectElement[0],
@@ -35428,7 +35430,7 @@
               updateOptionElement(option, optionElement);
               // Move to the next element
               currentElement = optionElement.nextSibling;
-            }
+          }
           });
 
 
@@ -35446,10 +35448,10 @@
             if (ngOptions.trackBy ? !equals(previousValue, nextValue) : previousValue !== nextValue) {
               ngModelCtrl.$setViewValue(nextValue);
               ngModelCtrl.$render();
-            }
           }
-
         }
+
+      }
 
       }
     };
@@ -35677,19 +35679,19 @@
             if (isUndefined(whenExpFn)) {
               if (newVal != null) {
                 $log.debug("ngPluralize: no rule defined for '" + count + "' in " + whenExp);
-              }
+            }
               watchRemover = noop;
               updateElementText();
             } else {
               watchRemover = scope.$watch(whenExpFn, updateElementText);
-            }
-            lastCount = count;
           }
+            lastCount = count;
+        }
         });
 
         function updateElementText(newText) {
           element.text(newText || '');
-        }
+      }
       }
     };
   }];
@@ -36079,8 +36081,8 @@
               hashFnLocals[valueIdentifier] = value;
               hashFnLocals.$index = index;
               return trackByExpGetter($scope, hashFnLocals);
-            };
-          }
+          };
+        }
 
           // Store a list of elements from previous run. This is a hash where key is the item from the
           // iterator, and the value is objects with following properties.
@@ -36124,8 +36126,8 @@
               for (var itemKey in collection) {
                 if (collection.hasOwnProperty(itemKey) && itemKey.charAt(0) !== '$') {
                   collectionKeys.push(itemKey);
-                }
               }
+            }
             }
 
             collectionLength = collectionKeys.length;
@@ -36154,7 +36156,7 @@
                 // new never before seen block
                 nextBlockOrder[index] = {id: trackById, scope: undefined, clone: undefined};
                 nextBlockMap[trackById] = true;
-              }
+            }
             }
 
             // remove leftover items
@@ -36167,8 +36169,8 @@
                 // so that we can ignore it later
                 for (index = 0, length = elementsToRemove.length; index < length; index++) {
                   elementsToRemove[index][NG_REMOVED] = true;
-                }
               }
+            }
               block.scope.$destroy();
             }
 
@@ -36211,9 +36213,9 @@
                   // by a directive with templateUrl when its template arrives.
                   block.clone = clone;
                   nextBlockMap[block.id] = block;
-                  updateScope(block.scope, index, valueIdentifier, value, keyIdentifier, key, collectionLength);
+                updateScope(block.scope, index, valueIdentifier, value, keyIdentifier, key, collectionLength);
                 });
-              }
+            }
             }
             lastBlockMap = nextBlockMap;
           });
@@ -36393,7 +36395,7 @@
           // Read: https://github.com/angular/angular.js/issues/9103#issuecomment-58335845
           $animate[value ? 'removeClass' : 'addClass'](element, NG_HIDE_CLASS, {
             tempClasses: NG_HIDE_IN_PROGRESS_CLASS
-          });
+        });
         });
       }
     };
@@ -36553,7 +36555,7 @@
           // remove a temporary class for the show/hide animation
           $animate[value ? 'addClass' : 'removeClass'](element, NG_HIDE_CLASS, {
             tempClasses: NG_HIDE_IN_PROGRESS_CLASS
-          });
+        });
         });
       }
     };
@@ -36792,11 +36794,11 @@
 
                 selectedElements.push(block);
                 $animate.enter(caseElement, anchor.parent(), anchor);
-              });
+            });
             });
           }
         });
-      }
+    }
     };
   }];
 
@@ -36844,12 +36846,12 @@
                restrict: 'E',
                transclude: true,
                scope: { title:'@' },
-   template: '<div style="border: 1px solid black;">' +
-   '<div style="background-color: gray">{{title}}</div>' +
-   '<ng-transclude></ng-transclude>' +
-   '</div>'
-   };
-   })
+               template: '<div style="border: 1px solid black;">' +
+                           '<div style="background-color: gray">{{title}}</div>' +
+                           '<ng-transclude></ng-transclude>' +
+                         '</div>'
+             };
+         })
    .controller('ExampleController', ['$scope', function($scope) {
            $scope.title = 'Lorem Ipsum';
            $scope.text = 'Neque porro quisquam est qui dolorem ipsum quia dolor...';
@@ -36885,7 +36887,7 @@
           'No parent directive that requires a transclusion found. ' +
           'Element: {0}',
           startingTag($element));
-      }
+    }
 
       $transclude(function (clone) {
         $element.empty();
@@ -36937,7 +36939,7 @@
             text = element[0].text;
 
           $templateCache.put(templateUrl, text);
-        }
+      }
       }
     };
   }];
@@ -37002,7 +37004,7 @@
           if (value === '') self.emptyOption.prop('selected', true); // to make IE9 happy
         } else {
           if (value == null && self.emptyOption) {
-            self.removeUnknownOption();
+        self.removeUnknownOption();
             $element.val('');
           } else {
             self.renderUnknownOption(value);
@@ -37027,9 +37029,9 @@
         if (count) {
           if (count === 1) {
             optionsMap.remove(value);
-            if (value === '') {
-              self.emptyOption = undefined;
-            }
+        if (value === '') {
+          self.emptyOption = undefined;
+        }
           } else {
             optionsMap.put(value, count - 1);
           }
@@ -37142,7 +37144,7 @@
         element.on('change', function () {
           scope.$apply(function () {
             ngModelCtrl.$setViewValue(selectCtrl.readValue());
-          });
+        });
         });
 
         // If the select allows multiple values then we need to modify how we read and write
@@ -37157,8 +37159,8 @@
             forEach(element.find('option'), function (option) {
               if (option.selected) {
                 array.push(option.value);
-              }
-            });
+            }
+          });
             return array;
           };
 
@@ -37187,9 +37189,9 @@
             return !value || value.length === 0;
           };
 
-        }
       }
-    };
+      }
+  };
   };
 
 
@@ -37204,7 +37206,7 @@
       // automatically select the new element
       if (optionElement[0].hasAttribute('selected')) {
         optionElement[0].selected = true;
-      }
+    }
     }
 
     return {
@@ -37218,7 +37220,7 @@
           var interpolateFn = $interpolate(element.text(), true);
           if (!interpolateFn) {
             attr.$set('value', element.text());
-          }
+        }
         }
 
         return function (scope, element, attr) {
@@ -37241,14 +37243,14 @@
                   selectCtrl.removeOption(oldVal);
                 }
                 selectCtrl.addOption(newVal, element);
-                selectCtrl.ngModelCtrl.$render();
-                chromeHack(element);
-              });
+              selectCtrl.ngModelCtrl.$render();
+              chromeHack(element);
+            });
             } else {
               selectCtrl.addOption(attr.value, element);
               selectCtrl.ngModelCtrl.$render();
               chromeHack(element);
-            }
+          }
 
             element.on('$destroy', function () {
               selectCtrl.removeOption(attr.value);
@@ -37281,7 +37283,7 @@
           ctrl.$validate();
         });
       }
-    };
+  };
   };
 
 
@@ -37312,7 +37314,7 @@
           return ctrl.$isEmpty(value) || isUndefined(regexp) || regexp.test(value);
         };
       }
-    };
+  };
   };
 
 
@@ -37333,7 +37335,7 @@
           return (maxlength < 0) || ctrl.$isEmpty(viewValue) || (viewValue.length <= maxlength);
         };
       }
-    };
+  };
   };
 
   var minlengthDirective = function () {
@@ -37352,7 +37354,7 @@
           return ctrl.$isEmpty(viewValue) || viewValue.length >= minlength;
         };
       }
-    };
+  };
   };
 
   if (window.angular.bootstrap) {
@@ -37415,7 +37417,7 @@
   function assertArg(arg, name, reason) {
     if (!arg) {
       throw ngMinErr('areq', "Argument '{0}' is {1}", (name || '?'), (reason || "required"));
-    }
+  }
     return arg;
   }
 
@@ -37433,7 +37435,7 @@
     if (options && (options.to || options.from)) {
       styles.to = options.to;
       styles.from = options.from;
-    }
+  }
     return styles;
   }
 
@@ -37449,7 +37451,7 @@
         className += (i > 0) ? ' ' : '';
         className += isPrefix ? fix + klass
           : klass + fix;
-      }
+    }
     });
     return className;
   }
@@ -37458,7 +37460,7 @@
     var index = arr.indexOf(val);
     if (val >= 0) {
       arr.splice(index, 1);
-    }
+  }
   }
 
   function stripCommentsFromElement(element) {
@@ -37480,12 +37482,12 @@
         default:
           return jqLite(extractElementNode(element));
           break;
-      }
     }
+  }
 
     if (element.nodeType === ELEMENT_NODE) {
       return jqLite(element);
-    }
+  }
   }
 
   function extractElementNode(element) {
@@ -37494,8 +37496,8 @@
       var elm = element[i];
       if (elm.nodeType == ELEMENT_NODE) {
         return elm;
-      }
     }
+  }
   }
 
   function $$addClass($$jqLite, element, className) {
@@ -37515,12 +37517,12 @@
       if (options.addClass) {
         $$addClass($$jqLite, element, options.addClass);
         options.addClass = null;
-      }
+    }
       if (options.removeClass) {
         $$removeClass($$jqLite, element, options.removeClass);
         options.removeClass = null;
-      }
     }
+  }
   }
 
   function prepareAnimationOptions(options) {
@@ -37531,7 +37533,7 @@
         options.$$domOperationFired = true;
         domOperation();
         domOperation = noop;
-      };
+    };
       options.$$prepared = true;
     }
     return options;
@@ -37612,7 +37614,7 @@
       if (allow) {
         if (classes[prop].length) {
           classes[prop] += ' ';
-        }
+      }
         classes[prop] += klass;
       }
     });
@@ -37628,8 +37630,8 @@
         // incase extra spaces were applied to the options
         if (klass.length) {
           obj[klass] = true;
-        }
-      });
+      }
+    });
       return obj;
     }
 
@@ -37650,7 +37652,7 @@
       // to track down on the outside code
       tickQueue.push([].concat(tasks));
       nextTick();
-    }
+  }
 
     /* waitUntilQuiet does two things:
      * 1. It will run the FINAL `fn` value only when an uncancelled RAF has passed through
@@ -37666,7 +37668,7 @@
       cancelFn = $$rAF(function () {
         cancelFn = null;
         fn();
-        nextTick();
+      nextTick();
       });
     };
 
@@ -37681,15 +37683,15 @@
         runNextTask(innerQueue);
         if (innerQueue.length) {
           updatedQueue.push(innerQueue);
-        }
       }
+    }
       tickQueue = updatedQueue;
 
       if (!cancelFn) {
         $$rAF(function () {
           if (!cancelFn) nextTick();
         });
-      }
+    }
     }
 
     function runNextTask(tasks) {
@@ -37997,14 +37999,14 @@
         // only numerical-based values have a negative sign or digit as the first value
         if (c === '-' || c === '+' || c >= 0) {
           val = parseMaxTime(val);
-        }
+      }
 
         // by setting this to null in the event that the delay is not set or is set directly as 0
         // then we can still allow for zegative values to be used later on and not mistake this
         // value for being greater than any other negative value.
         if (val === 0) {
           val = null;
-        }
+      }
         styles[actualStyleName] = val;
       }
     });
@@ -38020,7 +38022,7 @@
       // getComputedStyle will always handle the conversion for us
       if (value.charAt(value.length - 1) == 's') {
         value = value.substring(0, value.length - 1);
-      }
+    }
       value = parseFloat(value) || 0;
       maxValue = maxValue ? Math.max(value, maxValue) : value;
     });
@@ -38038,7 +38040,7 @@
       style += DURATION_KEY;
     } else {
       value += ' linear all';
-    }
+  }
     return [style, value];
   }
 
@@ -38127,7 +38129,7 @@
             timings = computeCssStyles($window, node, properties);
             if (timings.animationIterationCount === 'infinite') {
               timings.animationIterationCount = 1;
-            }
+        }
           }
 
           // we keep putting this in multiple times even though the value and the cacheKey are the same
@@ -38159,7 +38161,7 @@
               $$jqLite.removeClass(node, staggerClassName);
 
               gcsStaggerLookup.put(cacheKey, stagger);
-            }
+        }
           }
 
           return stagger || {};
@@ -38188,7 +38190,7 @@
             // during this looping then it will consider new requests
             for (var i = 0; i < rafWaitQueue.length; i++) {
               rafWaitQueue[i](width);
-            }
+        }
             rafWaitQueue.length = 0;
           });
         }
@@ -38352,8 +38354,8 @@
           flags.hasAnimations = timings.animationDuration > 0;
           flags.hasTransitionAll = flags.hasTransitions && timings.transitionProperty == 'all';
           flags.applyTransitionDuration = hasToStyles && (
-          (flags.hasTransitions && !flags.hasTransitionAll)
-          || (flags.hasAnimations && !flags.hasTransitions));
+            (flags.hasTransitions && !flags.hasTransitionAll)
+            || (flags.hasAnimations && !flags.hasTransitions));
           flags.applyAnimationDuration = options.duration && flags.hasAnimations;
           flags.applyTransitionDelay = truthyTimingValue(options.delay) && (flags.applyTransitionDuration || flags.hasTransitions);
           flags.applyAnimationDelay = truthyTimingValue(options.delay) && flags.hasAnimations;
@@ -38392,8 +38394,8 @@
           if (!options.skipBlocking) {
             flags.blockTransition = timings.transitionDuration > 0;
             flags.blockKeyframeAnimation = timings.animationDuration > 0 &&
-            stagger.animationDelay > 0 &&
-            stagger.animationDuration === 0;
+              stagger.animationDelay > 0 &&
+              stagger.animationDuration === 0;
           }
 
           applyAnimationFromStyles(element, options);
@@ -38411,11 +38413,11 @@
               if (animationClosed) return;
 
               runnerHost = {
-                end: endFn,
+            end: endFn,
                 cancel: cancelFn,
                 resume: null, //this will be set during the start() phase
                 pause: null
-              };
+          };
 
               runner = new $$AnimateRunner(runnerHost);
 
@@ -38525,9 +38527,9 @@
                     : removeFromArray(temporaryStyles, value);
                 }
               } else if (animationPaused && playAnimation) {
-                animationPaused = false;
-                close();
-              }
+            animationPaused = false;
+            close();
+          }
             };
 
             // checking the stagger duration prevents an accidently cascade of the CSS delay style
@@ -38580,9 +38582,9 @@
                 maxDuration = timings.maxDuration;
 
                 if (maxDuration === 0) {
-                  close();
-                  return;
-                }
+              close();
+              return;
+            }
 
                 flags.hasTransitions = timings.transitionDuration > 0;
                 flags.hasAnimations = timings.animationDuration > 0;
@@ -38671,11 +38673,11 @@
                 // the animation will automatically close itself since transitions cannot be paused.
                 animationCompleted = true;
                 close();
-              }
-            }
           }
         }
-      }];
+          }
+        }
+  }];
   }];
 
   var $$AnimateCssDriverProvider = ['$$animationProvider', function ($$animationProvider) {
@@ -38753,18 +38755,18 @@
               var currentAnimation = startingAnimator.start();
               currentAnimation.done(function () {
                 currentAnimation = null;
-                if (!animatorIn) {
-                  animatorIn = prepareInAnimation();
-                  if (animatorIn) {
-                    currentAnimation = animatorIn.start();
-                    currentAnimation.done(function () {
-                      currentAnimation = null;
-                      end();
-                      runner.complete();
-                    });
-                    return currentAnimation;
-                  }
-                }
+            if (!animatorIn) {
+              animatorIn = prepareInAnimation();
+              if (animatorIn) {
+                currentAnimation = animatorIn.start();
+                currentAnimation.done(function () {
+                  currentAnimation = null;
+                  end();
+                  runner.complete();
+                });
+                return currentAnimation;
+              }
+            }
                 // in the event that there is no `in` animation
                 end();
                 runner.complete();
@@ -38780,8 +38782,8 @@
               function endFn() {
                 if (currentAnimation) {
                   currentAnimation.end();
-                }
-              }
+            }
+          }
             }
           };
 
@@ -38858,7 +38860,7 @@
             var animator = prepareAnchoredAnimation(classes, outElement, inElement);
             if (animator) {
               anchorAnimations.push(animator);
-            }
+        }
           });
 
           // no point in doing anything when there are no elements to animate
@@ -38928,7 +38930,7 @@
           // a flag as a hint as to whether an animation was detected or not
           return animator.$$willAnimate ? animator : null;
         }
-      }];
+  }];
   }];
 
 // TODO(matsko): use caching here to speed things up for detection
@@ -39027,7 +39029,7 @@
                 },
                 cancel: function () {
                   endAnimations(true);
-                }
+            }
               });
 
               $$AnimateRunner.chain(chain, onComplete);
@@ -39044,8 +39046,8 @@
                 if (!animationClosed) {
                   (closeActiveAnimations || noop)(cancelled);
                   onComplete(cancelled);
-                }
-              }
+            }
+          }
             }
           };
 
@@ -39079,7 +39081,7 @@
             if (value) {
               if (isFunction(value.start)) {
                 value = value.start();
-              }
+          }
 
               if (value instanceof $$AnimateRunner) {
                 value.done(onDone);
@@ -39110,7 +39112,7 @@
                     (endProgressCb || noop)(rejected);
                     runner.complete(!rejected);
                   }
-                };
+            };
 
                 runner = new $$AnimateRunner({
                   end: function () {
@@ -39143,15 +39145,15 @@
               } else if (fnName === 'setClass') {
                 a = groupEventedAnimations(element, 'removeClass', options, animations, 'removeClass');
                 b = groupEventedAnimations(element, 'addClass', options, animations, 'addClass');
-              }
+          }
 
               if (a) {
                 operations = operations.concat(a);
               }
               if (b) {
                 operations = operations.concat(b);
-              }
-            }
+          }
+        }
 
             if (operations.length === 0) return;
 
@@ -39170,10 +39172,10 @@
                 forEach(runners, function (runner) {
                   reject ? runner.cancel() : runner.end();
                 });
-              };
+          };
             };
-          }
-        };
+      }
+    };
 
         function lookupAnimations(classes) {
           classes = isArray(classes) ? classes : classes.split(' ');
@@ -39187,7 +39189,7 @@
             }
           }
           return matches;
-        }
+    }
       }];
   }];
 
@@ -39200,41 +39202,41 @@
           var toAnimation = prepareAnimation(animationDetails.to);
           if (!fromAnimation && !toAnimation) return;
 
-          return {
-            start: function () {
-              var animationRunners = [];
+        return {
+          start: function () {
+            var animationRunners = [];
 
-              if (fromAnimation) {
-                animationRunners.push(fromAnimation.start());
-              }
-
-              if (toAnimation) {
-                animationRunners.push(toAnimation.start());
-              }
-
-              $$AnimateRunner.all(animationRunners, done);
-
-              var runner = new $$AnimateRunner({
-                end: endFnFactory(),
-                cancel: endFnFactory()
-              });
-
-              return runner;
-
-              function endFnFactory() {
-                return function () {
-                  forEach(animationRunners, function (runner) {
-                    // at this point we cannot cancel animations for groups just yet. 1.5+
-                    runner.end();
-                  });
-                };
-              }
-
-              function done(status) {
-                runner.complete(status);
-              }
+            if (fromAnimation) {
+              animationRunners.push(fromAnimation.start());
             }
-          };
+
+            if (toAnimation) {
+              animationRunners.push(toAnimation.start());
+            }
+
+            $$AnimateRunner.all(animationRunners, done);
+
+            var runner = new $$AnimateRunner({
+              end: endFnFactory(),
+              cancel: endFnFactory()
+            });
+
+            return runner;
+
+            function endFnFactory() {
+              return function () {
+                forEach(animationRunners, function (runner) {
+                  // at this point we cannot cancel animations for groups just yet. 1.5+
+                  runner.end();
+                });
+              };
+            }
+
+            function done(status) {
+              runner.complete(status);
+            }
+          }
+        };
         } else {
           return prepareAnimation(animationDetails);
         }
@@ -39388,7 +39390,7 @@
             forEach(entries, function (entry) {
               if (entry.node.contains(targetNode)) {
                 matches.push(entry.callback);
-              }
+          }
             });
           }
 
@@ -39476,7 +39478,7 @@
                     disabledElementsLookup.remove(node);
                   }
                 }
-              }
+          }
             }
 
             return bool;
@@ -39564,12 +39566,12 @@
             var skipAnimationFlag = isAllowed('skip', element, newAnimation, existingAnimation);
             if (skipAnimationFlag) {
               if (existingAnimation.state === RUNNING_STATE) {
-                close();
-                return runner;
+            close();
+            return runner;
               } else {
                 mergeAnimationOptions(element, existingAnimation.options, options);
                 return existingAnimation.runner;
-              }
+          }
             }
 
             var cancelAnimationFlag = isAllowed('cancel', element, newAnimation, existingAnimation);
@@ -39587,7 +39589,7 @@
               } else {
                 // this will merge the existing animation options into this new follow-up animation
                 mergeAnimationOptions(element, newAnimation.options, existingAnimation.options);
-              }
+          }
             } else {
               // a joined animation means that this animation will take over the existing one
               // so an example would involve a leave animation taking over an enter. Then when
@@ -39616,7 +39618,7 @@
           if (!isValidAnimation) {
             // animate (from/to) can be quickly checked first, otherwise we check if any classes are present
             isValidAnimation = (newAnimation.event === 'animate' && Object.keys(newAnimation.options.to || {}).length > 0)
-            || hasAnimationClasses(newAnimation.options);
+              || hasAnimationClasses(newAnimation.options);
           }
 
           if (!isValidAnimation) {
@@ -39661,21 +39663,21 @@
               if (animationCancelled) {
                 applyAnimationClasses(element, options);
                 applyAnimationStyles(element, options);
-              }
+          }
 
               // if the event changed from something like enter to leave then we do
               // it, otherwise if it's the same then the end result will be the same too
               if (animationCancelled || (isStructural && animationDetails.event !== event)) {
                 options.domOperation();
                 runner.end();
-              }
+          }
 
               // in the event that the element animation was not cancelled or a follow-up animation
               // isn't allowed to animate from here then we need to clear the state of the element
               // so that any future animations won't read the expired animation data.
-              if (!isValidAnimation) {
-                clearElementAnimationState(element);
-              }
+          if (!isValidAnimation) {
+            clearElementAnimationState(element);
+          }
 
               return;
             }
@@ -39697,7 +39699,7 @@
               var animationDetails = activeAnimationsLookup.get(node);
               if (animationDetails && animationDetails.counter === counter) {
                 clearElementAnimationState(getDomNode(element));
-              }
+          }
               notifyProgress(runner, event, 'close', {});
             });
 
@@ -39733,12 +39735,12 @@
                 animationDetails.runner.end();
               /* falls through */
               case PRE_DIGEST_STATE:
-                if (animationDetails) {
-                  activeAnimationsLookup.remove(child);
-                }
-                break;
+            if (animationDetails) {
+              activeAnimationsLookup.remove(child);
             }
-          });
+                break;
+        }
+      });
         }
 
         function clearElementAnimationState(element) {
@@ -39869,7 +39871,7 @@
       });
       return function (fn) {
         passed ? fn() : $$rAF(fn);
-      };
+    };
     };
   }];
 
@@ -39891,11 +39893,11 @@
         chain[index](function (response) {
           if (response === false) {
             callback(false);
-            return;
-          }
+          return;
+        }
           index++;
           next();
-        });
+      });
       }
     };
 
@@ -39911,7 +39913,7 @@
         if (++count === runners.length) {
           callback(status);
         }
-      }
+    }
     };
 
     function AnimateRunner(host) {
@@ -39939,11 +39941,11 @@
 
       getPromise: function () {
         if (!this.promise) {
-          var self = this;
+        var self = this;
           this.promise = $q(function (resolve, reject) {
             self.done(function (status) {
               status === false ? reject() : resolve();
-            });
+          });
           });
         }
         return this.promise;
@@ -39964,7 +39966,7 @@
       pause: function () {
         if (this.host.pause) {
           this.host.pause();
-        }
+      }
       },
 
       resume: function () {
@@ -40005,7 +40007,7 @@
           this._doneCallbacks.length = 0;
           this._state = DONE_COMPLETE_STATE;
         }
-      }
+    }
     };
 
     return AnimateRunner;
@@ -40157,7 +40159,7 @@
                   var operation = invokeFirstDriver(animationEntry);
                   if (operation) {
                     startAnimationFn = operation.start;
-                  }
+              }
                 }
 
                 if (!startAnimationFn) {
@@ -40186,7 +40188,7 @@
               var attr = node.getAttribute(NG_ANIMATE_REF_ATTR);
               if (attr && attr.length) {
                 anchors.push(node);
-              }
+          }
             });
             return anchors;
           }
@@ -40211,10 +40213,10 @@
                     animationID: index,
                     element: jqLite(anchor)
                   };
-                });
+            });
               } else {
                 preparedAnimations.push(animation);
-              }
+          }
             });
 
             var usedIndicesLookup = {};
@@ -40231,9 +40233,9 @@
                 if (!usedIndicesLookup[indexKey]) {
                   usedIndicesLookup[indexKey] = true;
                   preparedAnimations.push(animations[index]);
-                }
+            }
                 return;
-              }
+          }
 
               var fromAnimation = animations[from.animationID];
               var toAnimation = animations[to.animationID];
@@ -40260,10 +40262,10 @@
                 // the same animation driver and to properly sequence the anchor animation.
                 if (group.classes.length) {
                   preparedAnimations.push(group);
-                } else {
+            } else {
                   preparedAnimations.push(fromAnimation);
                   preparedAnimations.push(toAnimation);
-                }
+            }
               }
 
               anchorGroups[lookupKey].anchors.push({
@@ -40287,8 +40289,8 @@
                 if (aa === b[j]) {
                   matches.push(aa);
                   break;
-                }
-              }
+            }
+          }
             }
 
             return matches.join(' ');
@@ -40305,7 +40307,7 @@
               var driver = factory(animationDetails);
               if (driver) {
                 return driver;
-              }
+          }
             }
           }
 
@@ -40352,7 +40354,7 @@
             runner.complete(!rejected);
           }
         };
-      }];
+  }];
   }];
 
   /* global angularAnimateModule: true,
@@ -41325,21 +41327,21 @@
 
 // Safe Block Elements - HTML5
   var blockElements = angular.extend({}, optionalEndTagBlockElements, makeMap("address,article," +
-  "aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5," +
-  "h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul"));
+    "aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5," +
+    "h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul"));
 
 // Inline Elements - HTML5
   var inlineElements = angular.extend({}, optionalEndTagInlineElements, makeMap("a,abbr,acronym,b," +
-  "bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s," +
-  "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
+    "bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s," +
+    "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
 
 // SVG Elements
 // https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Elements
 // Note: the elements animate,animateColor,animateMotion,animateTransform,set are intentionally omitted.
 // They can potentially allow for arbitrary javascript to be executed. See #11290
   var svgElements = makeMap("circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph," +
-  "hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline," +
-  "radialGradient,rect,stop,svg,switch,text,title,tspan,use");
+    "hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline," +
+    "radialGradient,rect,stop,svg,switch,text,title,tspan,use");
 
 // Special Elements (can contain anything)
   var specialElements = makeMap("script,style");
@@ -41355,28 +41357,28 @@
   var uriAttrs = makeMap("background,cite,href,longdesc,src,usemap,xlink:href");
 
   var htmlAttrs = makeMap('abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,' +
-  'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,' +
-  'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,' +
-  'scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,' +
-  'valign,value,vspace,width');
+    'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,' +
+    'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,' +
+    'scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,' +
+    'valign,value,vspace,width');
 
 // SVG attributes (without "id" and "name" attributes)
 // https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Attributes
   var svgAttrs = makeMap('accent-height,accumulate,additive,alphabetic,arabic-form,ascent,' +
-  'baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,' +
-  'cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,' +
-  'font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,' +
-  'height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,' +
-  'marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,' +
-  'max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,' +
-  'path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,' +
-  'requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,' +
-  'stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,' +
-  'stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,' +
-  'stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,' +
-  'underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,' +
-  'width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,' +
-  'xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan', true);
+    'baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,' +
+    'cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,' +
+    'font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,' +
+    'height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,' +
+    'marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,' +
+    'max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,' +
+    'path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,' +
+    'requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,' +
+    'stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,' +
+    'stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,' +
+    'stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,' +
+    'underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,' +
+    'width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,' +
+    'xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan', true);
 
   var validAttrs = angular.extend({},
     uriAttrs,
@@ -41387,7 +41389,7 @@
     var obj = {}, items = str.split(','), i;
     for (i = 0; i < items.length; i++) {
       obj[lowercaseKeys ? angular.lowercase(items[i]) : items[i]] = true;
-    }
+  }
     return obj;
   }
 
@@ -41410,7 +41412,7 @@
         html = '';
       } else {
         html = '' + html;
-      }
+    }
     }
     var index, chars, match, stack = [], last = html, text;
     stack.last = function () {
@@ -41459,15 +41461,15 @@
           if (match) {
             // We only have a valid start-tag if there is a '>'.
             if (match[4]) {
-              html = html.substring(match[0].length);
+            html = html.substring(match[0].length);
               match[0].replace(START_TAG_REGEXP, parseStartTag);
-            }
+          }
             chars = false;
           } else {
             // no ending tag found --- this piece should be encoded as an entity.
             text += '<';
             html = html.substring(1);
-          }
+        }
         }
 
         if (chars) {
@@ -41485,7 +41487,7 @@
           function (all, text) {
             text = text.replace(COMMENT_REGEXP, "$1").replace(CDATA_REGEXP, "$1");
 
-            if (handler.chars) handler.chars(decodeEntities(text));
+          if (handler.chars) handler.chars(decodeEntities(text));
 
             return "";
           });
@@ -41495,7 +41497,7 @@
 
       if (html == last) {
         throw $sanitizeMinErr('badparse', "The sanitizer was unable to parse the following block " +
-        "of html: {0}", html);
+          "of html: {0}", html);
       }
       last = html;
     }
@@ -41507,13 +41509,13 @@
       tagName = angular.lowercase(tagName);
       if (blockElements[tagName]) {
         while (stack.last() && inlineElements[stack.last()]) {
-          parseEndTag("", stack.last());
-        }
+        parseEndTag("", stack.last());
+      }
       }
 
       if (optionalEndTagElements[tagName] && stack.last() == tagName) {
         parseEndTag("", tagName);
-      }
+    }
 
       unary = voidElements[tagName] || !!unary;
 
@@ -41543,7 +41545,7 @@
         for (pos = stack.length - 1; pos >= 0; pos--) {
           if (stack[pos] == tagName) break;
         }
-      }
+    }
 
       if (pos >= 0) {
         // Close all the open elements, up the stack
@@ -41552,8 +41554,8 @@
 
         // Remove the open elements from the stack
         stack.length = pos;
-      }
     }
+  }
   }
 
   var hiddenPre = document.createElement("pre");
@@ -41686,10 +41688,10 @@
                'Pretty text with some links:\n'+
                'http://angularjs.org/,\n'+
                'mailto:us@somewhere.org,\n'+
-   'another@somewhere.org,\n'+
-   'and one more: ftp://127.0.0.1/.';
-   $scope.snippetWithTarget = 'http://angularjs.org/';
-   }]);
+               'another@somewhere.org,\n'+
+               'and one more: ftp://127.0.0.1/.';
+             $scope.snippetWithTarget = 'http://angularjs.org/';
+           }]);
    </script>
    <div ng-controller="ExampleController">
    Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
@@ -41728,16 +41730,16 @@
    it('should linkify the snippet with urls', function() {
          expect(element(by.id('linky-filter')).element(by.binding('snippet | linky')).getText()).
              toBe('Pretty text with some links: http://angularjs.org/, us@somewhere.org, ' +
-   'another@somewhere.org, and one more: ftp://127.0.0.1/.');
-   expect(element.all(by.css('#linky-filter a')).count()).toEqual(4);
-   });
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#linky-filter a')).count()).toEqual(4);
+       });
 
    it('should not linkify snippet without the linky filter', function() {
          expect(element(by.id('escaped-html')).element(by.binding('snippet')).getText()).
              toBe('Pretty text with some links: http://angularjs.org/, mailto:us@somewhere.org, ' +
-   'another@somewhere.org, and one more: ftp://127.0.0.1/.');
-   expect(element.all(by.css('#escaped-html a')).count()).toEqual(0);
-   });
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#escaped-html a')).count()).toEqual(0);
+       });
 
    it('should update', function() {
          element(by.model('snippet')).clear();
@@ -41776,7 +41778,7 @@
         // if we did not match ftp/http/www/mailto then assume mailto
         if (!match[2] && !match[4]) {
           url = (match[3] ? 'http://' : 'mailto:') + url;
-        }
+      }
         i = match.index;
         addText(raw.substr(0, i));
         addLink(url, match[0].replace(MAILTO_REGEXP, ''));
@@ -41788,7 +41790,7 @@
       function addText(text) {
         if (!text) {
           return;
-        }
+      }
         html.push(sanitizeText(text));
       }
 
@@ -41798,7 +41800,7 @@
           html.push('target="',
             target,
             '" ');
-        }
+      }
         html.push('href="',
           url.replace(/"/g, '&quot;'),
           '">');
@@ -41873,7 +41875,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     for (var n in first.path) {
       if (first.path[n] !== second.path[n]) break;
       path.push(first.path[n]);
-    }
+  }
     return path;
   }
 
@@ -41886,7 +41888,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
   function objectKeys(object) {
     if (Object.keys) {
       return Object.keys(object);
-    }
+  }
     var result = [];
 
     angular.forEach(object, function (val, key) {
@@ -41905,7 +41907,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
   function indexOf(array, value) {
     if (Array.prototype.indexOf) {
       return array.indexOf(value, Number(arguments[2]) || 0);
-    }
+  }
     var len = array.length >>> 0, from = Number(arguments[2]) || 0;
     from = (from < 0) ? Math.ceil(from) : Math.floor(from);
 
@@ -41913,7 +41915,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
     for (; from < len; from++) {
       if (from in array && array[from] === value) return from;
-    }
+  }
     return -1;
   }
 
@@ -41938,8 +41940,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         if (indexOf(inheritList, parentParams[j]) >= 0) continue;
         inheritList.push(parentParams[j]);
         inherited[parentParams[j]] = currentParams[parentParams[j]];
-      }
     }
+  }
     return extend({}, inherited, newParams);
   }
 
@@ -41956,12 +41958,12 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     if (!keys) {
       keys = [];
       for (var n in a) keys.push(n); // Used instead of Object.keys() for IE8 compatibility
-    }
+  }
 
     for (var i = 0; i < keys.length; i++) {
       var k = keys[i];
       if (a[k] != b[k]) return false; // Not '===', values aren't necessarily normalized
-    }
+  }
     return true;
   }
 
@@ -42028,7 +42030,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     forEach(collection, function (val, i) {
       if (callback(val, i)) {
         result[array ? result.length : i] = val;
-      }
+    }
     });
     return result;
   }
@@ -42193,7 +42195,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             if (param !== key && invocables.hasOwnProperty(param)) visit(invocables[param], param);
           });
           plan.push(key, value, params);
-        }
+      }
 
         cycle.pop();
         visited[key] = VISIT_DONE;
@@ -42238,7 +42240,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             result.$$promises = result.$$promises || true; // keep for isResolve()
             delete result.$$inheritedValues;
             resolution.resolve(values);
-          }
+        }
         }
 
         function fail(reason) {
@@ -42264,9 +42266,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           result.$$inheritedValues = omit(parent.$$values, invocableKeys);
           done();
         } else {
-          if (parent.$$inheritedValues) {
-            result.$$inheritedValues = omit(parent.$$inheritedValues, invocableKeys);
-          }
+        if (parent.$$inheritedValues) {
+          result.$$inheritedValues = omit(parent.$$inheritedValues, invocableKeys);
+        }
           parent.then(done, fail);
         }
 
@@ -42283,7 +42285,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           function onfailure(reason) {
             invocation.reject(reason);
             fail(reason);
-          }
+        }
 
           // Wait for any parameter that we have a promise for (either from parent or from this
           // resolve; in that case study() will have made sure it's ordered before us in the plan).
@@ -42294,8 +42296,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 values[dep] = result;
                 if (!(--waitParams)) proceed();
               }, onfailure);
-            }
-          });
+          }
+        });
           if (!waitParams) proceed();
           function proceed() {
             if (isDefined(result.$$failure)) return;
@@ -42315,73 +42317,73 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         }
 
         return result;
-      };
+    };
     };
 
-    /**
-     * @ngdoc function
-     * @name ui.router.util.$resolve#resolve
-     * @methodOf ui.router.util.$resolve
-     *
-     * @description
-     * Resolves a set of invocables. An invocable is a function to be invoked via
-     * `$injector.invoke()`, and can have an arbitrary number of dependencies.
-     * An invocable can either return a value directly,
-     * or a `$q` promise. If a promise is returned it will be resolved and the
-     * resulting value will be used instead. Dependencies of invocables are resolved
-     * (in this order of precedence)
-     *
-     * - from the specified `locals`
-     * - from another invocable that is part of this `$resolve` call
-     * - from an invocable that is inherited from a `parent` call to `$resolve`
-     *   (or recursively
-     * - from any ancestor `$resolve` of that parent).
-     *
-     * The return value of `$resolve` is a promise for an object that contains
-     * (in this order of precedence)
-     *
-     * - any `locals` (if specified)
-     * - the resolved return values of all injectables
-     * - any values inherited from a `parent` call to `$resolve` (if specified)
-     *
-     * The promise will resolve after the `parent` promise (if any) and all promises
-     * returned by injectables have been resolved. If any invocable
-     * (or `$injector.invoke`) throws an exception, or if a promise returned by an
-     * invocable is rejected, the `$resolve` promise is immediately rejected with the
-     * same error. A rejection of a `parent` promise (if specified) will likewise be
-     * propagated immediately. Once the `$resolve` promise has been rejected, no
-     * further invocables will be called.
-     *
-     * Cyclic dependencies between invocables are not permitted and will caues `$resolve`
-     * to throw an error. As a special case, an injectable can depend on a parameter
-     * with the same name as the injectable, which will be fulfilled from the `parent`
-     * injectable of the same name. This allows inherited values to be decorated.
-     * Note that in this case any other injectable in the same `$resolve` with the same
-     * dependency would see the decorated value, not the inherited value.
-     *
-     * Note that missing dependencies -- unlike cyclic dependencies -- will cause an
-     * (asynchronous) rejection of the `$resolve` promise rather than a (synchronous)
-     * exception.
-     *
-     * Invocables are invoked eagerly as soon as all dependencies are available.
-     * This is true even for dependencies inherited from a `parent` call to `$resolve`.
-     *
-     * As a special case, an invocable can be a string, in which case it is taken to
-     * be a service name to be passed to `$injector.get()`. This is supported primarily
-     * for backwards-compatibility with the `resolve` property of `$routeProvider`
-     * routes.
-     *
-     * @param {object} invocables functions to invoke or
-     * `$injector` services to fetch.
-     * @param {object} locals  values to make available to the injectables
-     * @param {object} parent  a promise returned by another call to `$resolve`.
-     * @param {object} self  the `this` for the invoked methods
-     * @return {object} Promise for an object that contains the resolved return value
-     * of all invocables, as well as any inherited and local values.
-     */
-    this.resolve = function (invocables, locals, parent, self) {
-      return this.study(invocables)(locals, parent, self);
-    };
+  /**
+   * @ngdoc function
+   * @name ui.router.util.$resolve#resolve
+   * @methodOf ui.router.util.$resolve
+   *
+   * @description
+   * Resolves a set of invocables. An invocable is a function to be invoked via
+   * `$injector.invoke()`, and can have an arbitrary number of dependencies.
+   * An invocable can either return a value directly,
+   * or a `$q` promise. If a promise is returned it will be resolved and the
+   * resulting value will be used instead. Dependencies of invocables are resolved
+   * (in this order of precedence)
+   *
+   * - from the specified `locals`
+   * - from another invocable that is part of this `$resolve` call
+   * - from an invocable that is inherited from a `parent` call to `$resolve`
+   *   (or recursively
+   * - from any ancestor `$resolve` of that parent).
+   *
+   * The return value of `$resolve` is a promise for an object that contains
+   * (in this order of precedence)
+   *
+   * - any `locals` (if specified)
+   * - the resolved return values of all injectables
+   * - any values inherited from a `parent` call to `$resolve` (if specified)
+   *
+   * The promise will resolve after the `parent` promise (if any) and all promises
+   * returned by injectables have been resolved. If any invocable
+   * (or `$injector.invoke`) throws an exception, or if a promise returned by an
+   * invocable is rejected, the `$resolve` promise is immediately rejected with the
+   * same error. A rejection of a `parent` promise (if specified) will likewise be
+   * propagated immediately. Once the `$resolve` promise has been rejected, no
+   * further invocables will be called.
+   *
+   * Cyclic dependencies between invocables are not permitted and will caues `$resolve`
+   * to throw an error. As a special case, an injectable can depend on a parameter
+   * with the same name as the injectable, which will be fulfilled from the `parent`
+   * injectable of the same name. This allows inherited values to be decorated.
+   * Note that in this case any other injectable in the same `$resolve` with the same
+   * dependency would see the decorated value, not the inherited value.
+   *
+   * Note that missing dependencies -- unlike cyclic dependencies -- will cause an
+   * (asynchronous) rejection of the `$resolve` promise rather than a (synchronous)
+   * exception.
+   *
+   * Invocables are invoked eagerly as soon as all dependencies are available.
+   * This is true even for dependencies inherited from a `parent` call to `$resolve`.
+   *
+   * As a special case, an invocable can be a string, in which case it is taken to
+   * be a service name to be passed to `$injector.get()`. This is supported primarily
+   * for backwards-compatibility with the `resolve` property of `$routeProvider`
+   * routes.
+   *
+   * @param {object} invocables functions to invoke or
+   * `$injector` services to fetch.
+   * @param {object} locals  values to make available to the injectables
+   * @param {object} parent  a promise returned by another call to `$resolve`.
+   * @param {object} self  the `this` for the invoked methods
+   * @return {object} Promise for an object that contains the resolved return value
+   * of all invocables, as well as any inherited and local values.
+   */
+  this.resolve = function (invocables, locals, parent, self) {
+    return this.study(invocables)(locals, parent, self);
+  };
   }
 
   angular.module('ui.router.util').service('$resolve', $Resolve);
@@ -42405,14 +42407,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @ngdoc function
      * @name ui.router.util.$templateFactory#fromConfig
      * @methodOf ui.router.util.$templateFactory
-     *
+   *
      * @description
      * Creates a template from a configuration object.
-     *
+   *
      * @param {object} config Configuration object for which to load a template.
      * The following properties are search in the specified order, and the first one
      * that is defined is used to create the template:
-     *
+   *
      * @param {string|object} config.template html string template or function to
      * load via {@link ui.router.util.$templateFactory#fromString fromString}.
      * @param {string|object} config.templateUrl url to load or a function returning
@@ -42422,10 +42424,10 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @param {object} params  Parameters to pass to the template function.
      * @param {object} locals Locals to pass to `invoke` if the template is loaded
      * via a `templateProvider`. Defaults to `{ params: params }`.
-     *
+   *
      * @return {string|object}  The template html as a string, or a promise for
      * that string,or `null` if no template is configured.
-     */
+   */
     this.fromConfig = function (config, params, locals) {
       return (
         isDefined(config.template) ? this.fromString(config.template, params) :
@@ -42613,9 +42615,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         default:
           surroundPattern = ['(' + squash + "|", ')?'];
           break;
-      }
-      return result + surroundPattern[0] + pattern + surroundPattern[1];
     }
+      return result + surroundPattern[0] + pattern + surroundPattern[1];
+  }
 
     this.source = pattern;
 
@@ -42630,7 +42632,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       type = $$UMFP.type(regexp || "string") || inherit($$UMFP.type("string"), {pattern: new RegExp(regexp)});
       return {
         id: id, regexp: regexp, segment: segment, type: type, cfg: cfg
-      };
+    };
     }
 
     var p, param, segment;
@@ -42705,7 +42707,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       caseInsensitive: $$UMFP.caseInsensitive(),
       strict: $$UMFP.strictMode(),
       squash: $$UMFP.defaultSquashPolicy()
-    };
+  };
     return new UrlMatcher(this.sourcePath + pattern + this.sourceSearch, extend(defaultConfig, config), this);
   };
 
@@ -42769,7 +42771,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       // if the param value matches a pre-replace pair, replace the value before decoding.
       for (j = 0; j < param.replace; j++) {
         if (param.replace[j].from === paramVal) paramVal = param.replace[j].to;
-      }
+    }
       if (paramVal && param.array === true) paramVal = decodePathArray(paramVal);
       values[paramName] = param.value(paramVal);
     }
@@ -42860,22 +42862,22 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               result += map(encoded, encodeDashes).join("-");
             } else {
               result += encodeURIComponent(encoded);
-            }
           }
+        }
           result += nextSegment;
         } else if (squash === true) {
           var capture = result.match(/\/$/) ? /\/?(.*)/ : /(.*)/;
           result += nextSegment.match(capture)[1];
         } else if (isString(squash)) {
           result += squash + nextSegment;
-        }
+      }
       } else {
         if (encoded == null || (isDefaultValue && squash !== false)) continue;
         if (!isArray(encoded)) encoded = [encoded];
         encoded = map(encoded, encodeURIComponent).join('&' + name + '=');
         result += (search ? '&' : '?') + (name + '=' + encoded);
         search = true;
-      }
+    }
     }
 
     return result;
@@ -43033,7 +43035,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             return mode === "auto" ? val[0] : val;
           default:
             return val;
-        }
+      }
       }
 
       function falsey(val) {
@@ -43058,10 +43060,10 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if (left.length !== right.length) return false;
           for (var i = 0; i < left.length; i++) {
             if (!callback(left[i], right[i])) return false;
-          }
+        }
           return true;
         };
-      }
+    }
 
       this.encode = arrayHandler(bindTo(type, 'encode'));
       this.decode = arrayHandler(bindTo(type, 'decode'));
@@ -43093,7 +43095,6 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     function valFromString(val) {
       return val != null ? val.toString().replace(/%2F/g, "/") : val;
     }
-
 //  TODO: in 1.0, make string .is() return false if value is undefined by default.
 //  function regexpMatches(val) { /*jshint validthis:true */ return isDefined(val) && this.pattern.test(val); }
     function regexpMatches(val) { /*jshint validthis:true */
@@ -43165,7 +43166,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         is: angular.identity,
         equals: angular.equals,
         pattern: /.*/
-      }
+    }
     };
 
     function getDefaultConfig() {
@@ -43280,7 +43281,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       forEach(UrlMatcher.prototype, function (val, name) {
         if (isFunction(val)) {
           result = result && (isDefined(o[name]) && isFunction(o[name]));
-        }
+      }
       });
       return result;
     };
@@ -43410,7 +43411,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         var type = typeQueue.shift();
         if (type.pattern) throw new Error("You cannot override a type's .pattern at runtime.");
         angular.extend($types[type.name], injector.invoke(type.def));
-      }
+    }
     }
 
     // Register default types. Store them in the prototype of $types.
@@ -43519,7 +43520,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             return obj.to;
           });
           return replacement.length ? replacement[0] : value;
-        }
+      }
 
         value = $replace(value);
         return isDefined(value) ? self.type.decode(value) : $$getDefaultValue();
@@ -43563,7 +43564,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         forEach(chain, function (paramset) {
           forEach(objectKeys(paramset), function (key) {
             if (indexOf(keys, key) === -1 && indexOf(ignore, key) === -1) keys.push(key);
-          });
+        });
         });
         return keys;
       },
@@ -43637,20 +43638,20 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       });
     }
 
-    /**
-     * @ngdoc function
-     * @name ui.router.router.$urlRouterProvider#rule
-     * @methodOf ui.router.router.$urlRouterProvider
-     *
-     * @description
-     * Defines rules that are used by `$urlRouterProvider` to find matches for
-     * specific URLs.
-     *
-     * @example
-     * <pre>
-     * var app = angular.module('app', ['ui.router.router']);
-     *
-     * app.config(function ($urlRouterProvider) {
+  /**
+   * @ngdoc function
+   * @name ui.router.router.$urlRouterProvider#rule
+   * @methodOf ui.router.router.$urlRouterProvider
+   *
+   * @description
+   * Defines rules that are used by `$urlRouterProvider` to find matches for
+   * specific URLs.
+   *
+   * @example
+   * <pre>
+   * var app = angular.module('app', ['ui.router.router']);
+   *
+   * app.config(function ($urlRouterProvider) {
    *   // Here's an example of how you might allow case insensitive urls
    *   $urlRouterProvider.rule(function ($injector, $location) {
    *     var path = $location.path(),
@@ -43661,18 +43662,18 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
    *     }
    *   });
    * });
-     * </pre>
-     *
-     * @param {object} rule Handler function that takes `$injector` and `$location`
-     * services as arguments. You can use them to return a valid path as a string.
-     *
-     * @return {object} `$urlRouterProvider` - `$urlRouterProvider` instance
-     */
-    this.rule = function (rule) {
-      if (!isFunction(rule)) throw new Error("'rule' must be a function");
-      rules.push(rule);
-      return this;
-    };
+   * </pre>
+   *
+   * @param {object} rule Handler function that takes `$injector` and `$location`
+   * services as arguments. You can use them to return a valid path as a string.
+   *
+   * @return {object} `$urlRouterProvider` - `$urlRouterProvider` instance
+   */
+  this.rule = function (rule) {
+    if (!isFunction(rule)) throw new Error("'rule' must be a function");
+    rules.push(rule);
+    return this;
+  };
 
     /**
      * @ngdoc object
@@ -43711,7 +43712,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         rule = function () {
           return redirect;
         };
-      }
+    }
       else if (!isFunction(rule)) throw new Error("'rule' must be a function");
       otherwise = rule;
       return this;
@@ -43775,7 +43776,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             handler = ['$match', function ($match) {
               return redirect.format($match);
             }];
-          }
+        }
           return extend(function ($injector, $location) {
             return handleIfMatch($injector, handler, what.exec($location.path(), $location.search()));
           }, {
@@ -43796,8 +43797,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           }, {
             prefix: regExpPrefix(what)
           });
-        }
-      };
+      }
+    };
 
       var check = {matcher: $urlMatcherFactory.isMatcher(what), regex: what instanceof RegExp};
 
@@ -43899,13 +43900,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if (!handled) return false;
           if (isString(handled)) $location.replace().url(handled);
           return true;
-        }
+      }
 
         var n = rules.length, i;
 
         for (i = 0; i < n; i++) {
           if (check(rules[i])) return;
-        }
+      }
         // always check otherwise last to allow dynamic updates to the set of rules
         if (otherwise) check(otherwise);
       }
@@ -44000,26 +44001,26 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           var isHtml5 = $locationProvider.html5Mode();
           if (angular.isObject(isHtml5)) {
             isHtml5 = isHtml5.enabled;
-          }
+        }
 
           var url = urlMatcher.format(params);
           options = options || {};
 
           if (!isHtml5 && url !== null) {
             url = "#" + $locationProvider.hashPrefix() + url;
-          }
+        }
           url = appendBasePath(url, isHtml5, options.absolute);
 
           if (!options.absolute || !url) {
             return url;
-          }
+        }
 
           var slash = (!isHtml5 && url ? '/' : ''), port = $location.port();
           port = (port === 80 || port === 443 ? '' : ':' + port);
 
           return [$location.protocol(), '://', $location.host(), port, slash, url].join('');
         }
-      };
+    };
     }
   }
 
@@ -44069,7 +44070,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       data: function (state) {
         if (state.parent && state.parent.data) {
           state.data = state.self.data = extend({}, state.parent.data, state.data);
-        }
+      }
         return state.data;
       },
 
@@ -44080,7 +44081,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         if (isString(url)) {
           if (url.charAt(0) == '^') return $urlMatcherFactory.compile(url.substring(1), config);
           return (state.parent.navigable || root).url.concat(url, config);
-        }
+      }
 
         if (!url || $urlMatcherFactory.isMatcher(url)) return url;
         throw new Error("Invalid url '" + url + "' in state '" + state + "'");
@@ -44163,15 +44164,15 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             continue;
           }
           break;
-        }
+      }
         rel = rel.slice(i).join(".");
         name = current.name + (current.name && rel ? "." : "") + rel;
-      }
+    }
       var state = states[name];
 
       if (state && (isStr || (!isStr && (state === stateOrName || state.self === stateOrName)))) {
         return state;
-      }
+    }
       return undefined;
     }
 
@@ -44263,8 +44264,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       for (var i = 0, l = globSegments.length; i < l; i++) {
         if (globSegments[i] === '*') {
           segments[i] = '*';
-        }
       }
+    }
 
       return segments.join('') === globSegments.join('');
     }
@@ -44378,8 +44379,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         return stateBuilder[name];
       }
       if (!isFunction(func) || !isString(name)) {
-        return this;
-      }
+      return this;
+    }
       if (stateBuilder[name] && !stateBuilder.$delegates[name]) {
         stateBuilder.$delegates[name] = stateBuilder[name];
       }
@@ -44545,7 +44546,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
    *       controller: "messagesCtrl",
    *       templateUrl: "messages.html"
    *     }
-     *   }</pre>
+   *   }</pre>
      *
      * @param {boolean=} [stateConfig.abstract=false]
      * <a id='abstract'></a>
@@ -44785,9 +44786,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
         // Allow the handler to return a promise to defer state lookup retry
         if (options.$retry) {
-          $urlRouter.update();
+        $urlRouter.update();
           return TransitionFailed;
-        }
+      }
         var retryTransition = $state.transition = $q.when(evt.retry);
 
         retryTransition.then(function () {
@@ -44977,10 +44978,10 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           options = redirect.options;
           toState = findState(to, options.relative);
 
-          if (!isDefined(toState)) {
-            if (!options.relative) throw new Error("No such state '" + to + "'");
-            throw new Error("Could not resolve '" + to + "' from state '" + options.relative + "'");
-          }
+        if (!isDefined(toState)) {
+          if (!options.relative) throw new Error("No such state '" + to + "'");
+          throw new Error("Could not resolve '" + to + "' from state '" + options.relative + "'");
+        }
         }
         if (toState[abstractKey]) throw new Error("Cannot transition to abstract state '" + to + "'");
         if (options.inherit) toParams = inheritParams($stateParams, toParams || {}, $state.$current, toState);
@@ -44999,7 +45000,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             locals = toLocals[keep] = state.locals;
             keep++;
             state = toPath[keep];
-          }
+        }
         }
 
         // If we're going to the same state and all locals are kept, we've got nothing to do.
@@ -45048,7 +45049,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if ($rootScope.$broadcast('$stateChangeStart', to.self, toParams, from.self, fromParams).defaultPrevented) {
             $urlRouter.update();
             return TransitionPrevented;
-          }
+        }
         }
 
         // Resolve locals for the remaining states, but don't update any global state just
@@ -45079,7 +45080,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             exiting = fromPath[l];
             if (exiting.self.onExit) {
               $injector.invoke(exiting.self.onExit, exiting.self, exiting.locals.globals);
-            }
+          }
             exiting.locals = null;
           }
 
@@ -45089,7 +45090,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             entering.locals = toLocals[l];
             if (entering.self.onEnter) {
               $injector.invoke(entering.self.onEnter, entering.self, entering.locals.globals);
-            }
+          }
           }
 
           // Run it again, to catch any transitions in callbacks
@@ -45264,8 +45265,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         options = extend({relative: $state.$current}, options || {});
         if (isString(stateOrName) && isGlob(stateOrName)) {
           if (!doesStateMatchGlob(stateOrName)) {
-            return false;
-          }
+          return false;
+        }
           stateOrName = $state.$current.name;
         }
 
@@ -45395,7 +45396,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         return $q.all(promises).then(function (values) {
           return dst;
         });
-      }
+    }
 
       return $state;
     }
@@ -45403,8 +45404,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     function shouldTriggerReload(to, from, locals, options) {
       if (to === from && ((locals === from.locals && !options.reload) || (to.self.reloadOnSearch === false))) {
         return true;
-      }
     }
+  }
   }
 
   angular.module('ui.router.state')
@@ -45450,35 +45451,35 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             result = $templateFactory.fromConfig(options.view, options.params, options.locals);
           }
           if (result && options.notify) {
-            /**
-             * @ngdoc event
-             * @name ui.router.state.$state#$viewContentLoading
-             * @eventOf ui.router.state.$view
-             * @eventType broadcast on root scope
-             * @description
-             *
-             * Fired once the view **begins loading**, *before* the DOM is rendered.
-             *
-             * @param {Object} event Event object.
-             * @param {Object} viewConfig The view config properties (template, controller, etc).
-             *
-             * @example
-             *
-             * <pre>
-             * $scope.$on('$viewContentLoading',
-             * function(event, viewConfig){
+        /**
+         * @ngdoc event
+         * @name ui.router.state.$state#$viewContentLoading
+         * @eventOf ui.router.state.$view
+         * @eventType broadcast on root scope
+         * @description
+         *
+         * Fired once the view **begins loading**, *before* the DOM is rendered.
+         *
+         * @param {Object} event Event object.
+         * @param {Object} viewConfig The view config properties (template, controller, etc).
+         *
+         * @example
+         *
+         * <pre>
+         * $scope.$on('$viewContentLoading',
+         * function(event, viewConfig){
          *     // Access to all the view config properties.
          *     // and one special property 'targetView'
          *     // viewConfig.targetView
          * });
-             * </pre>
-             */
-            $rootScope.$broadcast('$viewContentLoading', options);
-          }
-          return result;
+         * </pre>
+         */
+        $rootScope.$broadcast('$viewContentLoading', options);
         }
+          return result;
+      }
       };
-    }
+  }
   }
 
   angular.module('ui.router.state').provider('$view', $ViewProvider);
@@ -45494,30 +45495,30 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
     var useAnchorScroll = false;
 
-    /**
-     * @ngdoc function
-     * @name ui.router.state.$uiViewScrollProvider#useAnchorScroll
-     * @methodOf ui.router.state.$uiViewScrollProvider
-     *
-     * @description
-     * Reverts back to using the core [`$anchorScroll`](http://docs.angularjs.org/api/ng.$anchorScroll) service for
-     * scrolling based on the url anchor.
-     */
-    this.useAnchorScroll = function () {
-      useAnchorScroll = true;
-    };
+  /**
+   * @ngdoc function
+   * @name ui.router.state.$uiViewScrollProvider#useAnchorScroll
+   * @methodOf ui.router.state.$uiViewScrollProvider
+   *
+   * @description
+   * Reverts back to using the core [`$anchorScroll`](http://docs.angularjs.org/api/ng.$anchorScroll) service for
+   * scrolling based on the url anchor.
+   */
+  this.useAnchorScroll = function () {
+    useAnchorScroll = true;
+  };
 
     /**
      * @ngdoc object
      * @name ui.router.state.$uiViewScroll
-     *
+   *
      * @requires $anchorScroll
      * @requires $timeout
-     *
-     * @description
+   *
+   * @description
      * When called with a jqLite element, it scrolls the element into view (after a
      * `$timeout` so the DOM has time to refresh).
-     *
+   *
      * If you prefer to rely on `$anchorScroll` to scroll the view to the anchor,
      * this can be enabled by calling {@link ui.router.state.$uiViewScrollProvider#methods_useAnchorScroll `$uiViewScrollProvider.useAnchorScroll()`}.
      */
@@ -45681,7 +45682,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             element.remove();
             cb();
           }
-        };
+      };
       };
 
       if ($animate) {
@@ -45710,7 +45711,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             cb();
           }
         };
-      }
+    }
 
       return statics();
     }
@@ -45749,12 +45750,12 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
             if (currentEl) {
               renderer.leave(currentEl, function () {
-                previousEl = null;
+              previousEl = null;
               });
 
               previousEl = currentEl;
               currentEl = null;
-            }
+          }
           }
 
           function updateView(firstTime) {
@@ -45775,7 +45776,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 if (angular.isDefined(autoScrollExp) && !autoScrollExp || scope.$eval(autoScrollExp)) {
                   $uiViewScroll(clone);
                 }
-              });
+            });
               cleanupLastView();
             });
 
@@ -45827,7 +45828,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             var controller = $controller(locals.$$controller, locals);
             if (locals.$$controllerAs) {
               scope[locals.$$controllerAs] = controller;
-            }
+          }
             $element.data('$ngControllerController', controller);
             $element.children().data('$ngControllerController', controller);
           }
@@ -45974,7 +45975,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             if (newVal !== params) update(newVal);
           }, true);
           params = angular.copy(scope.$eval(ref.paramExpr));
-        }
+      }
         update();
 
         if (isForm) return;
@@ -45994,7 +45995,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               if (ignorePreventDefaultCount-- <= 0)
                 $timeout.cancel(transition);
             };
-          }
+        }
         });
       }
     };
@@ -46090,7 +46091,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         this.$$setStateInfo = function (newState, newParams) {
           state = $state.get(newState, stateContext($element));
           params = newParams;
-          update();
+        update();
         };
 
         $scope.$on('$stateChangeSuccess', update);
@@ -46102,14 +46103,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           } else {
             $element.removeClass(activeClass);
           }
-        }
+      }
 
         function isMatch() {
           if (typeof $attrs.uiSrefActiveEq !== 'undefined') {
             return state && $state.is(state.name, params);
           } else {
             return state && $state.includes(state.name, params);
-          }
+        }
         }
       }]
     };
@@ -46256,149 +46257,149 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
         return {
           show: actionSheet
-        };
+  };
 
-        /**
-         * @ngdoc method
-         * @name $ionicActionSheet#show
-         * @description
-         * Load and return a new action sheet.
-         *
-         * A new isolated scope will be created for the
-         * action sheet and the new element will be appended into the body.
-         *
-         * @param {object} options The options for this ActionSheet. Properties:
-         *
-         *  - `[Object]` `buttons` Which buttons to show.  Each button is an object with a `text` field.
-         *  - `{string}` `titleText` The title to show on the action sheet.
-         *  - `{string=}` `cancelText` the text for a 'cancel' button on the action sheet.
-         *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
-         *  - `{function=}` `cancel` Called if the cancel button is pressed, the backdrop is tapped or
-         *     the hardware back button is pressed.
-         *  - `{function=}` `buttonClicked` Called when one of the non-destructive buttons is clicked,
-         *     with the index of the button that was clicked and the button object. Return true to close
-         *     the action sheet, or false to keep it opened.
-         *  - `{function=}` `destructiveButtonClicked` Called when the destructive button is clicked.
-         *     Return true to close the action sheet, or false to keep it opened.
-         *  -  `{boolean=}` `cancelOnStateChange` Whether to cancel the actionSheet when navigating
-         *     to a new state.  Default true.
-         *  - `{string}` `cssClass` The custom CSS class name.
-         *
-         * @returns {function} `hideSheet` A function which, when called, hides & cancels the action sheet.
-         */
-        function actionSheet(opts) {
-          var scope = $rootScope.$new(true);
+  /**
+   * @ngdoc method
+   * @name $ionicActionSheet#show
+   * @description
+   * Load and return a new action sheet.
+   *
+   * A new isolated scope will be created for the
+   * action sheet and the new element will be appended into the body.
+   *
+   * @param {object} options The options for this ActionSheet. Properties:
+   *
+   *  - `[Object]` `buttons` Which buttons to show.  Each button is an object with a `text` field.
+   *  - `{string}` `titleText` The title to show on the action sheet.
+   *  - `{string=}` `cancelText` the text for a 'cancel' button on the action sheet.
+   *  - `{string=}` `destructiveText` The text for a 'danger' on the action sheet.
+   *  - `{function=}` `cancel` Called if the cancel button is pressed, the backdrop is tapped or
+   *     the hardware back button is pressed.
+   *  - `{function=}` `buttonClicked` Called when one of the non-destructive buttons is clicked,
+   *     with the index of the button that was clicked and the button object. Return true to close
+   *     the action sheet, or false to keep it opened.
+   *  - `{function=}` `destructiveButtonClicked` Called when the destructive button is clicked.
+   *     Return true to close the action sheet, or false to keep it opened.
+   *  -  `{boolean=}` `cancelOnStateChange` Whether to cancel the actionSheet when navigating
+   *     to a new state.  Default true.
+   *  - `{string}` `cssClass` The custom CSS class name.
+   *
+   * @returns {function} `hideSheet` A function which, when called, hides & cancels the action sheet.
+   */
+  function actionSheet(opts) {
+    var scope = $rootScope.$new(true);
 
-          extend(scope, {
-            cancel: noop,
-            destructiveButtonClicked: noop,
-            buttonClicked: noop,
-            $deregisterBackButton: noop,
-            buttons: [],
-            cancelOnStateChange: true
-          }, opts || {});
+    extend(scope, {
+      cancel: noop,
+      destructiveButtonClicked: noop,
+      buttonClicked: noop,
+      $deregisterBackButton: noop,
+      buttons: [],
+      cancelOnStateChange: true
+    }, opts || {});
 
-          function textForIcon(text) {
-            if (text && /icon/.test(text)) {
-              scope.$actionSheetHasIcon = true;
-            }
-          }
+    function textForIcon(text) {
+      if (text && /icon/.test(text)) {
+        scope.$actionSheetHasIcon = true;
+      }
+    }
 
-          for (var x = 0; x < scope.buttons.length; x++) {
-            textForIcon(scope.buttons[x].text);
-          }
-          textForIcon(scope.cancelText);
-          textForIcon(scope.destructiveText);
+    for (var x = 0; x < scope.buttons.length; x++) {
+      textForIcon(scope.buttons[x].text);
+    }
+    textForIcon(scope.cancelText);
+    textForIcon(scope.destructiveText);
 
-          // Compile the template
-          var element = scope.element = $compile('<ion-action-sheet ng-class="cssClass" buttons="buttons"></ion-action-sheet>')(scope);
+    // Compile the template
+    var element = scope.element = $compile('<ion-action-sheet ng-class="cssClass" buttons="buttons"></ion-action-sheet>')(scope);
 
-          // Grab the sheet element for animation
-          var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
+    // Grab the sheet element for animation
+    var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
-          var stateChangeListenDone = scope.cancelOnStateChange ?
-            $rootScope.$on('$stateChangeSuccess', function () {
-              scope.cancel();
-            }) :
-            noop;
+    var stateChangeListenDone = scope.cancelOnStateChange ?
+      $rootScope.$on('$stateChangeSuccess', function () {
+        scope.cancel();
+      }) :
+      noop;
 
-          // removes the actionSheet from the screen
-          scope.removeSheet = function (done) {
-            if (scope.removed) return;
+    // removes the actionSheet from the screen
+    scope.removeSheet = function (done) {
+      if (scope.removed) return;
 
-            scope.removed = true;
-            sheetEl.removeClass('action-sheet-up');
-            $timeout(function () {
-              // wait to remove this due to a 300ms delay native
-              // click which would trigging whatever was underneath this
-              $ionicBody.removeClass('action-sheet-open');
-            }, 400);
-            scope.$deregisterBackButton();
-            stateChangeListenDone();
+      scope.removed = true;
+      sheetEl.removeClass('action-sheet-up');
+      $timeout(function () {
+        // wait to remove this due to a 300ms delay native
+        // click which would trigging whatever was underneath this
+        $ionicBody.removeClass('action-sheet-open');
+      }, 400);
+      scope.$deregisterBackButton();
+      stateChangeListenDone();
 
-            $animate.removeClass(element, 'active').then(function () {
-              scope.$destroy();
-              element.remove();
-              // scope.cancel.$scope is defined near the bottom
-              scope.cancel.$scope = sheetEl = null;
-              (done || noop)();
-            });
-          };
+      $animate.removeClass(element, 'active').then(function () {
+        scope.$destroy();
+        element.remove();
+        // scope.cancel.$scope is defined near the bottom
+        scope.cancel.$scope = sheetEl = null;
+        (done || noop)();
+      });
+    };
 
-          scope.showSheet = function (done) {
-            if (scope.removed) return;
+    scope.showSheet = function (done) {
+      if (scope.removed) return;
 
-            $ionicBody.append(element)
-              .addClass('action-sheet-open');
+      $ionicBody.append(element)
+        .addClass('action-sheet-open');
 
-            $animate.addClass(element, 'active').then(function () {
-              if (scope.removed) return;
-              (done || noop)();
-            });
-            $timeout(function () {
-              if (scope.removed) return;
-              sheetEl.addClass('action-sheet-up');
-            }, 20, false);
-          };
+      $animate.addClass(element, 'active').then(function () {
+        if (scope.removed) return;
+        (done || noop)();
+      });
+      $timeout(function () {
+        if (scope.removed) return;
+        sheetEl.addClass('action-sheet-up');
+      }, 20, false);
+    };
 
-          // registerBackButtonAction returns a callback to deregister the action
-          scope.$deregisterBackButton = $ionicPlatform.registerBackButtonAction(
-            function () {
-              $timeout(scope.cancel);
-            },
-            IONIC_BACK_PRIORITY.actionSheet
-          );
+    // registerBackButtonAction returns a callback to deregister the action
+    scope.$deregisterBackButton = $ionicPlatform.registerBackButtonAction(
+      function () {
+        $timeout(scope.cancel);
+      },
+      IONIC_BACK_PRIORITY.actionSheet
+    );
 
-          // called when the user presses the cancel button
-          scope.cancel = function () {
-            // after the animation is out, call the cancel callback
-            scope.removeSheet(opts.cancel);
-          };
+    // called when the user presses the cancel button
+    scope.cancel = function () {
+      // after the animation is out, call the cancel callback
+      scope.removeSheet(opts.cancel);
+    };
 
-          scope.buttonClicked = function (index) {
-            // Check if the button click event returned true, which means
-            // we can close the action sheet
-            if (opts.buttonClicked(index, opts.buttons[index]) === true) {
-              scope.removeSheet();
-            }
-          };
+    scope.buttonClicked = function (index) {
+      // Check if the button click event returned true, which means
+      // we can close the action sheet
+      if (opts.buttonClicked(index, opts.buttons[index]) === true) {
+        scope.removeSheet();
+      }
+    };
 
-          scope.destructiveButtonClicked = function () {
-            // Check if the destructive button click event returned true, which means
-            // we can close the action sheet
-            if (opts.destructiveButtonClicked() === true) {
-              scope.removeSheet();
-            }
-          };
+    scope.destructiveButtonClicked = function () {
+      // Check if the destructive button click event returned true, which means
+      // we can close the action sheet
+      if (opts.destructiveButtonClicked() === true) {
+        scope.removeSheet();
+      }
+    };
 
-          scope.showSheet();
+    scope.showSheet();
 
-          // Expose the scope on $ionicActionSheet's return value for the sake
-          // of testing it.
-          scope.cancel.$scope = scope;
+    // Expose the scope on $ionicActionSheet's return value for the sake
+    // of testing it.
+    scope.cancel.$scope = scope;
 
-          return scope.cancel;
-        }
+    return scope.cancel;
+  }
       }]);
 
 
@@ -46568,7 +46569,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             case '@':
               if (!attrs[attrName]) {
                 return;
-              }
+          }
               attrs.$observe(attrName, function (value) {
                 scope[scopeName] = value;
               });
@@ -46582,7 +46583,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             case '=':
               if (!attrs[attrName]) {
                 return;
-              }
+          }
               unwatch = scope.$watch(attrs[attrName], function (value) {
                 scope[scopeName] = value;
               });
@@ -46594,7 +46595,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               /* jshint -W044 */
               if (attrs[attrName] && attrs[attrName].match(RegExp(scopeName + '\(.*?\)'))) {
                 throw new Error('& expression binding "' + scopeName + '" looks like it will recursively call "' +
-                attrs[attrName] + '" and cause a stack overflow! Please choose a different scopeName.');
+                  attrs[attrName] + '" and cause a stack overflow! Please choose a different scopeName.');
               }
               parentGet = $parse(attrs[attrName]);
               scope[scopeName] = function (locals) {
@@ -46924,7 +46925,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 if ($state.params.hasOwnProperty(key) && $state.params[key]) {
                   id += "_" + key + "=" + $state.params[key];
                 }
-              }
+        }
             }
             return id;
           }
@@ -46939,7 +46940,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               if ($state.params.hasOwnProperty(key)) {
                 rtn = rtn || {};
                 rtn[key] = $state.params[key];
-              }
+        }
             }
           }
           return rtn;
@@ -46994,9 +46995,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   tmp = getHistoryById(currentView.historyId);
                   if (tmp && tmp.parentHistoryId === hist.parentHistoryId) {
                     direction = DIRECTION_SWAP;
-                  }
-                }
-              }
+            }
+          }
+        }
 
             } else if (forwardView && forwardView.stateId === currentStateId) {
               // they went to the forward one, set the forward view to no longer a forward view
@@ -47016,16 +47017,16 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   tmp = getHistoryById(currentView.historyId);
                   if (tmp && tmp.parentHistoryId === hist.parentHistoryId) {
                     direction = DIRECTION_SWAP;
-                  }
-                }
-              }
+            }
+          }
+        }
 
               tmp = getParentHistoryObj(parentScope);
               if (forwardView.historyId && tmp.scope) {
                 // if a history has already been created by the forward view then make sure it stays the same
                 tmp.scope.$historyId = forwardView.historyId;
                 historyId = forwardView.historyId;
-              }
+        }
 
             } else if (currentView && currentView.historyId !== historyId &&
               hist.cursor > -1 && hist.stack.length > 0 && hist.cursor < hist.stack.length &&
@@ -47091,8 +47092,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                       var stackItem = tmp.stack[x];
                       stackItem && stackItem.destroy && stackItem.destroy();
                       tmp.stack.splice(x);
-                    }
-                    historyId = forwardView.historyId;
+              }
+              historyId = forwardView.historyId;
                   }
                 }
 
@@ -47105,13 +47106,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
                   tmp = getHistoryById(currentView.historyId);
                   if (tmp && tmp.parentHistoryId === hist.parentHistoryId) {
-                    direction = DIRECTION_SWAP;
+              direction = DIRECTION_SWAP;
 
                   } else {
                     tmp = getHistoryById(tmp.parentHistoryId);
                     if (tmp && tmp.historyId === hist.historyId) {
-                      direction = DIRECTION_EXIT;
-                    }
+                direction = DIRECTION_EXIT;
+              }
                   }
                 }
 
@@ -47153,9 +47154,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   if (hist.stack[x].viewId === viewId) {
                     hist.stack[x].index = 0;
                     hist.stack[x].backViewId = hist.stack[x].forwardViewId = null;
-                  } else {
+            } else {
                     delete viewHistory.views[hist.stack[x].viewId];
-                  }
+            }
                 }
                 hist.stack = [viewHistory.views[viewId]];
               }
@@ -47171,7 +47172,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   direction = DIRECTION_NONE;
                   if (x > 0) {
                     hist.stack[x - 1].forwardViewId = null;
-                  }
+            }
                   viewHistory.forwardView = null;
                   viewHistory.currentView.index = viewHistory.backView.index;
                   viewHistory.currentView.backViewId = viewHistory.backView.backViewId;
@@ -47474,8 +47475,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                       nextViewOptions = null;
                     }, nextViewOptions.expire);
                   });
-                }
-              }
+          }
+        }
             }
             return nextViewOptions;
           },
@@ -47496,8 +47497,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
             while (climbScope) {
               if (climbScope.$$disconnected) {
-                return false;
-              }
+          return false;
+        }
 
               if (!foundHistoryId && climbScope.hasOwnProperty('$historyId')) {
                 foundHistoryId = true;
@@ -48044,7 +48045,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               // swap, enter, exit
               setStyles(enteringEle, 1, 0, -1);
               setStyles(leavingEle, 0, 0, -1);
-            }
+        }
           },
           shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
         };
@@ -48093,7 +48094,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             } else {
               enter(enteringHeaderCtrl, leavingHeaderCtrl, step);
               leave(leavingHeaderCtrl, enteringHeaderCtrl, step);
-            }
+        }
           },
           direction: direction,
           shouldAnimate: shouldAnimate && (direction == 'forward' || direction == 'back')
@@ -48130,7 +48131,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               // swap, enter, exit
               setStyles(enteringEle, 0);
               setStyles(leavingEle, 0);
-            }
+        }
           },
           shouldAnimate: shouldAnimate
         };
@@ -48203,13 +48204,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             if (angular.isObject(configObj[n])) {
               if (!isDefined(platformObj[n])) {
                 platformObj[n] = {};
-              }
+          }
               addConfig(configObj[n], platformObj[n]);
 
             } else if (!isDefined(platformObj[n])) {
               platformObj[n] = null;
-            }
-          }
+        }
+      }
         }
       }
 
@@ -48229,7 +48230,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               if (arguments.length) {
                 configObj[namespace] = newValue;
                 return providerObj;
-              }
+          }
               if (configObj[namespace] == PLATFORM) {
                 // if the config is set to 'platform', then get this config's platform value
                 var platformConfig = stringObj(configProperties.platform, ionic.Platform.platform() + platformPath + '.' + namespace);
@@ -48241,7 +48242,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               }
               return configObj[namespace];
             };
-          }
+      }
 
         });
       }
@@ -48253,7 +48254,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             obj = obj[str[i]];
           } else {
             return null;
-          }
+      }
         }
         return obj;
       }
@@ -48462,7 +48463,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                     setTimeout(function () {
                       !self.isShown && self.element.removeClass('visible');
                     }, 200);
-                  }
+          }
                   $timeout.cancel(self.durationTimeout);
                   self.isShown = false;
                 };
@@ -48598,189 +48599,189 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       'IONIC_BACK_PRIORITY',
       function ($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
 
-        /**
-         * @ngdoc controller
-         * @name ionicModal
-         * @module ionic
-         * @description
-         * Instantiated by the {@link ionic.service:$ionicModal} service.
-         *
-         * Be sure to call [remove()](#remove) when you are done with each modal
-         * to clean it up and avoid memory leaks.
-         *
-         * Note: a modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating
-         * scope, passing in itself as an event argument. Note: both modal.removed and modal.hidden are
-         * called when the modal is removed.
-         */
-        var ModalView = ionic.views.Modal.inherit({
-          /**
-           * @ngdoc method
-           * @name ionicModal#initialize
-           * @description Creates a new modal controller instance.
-           * @param {object} options An options object with the following properties:
-           *  - `{object=}` `scope` The scope to be a child of.
-           *    Default: creates a child of $rootScope.
-           *  - `{string=}` `animation` The animation to show & hide with.
-           *    Default: 'slide-in-up'
-           *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
-           *    the modal when shown. Will only show the keyboard on iOS, to force the keyboard to show
-           *    on Android, please use the [Ionic keyboard plugin](https://github.com/driftyco/ionic-plugin-keyboard#keyboardshow).
-           *    Default: false.
-           *  - `{boolean=}` `backdropClickToClose` Whether to close the modal on clicking the backdrop.
-           *    Default: true.
-           *  - `{boolean=}` `hardwareBackButtonClose` Whether the modal can be closed using the hardware
-           *    back button on Android and similar devices.  Default: true.
-           */
-          initialize: function (opts) {
-            ionic.views.Modal.prototype.initialize.call(this, opts);
-            this.animation = opts.animation || 'slide-in-up';
-          },
+  /**
+   * @ngdoc controller
+   * @name ionicModal
+   * @module ionic
+   * @description
+   * Instantiated by the {@link ionic.service:$ionicModal} service.
+   *
+   * Be sure to call [remove()](#remove) when you are done with each modal
+   * to clean it up and avoid memory leaks.
+   *
+   * Note: a modal will broadcast 'modal.shown', 'modal.hidden', and 'modal.removed' events from its originating
+   * scope, passing in itself as an event argument. Note: both modal.removed and modal.hidden are
+   * called when the modal is removed.
+   */
+  var ModalView = ionic.views.Modal.inherit({
+    /**
+     * @ngdoc method
+     * @name ionicModal#initialize
+     * @description Creates a new modal controller instance.
+     * @param {object} options An options object with the following properties:
+     *  - `{object=}` `scope` The scope to be a child of.
+     *    Default: creates a child of $rootScope.
+     *  - `{string=}` `animation` The animation to show & hide with.
+     *    Default: 'slide-in-up'
+     *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
+     *    the modal when shown. Will only show the keyboard on iOS, to force the keyboard to show
+     *    on Android, please use the [Ionic keyboard plugin](https://github.com/driftyco/ionic-plugin-keyboard#keyboardshow).
+     *    Default: false.
+     *  - `{boolean=}` `backdropClickToClose` Whether to close the modal on clicking the backdrop.
+     *    Default: true.
+     *  - `{boolean=}` `hardwareBackButtonClose` Whether the modal can be closed using the hardware
+     *    back button on Android and similar devices.  Default: true.
+     */
+    initialize: function (opts) {
+      ionic.views.Modal.prototype.initialize.call(this, opts);
+      this.animation = opts.animation || 'slide-in-up';
+    },
 
-          /**
-           * @ngdoc method
-           * @name ionicModal#show
-           * @description Show this modal instance.
-           * @returns {promise} A promise which is resolved when the modal is finished animating in.
-           */
-          show: function (target) {
-            var self = this;
+    /**
+     * @ngdoc method
+     * @name ionicModal#show
+     * @description Show this modal instance.
+     * @returns {promise} A promise which is resolved when the modal is finished animating in.
+     */
+    show: function (target) {
+      var self = this;
 
-            if (self.scope.$$destroyed) {
-              $log.error('Cannot call ' + self.viewType + '.show() after remove(). Please create a new ' + self.viewType + ' instance.');
-              return $$q.when();
-            }
+      if (self.scope.$$destroyed) {
+        $log.error('Cannot call ' + self.viewType + '.show() after remove(). Please create a new ' + self.viewType + ' instance.');
+        return $$q.when();
+      }
 
-            // on iOS, clicks will sometimes bleed through/ghost click on underlying
-            // elements
-            $ionicClickBlock.show(600);
-            stack.add(self);
+      // on iOS, clicks will sometimes bleed through/ghost click on underlying
+      // elements
+      $ionicClickBlock.show(600);
+      stack.add(self);
 
-            var modalEl = jqLite(self.modalEl);
+      var modalEl = jqLite(self.modalEl);
 
-            self.el.classList.remove('hide');
-            $timeout(function () {
-              if (!self._isShown) return;
-              $ionicBody.addClass(self.viewType + '-open');
-            }, 400, false);
+      self.el.classList.remove('hide');
+      $timeout(function () {
+        if (!self._isShown) return;
+        $ionicBody.addClass(self.viewType + '-open');
+      }, 400, false);
 
-            if (!self.el.parentElement) {
-              modalEl.addClass(self.animation);
-              $ionicBody.append(self.el);
-            }
+      if (!self.el.parentElement) {
+        modalEl.addClass(self.animation);
+        $ionicBody.append(self.el);
+      }
 
-            // if modal was closed while the keyboard was up, reset scroll view on
-            // next show since we can only resize it once it's visible
-            var scrollCtrl = modalEl.data('$$ionicScrollController');
-            scrollCtrl && scrollCtrl.resize();
+      // if modal was closed while the keyboard was up, reset scroll view on
+      // next show since we can only resize it once it's visible
+      var scrollCtrl = modalEl.data('$$ionicScrollController');
+      scrollCtrl && scrollCtrl.resize();
 
-            if (target && self.positionView) {
-              self.positionView(target, modalEl);
-              // set up a listener for in case the window size changes
+      if (target && self.positionView) {
+        self.positionView(target, modalEl);
+        // set up a listener for in case the window size changes
 
-              self._onWindowResize = function () {
-                if (self._isShown) self.positionView(target, modalEl);
-              };
-              ionic.on('resize', self._onWindowResize, window);
-            }
+        self._onWindowResize = function () {
+          if (self._isShown) self.positionView(target, modalEl);
+        };
+        ionic.on('resize', self._onWindowResize, window);
+      }
 
-            modalEl.addClass('ng-enter active')
-              .removeClass('ng-leave ng-leave-active');
+      modalEl.addClass('ng-enter active')
+        .removeClass('ng-leave ng-leave-active');
 
-            self._isShown = true;
-            self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
-              self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
-              IONIC_BACK_PRIORITY.modal
-            );
+      self._isShown = true;
+      self._deregisterBackButton = $ionicPlatform.registerBackButtonAction(
+        self.hardwareBackButtonClose ? angular.bind(self, self.hide) : noop,
+        IONIC_BACK_PRIORITY.modal
+      );
 
-            ionic.views.Modal.prototype.show.call(self);
+      ionic.views.Modal.prototype.show.call(self);
 
-            $timeout(function () {
-              if (!self._isShown) return;
-              modalEl.addClass('ng-enter-active');
-              ionic.trigger('resize');
-              self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.shown', self);
-              self.el.classList.add('active');
-              self.scope.$broadcast('$ionicHeader.align');
-            }, 20);
+      $timeout(function () {
+        if (!self._isShown) return;
+        modalEl.addClass('ng-enter-active');
+        ionic.trigger('resize');
+        self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.shown', self);
+        self.el.classList.add('active');
+        self.scope.$broadcast('$ionicHeader.align');
+      }, 20);
 
-            return $timeout(function () {
-              if (!self._isShown) return;
-              //After animating in, allow hide on backdrop click
-              self.$el.on('click', function (e) {
-                if (self.backdropClickToClose && e.target === self.el && stack.isHighest(self)) {
-                  self.hide();
-                }
-              });
-            }, 400);
-          },
-
-          /**
-           * @ngdoc method
-           * @name ionicModal#hide
-           * @description Hide this modal instance.
-           * @returns {promise} A promise which is resolved when the modal is finished animating out.
-           */
-          hide: function () {
-            var self = this;
-            var modalEl = jqLite(self.modalEl);
-
-            // on iOS, clicks will sometimes bleed through/ghost click on underlying
-            // elements
-            $ionicClickBlock.show(600);
-            stack.remove(self);
-
-            self.el.classList.remove('active');
-            modalEl.addClass('ng-leave');
-
-            $timeout(function () {
-              if (self._isShown) return;
-              modalEl.addClass('ng-leave-active')
-                .removeClass('ng-enter ng-enter-active active');
-            }, 20, false);
-
-            self.$el.off('click');
-            self._isShown = false;
-            self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.hidden', self);
-            self._deregisterBackButton && self._deregisterBackButton();
-
-            ionic.views.Modal.prototype.hide.call(self);
-
-            // clean up event listeners
-            if (self.positionView) {
-              ionic.off('resize', self._onWindowResize, window);
-            }
-
-            return $timeout(function () {
-              $ionicBody.removeClass(self.viewType + '-open');
-              self.el.classList.add('hide');
-            }, self.hideDelay || 320);
-          },
-
-          /**
-           * @ngdoc method
-           * @name ionicModal#remove
-           * @description Remove this modal instance from the DOM and clean up.
-           * @returns {promise} A promise which is resolved when the modal is finished animating out.
-           */
-          remove: function () {
-            var self = this;
-            self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.removed', self);
-
-            return self.hide().then(function () {
-              self.scope.$destroy();
-              self.$el.remove();
-            });
-          },
-
-          /**
-           * @ngdoc method
-           * @name ionicModal#isShown
-           * @returns boolean Whether this modal is currently shown.
-           */
-          isShown: function () {
-            return !!this._isShown;
+      return $timeout(function () {
+        if (!self._isShown) return;
+        //After animating in, allow hide on backdrop click
+        self.$el.on('click', function (e) {
+          if (self.backdropClickToClose && e.target === self.el && stack.isHighest(self)) {
+            self.hide();
           }
         });
+      }, 400);
+    },
+
+    /**
+     * @ngdoc method
+     * @name ionicModal#hide
+     * @description Hide this modal instance.
+     * @returns {promise} A promise which is resolved when the modal is finished animating out.
+     */
+    hide: function () {
+      var self = this;
+      var modalEl = jqLite(self.modalEl);
+
+      // on iOS, clicks will sometimes bleed through/ghost click on underlying
+      // elements
+      $ionicClickBlock.show(600);
+      stack.remove(self);
+
+      self.el.classList.remove('active');
+      modalEl.addClass('ng-leave');
+
+      $timeout(function () {
+        if (self._isShown) return;
+        modalEl.addClass('ng-leave-active')
+          .removeClass('ng-enter ng-enter-active active');
+      }, 20, false);
+
+      self.$el.off('click');
+      self._isShown = false;
+      self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.hidden', self);
+      self._deregisterBackButton && self._deregisterBackButton();
+
+      ionic.views.Modal.prototype.hide.call(self);
+
+      // clean up event listeners
+      if (self.positionView) {
+        ionic.off('resize', self._onWindowResize, window);
+      }
+
+      return $timeout(function () {
+        $ionicBody.removeClass(self.viewType + '-open');
+        self.el.classList.add('hide');
+      }, self.hideDelay || 320);
+    },
+
+    /**
+     * @ngdoc method
+     * @name ionicModal#remove
+     * @description Remove this modal instance from the DOM and clean up.
+     * @returns {promise} A promise which is resolved when the modal is finished animating out.
+     */
+    remove: function () {
+      var self = this;
+      self.scope.$parent && self.scope.$parent.$broadcast(self.viewType + '.removed', self);
+
+      return self.hide().then(function () {
+        self.scope.$destroy();
+        self.$el.remove();
+      });
+    },
+
+    /**
+     * @ngdoc method
+     * @name ionicModal#isShown
+     * @returns boolean Whether this modal is currently shown.
+     */
+    isShown: function () {
+      return !!this._isShown;
+    }
+  });
 
         var createModal = function (templateString, options) {
           // Create a new scope for the modal
@@ -48909,17 +48910,17 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @description Aligns the title with the buttons in a given direction.
      * @param {string=} direction The direction to the align the title text towards.
      * Available: 'left', 'right', 'center'. Default: 'center'.
-     */
+   */
       'align',
-    /**
-     * @ngdoc method
-     * @name $ionicNavBarDelegate#showBackButton
-     * @description
-     * Set/get whether the {@link ionic.directive:ionNavBackButton} is shown
-     * (if it exists and there is a previous view that can be navigated to).
-     * @param {boolean=} show Whether to show the back button.
-     * @returns {boolean} Whether the back button is shown.
-     */
+  /**
+   * @ngdoc method
+   * @name $ionicNavBarDelegate#showBackButton
+   * @description
+   * Set/get whether the {@link ionic.directive:ionNavBackButton} is shown
+   * (if it exists and there is a previous view that can be navigated to).
+   * @param {boolean=} show Whether to show the back button.
+   * @returns {boolean} Whether the back button is shown.
+   */
       'showBackButton',
     /**
      * @ngdoc method
@@ -49073,7 +49074,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               for (actionId in self.$backButtonActions) {
                 if (!priorityAction || self.$backButtonActions[actionId].priority >= priorityAction.priority) {
                   priorityAction = self.$backButtonActions[actionId];
-                }
+            }
               }
               if (priorityAction) {
                 priorityAction.fn(e);
@@ -49104,7 +49105,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 ionic.Platform.ready(function () {
                   document.removeEventListener(type, cb);
                 });
-              };
+          };
             },
 
             /**
@@ -49126,7 +49127,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
               return q.promise;
             }
-          };
+      };
           return self;
         }]
       };
@@ -49771,10 +49772,10 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   // click which would trigging whatever was underneath this
                   if (!popupStack.length) {
                     $ionicBody.removeClass('popup-open');
-                  }
+            }
                 }, 400, false);
                 ($ionicPopup._backButtonActionDone || noop)();
-              }
+        }
 
               popup.remove();
 
@@ -49799,7 +49800,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               type: opts.okType || 'button-positive',
               onTap: function () {
                 return true;
-              }
+        }
             }]
           }, opts || {}));
         }
@@ -49844,7 +49845,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               type: opts.okType || 'button-positive',
               onTap: function () {
                 return scope.data.response || '';
-              }
+        }
             }]
           }, opts || {}));
         }
@@ -49875,13 +49876,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         return el.style[cssprop];
       }
 
-      /**
-       * Checks if a given element is statically positioned
-       * @param element - raw DOM element
-       */
-      function isStaticPositioned(element) {
-        return (getStyle(element, 'position') || 'static') === 'static';
-      }
+  /**
+   * Checks if a given element is statically positioned
+   * @param element - raw DOM element
+   */
+  function isStaticPositioned(element) {
+    return (getStyle(element, 'position') || 'static') === 'static';
+  }
 
       /**
        * returns the closest, non-statically positioned parentOffset of a given element
@@ -49913,7 +49914,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             offsetParentBCR = this.offset(jqLite(offsetParentEl));
             offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
             offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
-          }
+      }
 
           var boundingClientRect = element[0].getBoundingClientRect();
           return {
@@ -49921,7 +49922,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             height: boundingClientRect.height || element.prop('offsetHeight'),
             top: elBCR.top - offsetParentBCR.top,
             left: elBCR.left - offsetParentBCR.left
-          };
+      };
         },
 
         /**
@@ -49934,12 +49935,12 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
          */
         offset: function (element) {
           var boundingClientRect = element[0].getBoundingClientRect();
-          return {
-            width: boundingClientRect.width || element.prop('offsetWidth'),
-            height: boundingClientRect.height || element.prop('offsetHeight'),
-            top: boundingClientRect.top + ($window.pageYOffset || $document[0].documentElement.scrollTop),
-            left: boundingClientRect.left + ($window.pageXOffset || $document[0].documentElement.scrollLeft)
-          };
+      return {
+        width: boundingClientRect.width || element.prop('offsetWidth'),
+        height: boundingClientRect.height || element.prop('offsetHeight'),
+        top: boundingClientRect.top + ($window.pageYOffset || $document[0].documentElement.scrollTop),
+        left: boundingClientRect.left + ($window.pageXOffset || $document[0].documentElement.scrollLeft)
+      };
         }
 
       };
@@ -50010,13 +50011,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @ngdoc method
      * @name $ionicScrollDelegate#resize
      * @description Tell the scrollView to recalculate the size of its container.
-     */
+   */
       'resize',
-    /**
-     * @ngdoc method
-     * @name $ionicScrollDelegate#scrollTop
-     * @param {boolean=} shouldAnimate Whether the scroll should animate.
-     */
+  /**
+   * @ngdoc method
+   * @name $ionicScrollDelegate#scrollTop
+   * @param {boolean=} shouldAnimate Whether the scroll should animate.
+   */
       'scrollTop',
     /**
      * @ngdoc method
@@ -50071,9 +50072,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @name $ionicScrollDelegate#anchorScroll
      * @description Tell the scrollView to scroll to the element with an id
      * matching window.location.hash.
-     *
+   *
      * If no matching element is found, it will scroll to top.
-     *
+   *
      * @param {boolean=} shouldAnimate Whether the scroll should animate.
      */
       'anchorScroll',
@@ -50104,7 +50105,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @param {string} handle
      * @returns `delegateInstance` A delegate instance that controls only the
      * scrollViews with `delegate-handle` matching the given handle.
-     *
+   *
      * Example: `$ionicScrollDelegate.$getByHandle('my-handle').scrollTop();`
      */
     ]));
@@ -50155,15 +50156,15 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @description Toggle the left side menu (if it exists).
      * @param {boolean=} isOpen Whether to open or close the menu.
      * Default: Toggles the menu.
-     */
+   */
       'toggleLeft',
-    /**
-     * @ngdoc method
-     * @name $ionicSideMenuDelegate#toggleRight
-     * @description Toggle the right side menu (if it exists).
-     * @param {boolean=} isOpen Whether to open or close the menu.
-     * Default: Toggles the menu.
-     */
+  /**
+   * @ngdoc method
+   * @name $ionicSideMenuDelegate#toggleRight
+   * @description Toggle the right side menu (if it exists).
+   * @param {boolean=} isOpen Whether to open or close the menu.
+   * Default: Toggles the menu.
+   */
       'toggleRight',
     /**
      * @ngdoc method
@@ -50171,7 +50172,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @description Gets the ratio of open amount over menu width. For example, a
      * menu of width 100 that is opened by 50 pixels is 50% opened, and would return
      * a ratio of 0.5.
-     *
+   *
      * @returns {float} 0 if nothing is open, between 0 and 1 if left menu is
      * opened/opening, and between 0 and -1 if right menu is opened/opening.
      */
@@ -50219,7 +50220,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @returns `delegateInstance` A delegate instance that controls only the
      * {@link ionic.directive:ionSideMenus} directives with `delegate-handle` matching
      * the given handle.
-     *
+   *
      * Example: `$ionicSideMenuDelegate.$getByHandle('my-handle').toggleLeft();`
      */
     ]));
@@ -50263,13 +50264,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
    */
   IonicModule
     .service('$ionicSlideBoxDelegate', ionic.DelegateService([
-    /**
-     * @ngdoc method
-     * @name $ionicSlideBoxDelegate#update
-     * @description
-     * Update the slidebox (for example if using Angular with ng-repeat,
-     * resize it for the elements inside).
-     */
+  /**
+   * @ngdoc method
+   * @name $ionicSlideBoxDelegate#update
+   * @description
+   * Update the slidebox (for example if using Angular with ng-repeat,
+   * resize it for the elements inside).
+   */
       'update',
     /**
      * @ngdoc method
@@ -50336,7 +50337,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @returns `delegateInstance` A delegate instance that controls only the
      * {@link ionic.directive:ionSlideBox} directives with `delegate-handle` matching
      * the given handle.
-     *
+   *
      * Example: `$ionicSlideBoxDelegate.$getByHandle('my-handle').stop();`
      */
     ]));
@@ -50385,7 +50386,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @description Select the tab matching the given index.
      *
      * @param {number} index Index of the tab to select.
-     */
+   */
       'select',
     /**
      * @ngdoc method
@@ -50584,7 +50585,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 })
               );
               element.children().data('$ngControllerController', controller);
-            }
+      }
             if (options.appendTo) {
               jqLite(options.appendTo).append(element);
             }
@@ -50594,7 +50595,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             return {
               element: element,
               scope: scope
-            };
+      };
           });
         }
 
@@ -50705,7 +50706,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                     viewEle.data(DATA_ELE_IDENTIFIER, enteringEleIdentifier + ionic.Utils.nextUid());
                     viewEle.data(DATA_DESTROY_ELE, true);
 
-                  } else {
+              } else {
                     enteringEle = viewEle;
                   }
 
@@ -50844,11 +50845,11 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                       $ionicClickBlock.show(defaultTimeout);
                     } else {
                       cancelTransition();
-                    }
+                }
                     viewTransition.shouldAnimate = shouldAnimate;
-                    viewTransition.run(0);
+                viewTransition.run(0);
                     viewTransition = null;
-                  }
+              }
                 };
 
               } else if (renderEnd) {
@@ -51125,7 +51126,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if (viewScope) {
             viewScope.$emit('$ionicView.unloaded', ele.data(DATA_VIEW));
             viewScope.$destroy();
-          }
+      }
           ele.remove();
         }
       }
@@ -51145,7 +51146,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         $element.data(dataName, scope);
       };
       return $compile;
-    }]);
+  }]);
   }]);
 
   /**
@@ -51166,9 +51167,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               var scroll = document.querySelector('.scroll-content');
               if (scroll) {
                 scroll.scrollTop = 0;
-              }
-            }, 0, false);
           }
+            }, 0, false);
+      }
           return $location.__hash(value);
         };
 
@@ -51269,14 +51270,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 if (ele) {
                   self.backButtonIcon = $ionicConfig.backButton.icon();
                   ele.className = 'icon ' + self.backButtonIcon;
-                }
+          }
               }
 
               if (self.backButtonText !== $ionicConfig.backButton.text()) {
                 ele = getEle(BACK_BUTTON + ' .back-text');
                 if (ele) {
                   ele.textContent = self.backButtonText = $ionicConfig.backButton.text();
-                }
+          }
               }
             }
           }
@@ -51413,19 +51414,19 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                         } else {
                           if (d.classList.contains(PREVIOUS_TITLE)) continue;
                           backButtonWidth += d.offsetWidth;
-                        }
-                      }
+                  }
+                }
 
-                    } else {
+              } else {
                       backButtonWidth += b.offsetWidth;
-                    }
+              }
 
                   } else if (b.nodeType == 3 && b.nodeValue.trim()) {
                     bounds = ionic.DomUtil.getTextBounds(b);
                     backButtonWidth += bounds && bounds.width || 0;
-                  }
+            }
 
-                }
+          }
                 childSize = backButtonWidth || c.offsetWidth;
 
               } else {
@@ -51622,11 +51623,11 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           } else {
             maxScroll = self.getNativeMaxScroll();
             if ((
-              maxScroll.left !== -1 &&
-              self.scrollEl.scrollLeft >= maxScroll.left - self.scrollEl.clientWidth
+                maxScroll.left !== -1 &&
+                self.scrollEl.scrollLeft >= maxScroll.left - self.scrollEl.clientWidth
               ) || (
-              maxScroll.top !== -1 &&
-              self.scrollEl.scrollTop >= maxScroll.top - self.scrollEl.clientHeight
+                maxScroll.top !== -1 &&
+                self.scrollEl.scrollTop >= maxScroll.top - self.scrollEl.clientHeight
               )) {
               onInfinite();
             }
@@ -51893,7 +51894,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 if (itemType === 'title') {
                   // clear out the text based title
                   headerBarInstance.title("");
-                }
+          }
 
                 // there's a custom nav bar item
                 positionItem(navBarItemEle, itemType);
@@ -51901,7 +51902,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 if (navEle[itemType]) {
                   // make sure the default on this itemType is hidden
                   navEle[itemType].addClass(CSS_HIDE);
-                }
+          }
                 lastViewItemEle[itemType] = navBarItemEle;
 
               } else if (navEle[itemType]) {
@@ -51940,7 +51941,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 if (navEle[n]) {
                   navEle[n].removeData();
                   navEle[n] = null;
-                }
+          }
               }
               leftButtonsEle && leftButtonsEle.removeData();
               rightButtonsEle && rightButtonsEle.removeData();
@@ -51978,9 +51979,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 leftButtonsEle = jqLite('<div class="buttons buttons-left">');
                 if (navEle[BACK_BUTTON]) {
                   navEle[BACK_BUTTON].after(leftButtonsEle);
-                } else {
+          } else {
                   headerBarEle.prepend(leftButtonsEle);
-                }
+          }
               }
               if (itemType == SECONDARY_BUTTONS) {
                 leftButtonsEle.append(ele);
@@ -52494,7 +52495,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
                 // disconnect the leaving scope
                 ionic.Utils.disconnectScope(viewElement.scope());
-              }
+        }
             }
           }
 
@@ -52545,7 +52546,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               for (y = 0; y < stateIds.length; y++) {
                 if (eleIdentifier === stateIds[y]) {
                   $ionicViewSwitcher.destroyViewEle(viewElement);
-                }
+          }
               }
               continue;
             }
@@ -52730,7 +52731,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               for (var x = dragPoints.length - 2; x >= 0; x--) {
                 if (now - startDrag.t > 200) {
                   break;
-                }
+          }
                 startDrag = dragPoints[x];
               }
 
@@ -52807,7 +52808,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             for (var x = 0; x < $ionicNavBarDelegate._instances.length; x++) {
               if ($ionicNavBarDelegate._instances[x].$$delegateHandle == navBarDelegate) {
                 return $ionicNavBarDelegate._instances[x];
-              }
+        }
             }
           }
           return $element.inheritedData('$ionNavBarController');
@@ -52881,7 +52882,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             } else {
               scrollTo(0, scrollTime, deactivate);
               isOverscrolling = false;
-            }
+        }
           }
         }
 
@@ -52910,11 +52911,11 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             if (isOverscrolling) {
               isOverscrolling = false;
               setScrollLock(false);
-            }
+        }
 
             if (isDragging) {
               nativescroll(scrollParent, parseInt(deltaY - dragOffset, 10) * -1);
-            }
+        }
 
             // if we're not at overscroll 0 yet, 0 out
             if (lastOverscroll !== 0) {
@@ -52977,7 +52978,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             ionic.requestAnimationFrame(function () {
               scrollChild.classList.add('overscroll');
               show();
-            });
+        });
 
           } else {
             ionic.requestAnimationFrame(function () {
@@ -53001,9 +53002,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             $timeout(function () {
 
               if (isOverscrolling) {
-                isOverscrolling = false;
-                setScrollLock(false);
-              }
+            isOverscrolling = false;
+            setScrollLock(false);
+          }
 
             }, scrollTime);
 
@@ -53038,14 +53039,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             overscroll(parseInt((easedT * (Y - from)) + from, 10));
 
             if (time < 1) {
-              ionic.requestAnimationFrame(scroll);
+          ionic.requestAnimationFrame(scroll);
 
             } else {
 
               if (Y < 5 && Y > -5) {
                 isOverscrolling = false;
                 setScrollLock(false);
-              }
+          }
 
               callback && callback();
             }
@@ -53202,7 +53203,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 scrollView.options.bouncing = false;
                 // Faster scroll decel
                 scrollView.options.deceleration = 0.95;
-              }
+        }
             }
           });
         }
@@ -53291,7 +53292,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             if (!(hash && elm)) {
               scrollView.scrollTo(0, 0, !!shouldAnimate);
               return;
-            }
+      }
             var curElm = elm;
             var scrollLeft = 0, scrollTop = 0;
             do {
@@ -53312,17 +53313,17 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         };
 
 
-        /**
-         * @private
-         */
-        self._setRefresher = function (refresherScope, refresherElement, refresherMethods) {
-          self.refresher = refresherElement;
-          var refresherHeight = self.refresher.clientHeight || 60;
-          scrollView.activatePullToRefresh(
-            refresherHeight,
-            refresherMethods
-          );
-        };
+  /**
+   * @private
+   */
+  self._setRefresher = function (refresherScope, refresherElement, refresherMethods) {
+    self.refresher = refresherElement;
+    var refresherHeight = self.refresher.clientHeight || 60;
+    scrollView.activatePullToRefresh(
+      refresherHeight,
+      refresherMethods
+    );
+  };
 
       }]);
 
@@ -53822,9 +53823,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               for (y = 0; y < data[k][x].t; y++) {
                 createSvgElement(k, data[k][x].fn(y, spinnerName), ele, spinnerName);
               }
-            } else {
+          } else {
               createSvgElement(k, data[k][x], ele, spinnerName);
-            }
+          }
           }
 
         } else {
@@ -53867,7 +53868,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               },
               t: 1
             }]
-          };
+        };
         },
         t: 12
       }]
@@ -53993,47 +53994,47 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
       lines: {
         sw: 7,
-        lc: ROUND,
-        line: [{
-          fn: function (i) {
-            return {
-              x1: 10 + (i * 14),
-              x2: 10 + (i * 14),
-              a: [{
-                fn: function () {
-                  return {
-                    an: 'y1',
-                    dur: DURATION,
-                    v: animationValues('16;18;28;18;16', i),
-                    rc: INDEFINITE
-                  };
-                },
-                t: 1
-              }, {
-                fn: function () {
-                  return {
-                    an: 'y2',
-                    dur: DURATION,
-                    v: animationValues('48;44;36;46;48', i),
-                    rc: INDEFINITE
-                  };
-                },
-                t: 1
-              }, {
-                fn: function () {
-                  return {
-                    an: STROKE_OPACITY,
-                    dur: DURATION,
-                    v: animationValues('1;.8;.5;.4;1', i),
-                    rc: INDEFINITE
-                  };
-                },
-                t: 1
-              }]
-            };
-          },
-          t: 4
-        }]
+      lc: ROUND,
+      line: [{
+        fn: function (i) {
+          return {
+            x1: 10 + (i * 14),
+            x2: 10 + (i * 14),
+            a: [{
+              fn: function () {
+                return {
+                  an: 'y1',
+                  dur: DURATION,
+                  v: animationValues('16;18;28;18;16', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }, {
+              fn: function () {
+                return {
+                  an: 'y2',
+                  dur: DURATION,
+                  v: animationValues('48;44;36;46;48', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }, {
+              fn: function () {
+                return {
+                  an: STROKE_OPACITY,
+                  dur: DURATION,
+                  v: animationValues('1;.8;.5;.4;1', i),
+                  rc: INDEFINITE
+                };
+              },
+              t: 1
+            }]
+          };
+        },
+        t: 4
+      }]
       },
 
       ripple: {
@@ -54090,18 +54091,18 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               offset: 1,
               class: 'stop2'
             }]
-          }]
+        }]
         }],
         g: [{
           sw: 4,
-          lc: ROUND,
-          f: NONE,
+        lc: ROUND,
+        f: NONE,
           path: [{
             stroke: 'url(#sGD)',
             d: 'M4,32 c0,15,12,28,28,28c8,0,16-4,21-9'
           }, {
             d: 'M60,32 C60,16,47.464,4,32,4S4,16,4,32'
-          }],
+        }],
           at: [SPIN_ANIMATION]
         }]
       }
@@ -54129,7 +54130,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             translateX = -64;
             dasharray = (128 - (-58 * v));
             dashoffset = (182 * v);
-          }
+        }
 
           var rotateLine = [0, -101, -90, -11, -180, 79, -270, -191][rIndex];
 
@@ -54144,18 +54145,18 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if (v >= 1) {
             rIndex++;
             if (rIndex > 7) rIndex = 0;
-            startTime = Date.now();
+          startTime = Date.now();
           }
 
           ionic.requestAnimationFrame(run);
-        }
+      }
 
         return function () {
           startTime = Date.now();
           run();
         };
 
-      }
+    }
 
     };
 
@@ -54333,7 +54334,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 title: tab.title,
                 url: tab.href,
                 uiSref: tab.uiSref
-              });
+        });
             }
           }
         };
@@ -54492,7 +54493,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               $scope.cancel();
               $scope.$apply();
             }
-          };
+      };
 
           var backdropClick = function (e) {
             if (e.target == $element[0]) {
@@ -54573,7 +54574,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           }, function (value, name) {
             if (isDefined(value)) {
               input.attr(name, value);
-            }
+        }
           });
           var checkboxWrapper = element[0].querySelector('.checkbox');
           checkboxWrapper.classList.add('checkbox-' + $ionicConfig.form.checkbox());
@@ -54690,14 +54691,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
       if (scrollView.options.scrollingX && scrollView.options.scrollingY) {
         throw new Error("collection-repeat expected a parent x or y scrollView, not " +
-        "an xy scrollView.");
+          "an xy scrollView.");
       }
 
       var repeatExpr = attr.collectionRepeat;
       var match = repeatExpr.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
       if (!match) {
         throw new Error("collection-repeat expected expression in form of '_item_ in " +
-        "_collection_[ track by _id_]' but got '" + attr.collectionRepeat + "'.");
+          "_collection_[ track by _id_]' but got '" + attr.collectionRepeat + "'.");
       }
       var keyExpr = match[1];
       var listExpr = match[2];
@@ -54737,7 +54738,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       function onResize() {
         if (changeValidator.resizeRequiresRefresh(scrollView.__clientWidth, scrollView.__clientHeight)) {
           refreshDimensions();
-        }
+      }
       }
 
       scope.$watchCollection(listGetter, function (newValue) {
@@ -54750,7 +54751,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         scope.$$postDigest(function () {
           getRepeatManager().setData(data);
           if (changeValidator.dataChangeRequiresRefresh(data)) refreshDimensions();
-        });
+      });
       });
 
       scope.$on('$destroy', function () {
@@ -54793,7 +54794,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
             return !!requiresRefresh;
           }
-        });
+      });
       }
 
       function getRepeatManager() {
@@ -54822,16 +54823,16 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             if (ionic.DomUtil.contains(node, containerNode)) {
               elementIsAfterRepeater = true;
               return false;
-            }
+          }
             return elementIsAfterRepeater;
-          });
+        });
           container = angular.element('<span class="collection-repeat-after-container">');
           if (scrollView.options.scrollingX) {
             container.addClass('horizontal');
           }
           container.append(afterNodes);
           scrollView.__content.appendChild(container[0]);
-        }
+      }
         return container;
       }
 
@@ -54855,12 +54856,12 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           parseDimensionAttr(heightExpr, heightData);
         } else {
           heightData.computed = true;
-        }
+      }
         if (widthExpr) {
           parseDimensionAttr(widthExpr, widthData);
         } else {
           widthData.computed = true;
-        }
+      }
       }
 
       function refreshDimensions() {
@@ -54876,7 +54877,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             throw new Error('collection-repeat tried to compute the height of repeated elements "' +
             repeatExpr + '", but was unable to. Please provide the "item-height" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
-          }
+        }
         } else if (!heightData.dynamic && heightData.getValue) {
           // If it's a constant with a getter (eg percent), we just refresh .value after resize
           heightData.value = heightData.getValue();
@@ -54888,11 +54889,11 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             throw new Error('collection-repeat tried to compute the width of repeated elements "' +
             repeatExpr + '", but was unable to. Please provide the "item-width" attribute. ' +
             'http://ionicframework.com/docs/api/directive/collectionRepeat/');
-          }
+        }
         } else if (!widthData.dynamic && widthData.getValue) {
           // If it's a constant with a getter (eg percent), we just refresh .value after resize
           widthData.value = widthData.getValue();
-        }
+      }
         // Dynamic dimensions aren't updated on resize. Since they're already dynamic anyway,
         // .getValue() will be used.
 
@@ -54911,7 +54912,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           // quotes, to attempt to let the user provide a simple `attr="100%"` or `attr="100px"`
           if (attrValue.trim().match(/\d+(px|%)$/)) {
             attrValue = '"' + attrValue + '"';
-          }
+        }
           parsedValue = $parse(attrValue);
         }
 
@@ -54926,17 +54927,17 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           // For percents, store the percent getter on .getValue()
           if (attrValue.indexOf('%') > -1) {
             var decimalValue = intValue / 100;
-            dimensionData.getValue = dimensionData === heightData ?
-              function () {
-                return Math.floor(decimalValue * scrollView.__clientHeight);
-              } :
-              function () {
-                return Math.floor(decimalValue * scrollView.__clientWidth);
-              };
+          dimensionData.getValue = dimensionData === heightData ?
+            function () {
+              return Math.floor(decimalValue * scrollView.__clientHeight);
+            } :
+            function () {
+              return Math.floor(decimalValue * scrollView.__clientWidth);
+            };
           } else {
             // For static constants, just store the static constant.
             dimensionData.value = intValue;
-          }
+        }
 
         } else {
           dimensionData.dynamic = true;
@@ -54955,7 +54956,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               }
               return parseInt(result);
             };
-        }
+      }
       }
 
       var computedStyleNode;
@@ -54978,9 +54979,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         computedStyleDimensions.height = parseInt(style.height);
 
         containerNode.removeChild(computedStyleNode);
-      }
-
     }
+
+  }
 
   }
 
@@ -55145,7 +55146,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           var poolSize = Math.max(20, renderBuffer * 3);
           for (var i = 0; i < poolSize; i++) {
             itemsPool.push(new RepeatItem());
-          }
+        }
         }
 
         isLayoutReady = true;
@@ -55155,7 +55156,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if (scrollView.__scrollLeft > scrollView.__maxScrollLeft ||
             scrollView.__scrollTop > scrollView.__maxScrollTop) {
             scrollView.resize();
-          }
+        }
           forceRerender(true);
         }
       };
@@ -55209,7 +55210,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             delete itemsShownMap[i];
             itemsLeaving.push(item);
             item.isShown = false;
-          }
+        }
         }
 
         // Render indicies that aren't shown yet
@@ -55224,8 +55225,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if (i >= data.length || (itemsShownMap[i] && !forceRerender)) continue;
 
           item = itemsShownMap[i] || (itemsShownMap[i] = itemsLeaving.length ? itemsLeaving.pop() :
-            itemsPool.length ? itemsPool.shift() :
-              new RepeatItem());
+              itemsPool.length ? itemsPool.shift() :
+                new RepeatItem());
           itemsEntering.push(item);
           item.isShown = true;
 
@@ -55252,7 +55253,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 .replace(PRIMARY, (item.primarySize = dim.primarySize) + 1)
                 .replace(SECONDARY, (item.secondarySize = dim.secondarySize))
             );
-          }
+        }
 
         }
 
@@ -55281,8 +55282,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               var src = img.src;
               img.src = ONE_PX_TRANSPARENT_IMG_SRC;
               img.src = src;
-            }
           }
+        }
         }
         if (forceRerender) {
           var rootScopePhase = $rootScope.$$phase;
@@ -55305,9 +55306,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           while (itemsEntering.length) {
             item = itemsEntering.pop();
             if (item.isShown) {
-              if (!rootScopePhase) item.scope.$digest();
-            }
+            if (!rootScopePhase) item.scope.$digest();
           }
+        }
           digestEnteringItems.running = false;
         });
       }
@@ -55447,7 +55448,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             dim.primaryPos = prevDimension.primaryPos + prevDimension.primarySize;
             dim.secondaryPos = 0;
           }
-        }
+      }
 
         function calculateDimensionsGrid(toIndex) {
           var i, prevDimension, dim;
@@ -55460,7 +55461,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             dim.secondaryPos = prevDimension.secondaryPos + prevDimension.secondarySize;
 
             if (i === 0 || dim.secondaryPos + dim.secondarySize > self.scrollSecondarySize) {
-              dim.secondaryPos = 0;
+            dim.secondaryPos = 0;
               dim.primarySize = self.getItemPrimarySize(i, data[i]);
               dim.primaryPos = prevDimension.primaryPos + prevDimension.rowPrimarySize;
 
@@ -55474,7 +55475,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               dimensions[dim.rowStartIndex].rowPrimarySize = dim.rowPrimarySize = Math.max(
                 dimensions[dim.rowStartIndex].rowPrimarySize,
                 dim.primarySize
-              );
+            );
               dim.rowPrimarySize = Math.max(dim.primarySize, dim.rowPrimarySize);
             }
           }
@@ -55518,9 +55519,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               calculateDimensions(index);
               dimensionsIndex = index;
               debouncedScrollViewSetDimensions();
-            }
-
           }
+
+        }
           return dimensions[index];
         };
 
@@ -55543,8 +55544,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             for (i = oldRenderStartIndex, len = data.length; i < len; i++) {
               if ((dim = this.getDimensions(i)) && dim.primaryPos + dim.rowPrimarySize >= scrollValue) {
                 break;
-              }
             }
+          }
             // scrolling up
           } else {
             for (i = oldRenderStartIndex; i >= 0; i--) {
@@ -55570,10 +55571,10 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 while (i < len - 1 &&
                 (dim = this.getDimensions(i + 1)).primaryPos === lastRowDim.primaryPos) {
                   i++;
-                }
               }
-              break;
             }
+              break;
+          }
           }
 
           renderEndIndex = Math.min(i, data.length - 1);
@@ -55745,7 +55746,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                     scrollEventInterval: parseInt($scope.scrollEventInterval, 10) || 10,
                     scrollingComplete: onScrollComplete
                   };
-                }
+          }
 
                 // init scroll controller with appropriate options
                 scrollCtrl = $controller('$ionicScroll', {
@@ -55771,7 +55772,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 });
               }
 
-            }
+      }
           }
         };
       }]);
@@ -56151,7 +56152,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         scope.$on('$destroy', function () {
           $ionicGesture.off(gesture, eventType, listener);
         });
-      };
+    };
     }];
   }
 
@@ -56236,41 +56237,41 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
   function tapScrollToTopDirective() {
     return ['$ionicScrollDelegate', function ($ionicScrollDelegate) {
-      return {
-        restrict: 'E',
-        link: function ($scope, $element, $attr) {
-          if ($attr.noTapScroll == 'true') {
-            return;
-          }
-          ionic.on('tap', onTap, $element[0]);
-          $scope.$on('$destroy', function () {
-            ionic.off('tap', onTap, $element[0]);
-          });
+    return {
+      restrict: 'E',
+      link: function ($scope, $element, $attr) {
+        if ($attr.noTapScroll == 'true') {
+          return;
+        }
+        ionic.on('tap', onTap, $element[0]);
+        $scope.$on('$destroy', function () {
+          ionic.off('tap', onTap, $element[0]);
+        });
 
-          function onTap(e) {
-            var depth = 3;
-            var current = e.target;
-            //Don't scroll to top in certain cases
-            while (depth-- && current) {
-              if (current.classList.contains('button') ||
+        function onTap(e) {
+          var depth = 3;
+          var current = e.target;
+          //Don't scroll to top in certain cases
+          while (depth-- && current) {
+            if (current.classList.contains('button') ||
                 current.tagName.match(/input|textarea|select/i) ||
                 current.isContentEditable) {
-                return;
-              }
-              current = current.parentNode;
+              return;
             }
-            var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
-            var bounds = $element[0].getBoundingClientRect();
-            if (ionic.DomUtil.rectContains(
-                touch.pageX, touch.pageY,
-                bounds.left, bounds.top - 20,
-                bounds.left + bounds.width, bounds.top + bounds.height
-              )) {
-              $ionicScrollDelegate.scrollTop(true);
-            }
+            current = current.parentNode;
+          }
+          var touch = e.gesture && e.gesture.touches[0] || e.detail.touches[0];
+          var bounds = $element[0].getBoundingClientRect();
+          if (ionic.DomUtil.rectContains(
+              touch.pageX, touch.pageY,
+              bounds.left, bounds.top - 20,
+              bounds.left + bounds.width, bounds.top + bounds.height
+            )) {
+            $ionicScrollDelegate.scrollTop(true);
           }
         }
-      };
+      }
+    };
     }];
   }
 
@@ -56306,7 +56307,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               $scope.$on('$ionicHeader.align', function () {
                 ionic.requestAnimationFrame(function () {
                   ctrl.align();
-                });
+              });
               });
 
             } else {
@@ -56325,8 +56326,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               $scope.$watch('$hasTabs', function (val) {
                 $element.toggleClass('has-tabs', !!val);
               });
-            }
           }
+        }
         }
       };
     }];
@@ -56428,7 +56429,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             // if there's no scroll controller, and no overflow scroll div, infinite scroll wont work
             if (!scrollEl) {
               throw 'Infinite scroll must be used inside a scrollable div';
-            }
+        }
             //bind to native scroll events
             infiniteScrollCtrl.scrollEl.addEventListener('scroll', infiniteScrollCtrl.checkBounds);
           }
@@ -56494,7 +56495,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               innerElement.attr('ng-href', '{{$href()}}');
               if (isDefined($attrs.target)) {
                 innerElement.attr('target', '{{$target()}}');
-              }
+          }
             }
 
             innerElement.append($element.contents());
@@ -56521,14 +56522,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   content.style[ionic.CSS.TRANSITION] = 'none';
                   $$rAF(function () {
                     content.style[ionic.CSS.TRANSITION] = '';
-                  });
-                  content.$$ionicOptionsOpen = false;
-                }
               });
+                  content.$$ionicOptionsOpen = false;
             }
-          };
-
+          });
         }
+      };
+
+    }
       };
     }]);
 
@@ -56596,7 +56597,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               listCtrl = listCtrl || $element.controller('ionList');
               if (listCtrl && listCtrl.showDelete()) {
                 container.addClass('visible active');
-              }
+          }
             }
           };
         }
@@ -56630,8 +56631,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             ngModelCtrl.$render = function () {
               input.value = ngModelCtrl.$viewValue || '';
               onInput();
-            };
-          }
+        };
+      }
 
           scope.$on('$destroy', function () {
             input.removeEventListener('input', onInput);
@@ -56771,8 +56772,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               $element[0].onclick = function (e) {
                 e.stopPropagation();
                 return false;
-              };
-            }
+          };
+        }
 
             var container = jqLite(ITEM_TPL_REORDER_BUTTON);
             container.append($element);
@@ -56781,7 +56782,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             if (listCtrl && listCtrl.showReorder()) {
               container.addClass('visible active');
             }
-          };
+      };
         }
       };
     }]);
@@ -56860,7 +56861,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           //deprecated
           ionic.off('native.showkeyboard', onShow, window);
           ionic.off('native.hidekeyboard', onHide, window);
-        });
+    });
       };
     });
 
@@ -56987,8 +56988,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                       // $evalAsync
                       $timeout(function () {
                         itemScope.$onReorder(oldIndex, newIndex);
-                      });
-                    }
+                });
+              }
                   },
                   canSwipe: function () {
                     return listCtrl.canSwipeItems();
@@ -57006,7 +57007,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   $scope.$watch('!!(' + $attr.canSwipe + ')', function (value) {
                     listCtrl.canSwipeItems(value);
                   });
-                }
+          }
                 if (isDefined($attr.showDelete)) {
                   $scope.$watch('!!(' + $attr.showDelete + ')', function (value) {
                     listCtrl.showDelete(value);
@@ -57114,7 +57115,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 historyRoot: true,
                 disableAnimate: true,
                 expire: 300
-              });
+          });
               // if no transition in 300ms, reset nextViewOptions
               // the expire should take care of it, but will be cancelled in some
               // cases. This directive is an exception to the rules of history.js
@@ -57125,7 +57126,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 });
               }, 300);
               sideMenuCtrl.close();
-            }
+        }
           });
         }
       };
@@ -57181,7 +57182,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               }
             } else {
               $element.removeClass('hide');
-            }
+        }
           });
 
           $element.bind('click', function () {
@@ -57312,7 +57313,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 hasButtonText = true;
               } else if (childNode.classList.contains('previous-title')) {
                 hasPreviousTitle = true;
-              }
+          }
             } else if (!hasInnerText && childNode.nodeType === 3) {
               hasInnerText = !!childNode.nodeValue.trim();
             }
@@ -57350,8 +57351,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               // only register the plain HTML, the navBarCtrl takes care of scope/compile/link
               navBarCtrl.navElement('backButton', buttonEle.outerHTML);
               buttonEle = null;
-            }
-          };
+        }
+      };
         }
       };
     }]);
@@ -57502,8 +57503,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               }
 
               spanEle = null;
-            }
-          };
+        }
+      };
         }
       };
     }]);
@@ -57604,8 +57605,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               }
 
               spanEle = null;
-            }
-          };
+        }
+      };
         }
       };
     }]);
@@ -57998,14 +57999,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           }, function (value, name) {
             if (isDefined(value)) {
               input.attr(name, value);
-            }
+          }
           });
 
           return function (scope, element, attr) {
             scope.getValue = function () {
               return scope.ngValue || attr.value;
             };
-          };
+      };
         }
       };
     });
@@ -58224,11 +58225,11 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 maxZoom: $scope.$eval($scope.maxZoom) || 3,
                 minZoom: $scope.$eval($scope.minZoom) || 0.5,
                 preventDefault: true
-              };
+        };
               if (isPaging) {
                 scrollViewOptions.speedMultiplier = 0.8;
                 scrollViewOptions.bouncing = false;
-              }
+        }
 
               $controller('$ionicScroll', {
                 $scope: $scope,
@@ -58294,7 +58295,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             $scope.$watch($attr.isEnabled, function (val) {
               sideMenu.setIsEnabled(!!val);
             });
-          };
+      };
         }
       };
     });
@@ -58423,11 +58424,11 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                       // ok, we pretty much know which way they're going
                       // let's lock it in
                       primaryScrollAxis = scrollAxis;
-                    }
+              }
 
                     return scrollAxis;
-                  }
-                }
+            }
+          }
                 return 'y';
               }
 
@@ -58480,7 +58481,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   $element[0].classList.remove('menu-animated');
                 },
                 offsetX: 0
-              };
+        };
 
               sideMenuCtrl.setContent(content);
 
@@ -58832,9 +58833,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 children[i].classList.add('active');
               } else {
                 children[i].classList.remove('active');
-              }
-            }
-          };
+          }
+        }
+      };
 
           $scope.pagerClick = function (index) {
             slideBox.onPagerClick(index);
@@ -58842,7 +58843,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
           $scope.numSlides = function () {
             return new Array(slideBox.slidesCount());
-          };
+      };
 
           $scope.$watch('currentSlide', function (v) {
             selectPage(v);
@@ -59154,7 +59155,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               $ionicBind($scope, $attr, {
                 onSelect: '&',
                 onDeselect: '&',
-                title: '@',
+          title: '@',
                 uiSref: '@',
                 href: '@'
               });
@@ -59184,7 +59185,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               function selectIfMatchesState() {
                 if (tabCtrl.tabMatchesState()) {
                   tabsCtrl.select($scope, false);
-                }
+          }
               }
 
               var tabNavElement = jqLite(tabNavTemplate);
@@ -59226,7 +59227,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   }
 
                 }
-              }
+        }
 
               function destroyTab() {
                 childScope && childScope.$destroy();
@@ -59247,7 +59248,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 }
               });
 
-            };
+      };
           }
         };
       }]);
@@ -59405,7 +59406,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 var previousSelectedTab = tabsCtrl.previousSelectedTab();
                 if (previousSelectedTab) {
                   previousSelectedTab.$broadcast(ev.name.replace('NavView', 'Tabs'), data);
-                }
+          }
               }
 
               $scope.$on('$ionicNavView.beforeLeave', emitLifecycleEvent);
@@ -59523,8 +59524,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                   if (ngModelController) {
                     ngModelController.$setViewValue(checkbox.checked);
                     $scope.$apply();
-                  }
-                }
+            }
+          }
               });
 
               $scope.$on('$destroy', function () {
@@ -59654,7 +59655,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           tElement[0].removeAttribute('title');
           return function link($scope, $element, $attrs, viewCtrl) {
             viewCtrl.init();
-          };
+      };
         }
       };
     });

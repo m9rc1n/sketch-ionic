@@ -53,7 +53,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     for (var n in first.path) {
       if (first.path[n] !== second.path[n]) break;
       path.push(first.path[n]);
-    }
+  }
     return path;
   }
 
@@ -66,7 +66,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
   function objectKeys(object) {
     if (Object.keys) {
       return Object.keys(object);
-    }
+  }
     var result = [];
 
     angular.forEach(object, function (val, key) {
@@ -85,7 +85,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
   function indexOf(array, value) {
     if (Array.prototype.indexOf) {
       return array.indexOf(value, Number(arguments[2]) || 0);
-    }
+  }
     var len = array.length >>> 0, from = Number(arguments[2]) || 0;
     from = (from < 0) ? Math.ceil(from) : Math.floor(from);
 
@@ -93,7 +93,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
     for (; from < len; from++) {
       if (from in array && array[from] === value) return from;
-    }
+  }
     return -1;
   }
 
@@ -118,8 +118,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         if (indexOf(inheritList, parentParams[j]) >= 0) continue;
         inheritList.push(parentParams[j]);
         inherited[parentParams[j]] = currentParams[parentParams[j]];
-      }
     }
+  }
     return extend({}, inherited, newParams);
   }
 
@@ -136,12 +136,12 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     if (!keys) {
       keys = [];
       for (var n in a) keys.push(n); // Used instead of Object.keys() for IE8 compatibility
-    }
+  }
 
     for (var i = 0; i < keys.length; i++) {
       var k = keys[i];
       if (a[k] != b[k]) return false; // Not '===', values aren't necessarily normalized
-    }
+  }
     return true;
   }
 
@@ -189,7 +189,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
     for (var key in obj) {
       if (indexOf(keys, key) == -1) copy[key] = obj[key];
-    }
+  }
     return copy;
   }
 
@@ -360,7 +360,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         if (visited[key] === VISIT_IN_PROGRESS) {
           cycle.splice(0, indexOf(cycle, key));
           throw new Error("Cyclic dependency: " + cycle.join(" -> "));
-        }
+      }
         visited[key] = VISIT_IN_PROGRESS;
 
         if (isString(value)) {
@@ -373,7 +373,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             if (param !== key && invocables.hasOwnProperty(param)) visit(invocables[param], param);
           });
           plan.push(key, value, params);
-        }
+      }
 
         cycle.pop();
         visited[key] = VISIT_DONE;
@@ -418,7 +418,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             result.$$promises = result.$$promises || true; // keep for isResolve()
             delete result.$$inheritedValues;
             resolution.resolve(values);
-          }
+        }
         }
 
         function fail(reason) {
@@ -444,9 +444,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           result.$$inheritedValues = omit(parent.$$values, invocableKeys);
           done();
         } else {
-          if (parent.$$inheritedValues) {
-            result.$$inheritedValues = omit(parent.$$inheritedValues, invocableKeys);
-          }
+        if (parent.$$inheritedValues) {
+          result.$$inheritedValues = omit(parent.$$inheritedValues, invocableKeys);
+        }
           parent.then(done, fail);
         }
 
@@ -463,7 +463,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           function onfailure(reason) {
             invocation.reject(reason);
             fail(reason);
-          }
+        }
 
           // Wait for any parameter that we have a promise for (either from parent or from this
           // resolve; in that case study() will have made sure it's ordered before us in the plan).
@@ -474,7 +474,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 values[dep] = result;
                 if (!(--waitParams)) proceed();
               }, onfailure);
-            }
+          }
           });
           if (!waitParams) proceed();
           function proceed() {
@@ -487,81 +487,81 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               }, onfailure);
             } catch (e) {
               onfailure(e);
-            }
           }
+        }
 
           // Publish promise synchronously; invocations further down in the plan may depend on it.
           promises[key] = invocation.promise;
         }
 
         return result;
-      };
+    };
     };
 
-    /**
-     * @ngdoc function
-     * @name ui.router.util.$resolve#resolve
-     * @methodOf ui.router.util.$resolve
-     *
-     * @description
-     * Resolves a set of invocables. An invocable is a function to be invoked via
-     * `$injector.invoke()`, and can have an arbitrary number of dependencies.
-     * An invocable can either return a value directly,
-     * or a `$q` promise. If a promise is returned it will be resolved and the
-     * resulting value will be used instead. Dependencies of invocables are resolved
-     * (in this order of precedence)
-     *
-     * - from the specified `locals`
-     * - from another invocable that is part of this `$resolve` call
-     * - from an invocable that is inherited from a `parent` call to `$resolve`
-     *   (or recursively
-     * - from any ancestor `$resolve` of that parent).
-     *
-     * The return value of `$resolve` is a promise for an object that contains
-     * (in this order of precedence)
-     *
-     * - any `locals` (if specified)
-     * - the resolved return values of all injectables
-     * - any values inherited from a `parent` call to `$resolve` (if specified)
-     *
-     * The promise will resolve after the `parent` promise (if any) and all promises
-     * returned by injectables have been resolved. If any invocable
-     * (or `$injector.invoke`) throws an exception, or if a promise returned by an
-     * invocable is rejected, the `$resolve` promise is immediately rejected with the
-     * same error. A rejection of a `parent` promise (if specified) will likewise be
-     * propagated immediately. Once the `$resolve` promise has been rejected, no
-     * further invocables will be called.
-     *
-     * Cyclic dependencies between invocables are not permitted and will caues `$resolve`
-     * to throw an error. As a special case, an injectable can depend on a parameter
-     * with the same name as the injectable, which will be fulfilled from the `parent`
-     * injectable of the same name. This allows inherited values to be decorated.
-     * Note that in this case any other injectable in the same `$resolve` with the same
-     * dependency would see the decorated value, not the inherited value.
-     *
-     * Note that missing dependencies -- unlike cyclic dependencies -- will cause an
-     * (asynchronous) rejection of the `$resolve` promise rather than a (synchronous)
-     * exception.
-     *
-     * Invocables are invoked eagerly as soon as all dependencies are available.
-     * This is true even for dependencies inherited from a `parent` call to `$resolve`.
-     *
-     * As a special case, an invocable can be a string, in which case it is taken to
-     * be a service name to be passed to `$injector.get()`. This is supported primarily
-     * for backwards-compatibility with the `resolve` property of `$routeProvider`
-     * routes.
-     *
-     * @param {object} invocables functions to invoke or
-     * `$injector` services to fetch.
-     * @param {object} locals  values to make available to the injectables
-     * @param {object} parent  a promise returned by another call to `$resolve`.
-     * @param {object} self  the `this` for the invoked methods
-     * @return {object} Promise for an object that contains the resolved return value
-     * of all invocables, as well as any inherited and local values.
-     */
-    this.resolve = function (invocables, locals, parent, self) {
-      return this.study(invocables)(locals, parent, self);
-    };
+  /**
+   * @ngdoc function
+   * @name ui.router.util.$resolve#resolve
+   * @methodOf ui.router.util.$resolve
+   *
+   * @description
+   * Resolves a set of invocables. An invocable is a function to be invoked via
+   * `$injector.invoke()`, and can have an arbitrary number of dependencies.
+   * An invocable can either return a value directly,
+   * or a `$q` promise. If a promise is returned it will be resolved and the
+   * resulting value will be used instead. Dependencies of invocables are resolved
+   * (in this order of precedence)
+   *
+   * - from the specified `locals`
+   * - from another invocable that is part of this `$resolve` call
+   * - from an invocable that is inherited from a `parent` call to `$resolve`
+   *   (or recursively
+   * - from any ancestor `$resolve` of that parent).
+   *
+   * The return value of `$resolve` is a promise for an object that contains
+   * (in this order of precedence)
+   *
+   * - any `locals` (if specified)
+   * - the resolved return values of all injectables
+   * - any values inherited from a `parent` call to `$resolve` (if specified)
+   *
+   * The promise will resolve after the `parent` promise (if any) and all promises
+   * returned by injectables have been resolved. If any invocable
+   * (or `$injector.invoke`) throws an exception, or if a promise returned by an
+   * invocable is rejected, the `$resolve` promise is immediately rejected with the
+   * same error. A rejection of a `parent` promise (if specified) will likewise be
+   * propagated immediately. Once the `$resolve` promise has been rejected, no
+   * further invocables will be called.
+   *
+   * Cyclic dependencies between invocables are not permitted and will caues `$resolve`
+   * to throw an error. As a special case, an injectable can depend on a parameter
+   * with the same name as the injectable, which will be fulfilled from the `parent`
+   * injectable of the same name. This allows inherited values to be decorated.
+   * Note that in this case any other injectable in the same `$resolve` with the same
+   * dependency would see the decorated value, not the inherited value.
+   *
+   * Note that missing dependencies -- unlike cyclic dependencies -- will cause an
+   * (asynchronous) rejection of the `$resolve` promise rather than a (synchronous)
+   * exception.
+   *
+   * Invocables are invoked eagerly as soon as all dependencies are available.
+   * This is true even for dependencies inherited from a `parent` call to `$resolve`.
+   *
+   * As a special case, an invocable can be a string, in which case it is taken to
+   * be a service name to be passed to `$injector.get()`. This is supported primarily
+   * for backwards-compatibility with the `resolve` property of `$routeProvider`
+   * routes.
+   *
+   * @param {object} invocables functions to invoke or
+   * `$injector` services to fetch.
+   * @param {object} locals  values to make available to the injectables
+   * @param {object} parent  a promise returned by another call to `$resolve`.
+   * @param {object} self  the `this` for the invoked methods
+   * @return {object} Promise for an object that contains the resolved return value
+   * of all invocables, as well as any inherited and local values.
+   */
+  this.resolve = function (invocables, locals, parent, self) {
+    return this.study(invocables)(locals, parent, self);
+  };
   }
 
   angular.module('ui.router.util').service('$resolve', $Resolve);
@@ -581,52 +581,52 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
   $TemplateFactory.$inject = ['$http', '$templateCache', '$injector'];
   function $TemplateFactory($http, $templateCache, $injector) {
 
-    /**
-     * @ngdoc function
-     * @name ui.router.util.$templateFactory#fromConfig
-     * @methodOf ui.router.util.$templateFactory
-     *
-     * @description
-     * Creates a template from a configuration object.
-     *
-     * @param {object} config Configuration object for which to load a template.
-     * The following properties are search in the specified order, and the first one
-     * that is defined is used to create the template:
-     *
-     * @param {string|object} config.template html string template or function to
-     * load via {@link ui.router.util.$templateFactory#fromString fromString}.
-     * @param {string|object} config.templateUrl url to load or a function returning
-     * the url to load via {@link ui.router.util.$templateFactory#fromUrl fromUrl}.
-     * @param {Function} config.templateProvider function to invoke via
-     * {@link ui.router.util.$templateFactory#fromProvider fromProvider}.
-     * @param {object} params  Parameters to pass to the template function.
-     * @param {object} locals Locals to pass to `invoke` if the template is loaded
-     * via a `templateProvider`. Defaults to `{ params: params }`.
-     *
-     * @return {string|object}  The template html as a string, or a promise for
-     * that string,or `null` if no template is configured.
-     */
-    this.fromConfig = function (config, params, locals) {
-      return (
-        isDefined(config.template) ? this.fromString(config.template, params) :
-          isDefined(config.templateUrl) ? this.fromUrl(config.templateUrl, params) :
-            isDefined(config.templateProvider) ? this.fromProvider(config.templateProvider, params, locals) :
-              null
-      );
-    };
+  /**
+   * @ngdoc function
+   * @name ui.router.util.$templateFactory#fromConfig
+   * @methodOf ui.router.util.$templateFactory
+   *
+   * @description
+   * Creates a template from a configuration object.
+   *
+   * @param {object} config Configuration object for which to load a template.
+   * The following properties are search in the specified order, and the first one
+   * that is defined is used to create the template:
+   *
+   * @param {string|object} config.template html string template or function to
+   * load via {@link ui.router.util.$templateFactory#fromString fromString}.
+   * @param {string|object} config.templateUrl url to load or a function returning
+   * the url to load via {@link ui.router.util.$templateFactory#fromUrl fromUrl}.
+   * @param {Function} config.templateProvider function to invoke via
+   * {@link ui.router.util.$templateFactory#fromProvider fromProvider}.
+   * @param {object} params  Parameters to pass to the template function.
+   * @param {object} locals Locals to pass to `invoke` if the template is loaded
+   * via a `templateProvider`. Defaults to `{ params: params }`.
+   *
+   * @return {string|object}  The template html as a string, or a promise for
+   * that string,or `null` if no template is configured.
+   */
+  this.fromConfig = function (config, params, locals) {
+    return (
+      isDefined(config.template) ? this.fromString(config.template, params) :
+        isDefined(config.templateUrl) ? this.fromUrl(config.templateUrl, params) :
+          isDefined(config.templateProvider) ? this.fromProvider(config.templateProvider, params, locals) :
+            null
+    );
+  };
 
     /**
      * @ngdoc function
      * @name ui.router.util.$templateFactory#fromString
      * @methodOf ui.router.util.$templateFactory
-     *
+   *
      * @description
      * Creates a template from a string or a function returning a string.
-     *
+   *
      * @param {string|object} template html template as a string or function that
      * returns an html template as a string.
      * @param {object} params Parameters to pass to the template function.
-     *
+   *
      * @return {string|object} The template html as a string, or a promise for that
      * string.
      */
@@ -641,7 +641,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      *
      * @description
      * Loads a template from the a URL via `$http` and `$templateCache`.
-     *
+   *
      * @param {string|Function} url url of the template to load, or a function
      * that returns a url.
      * @param {Object} params Parameters to pass to the url function.
@@ -662,17 +662,17 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @ngdoc function
      * @name ui.router.util.$templateFactory#fromProvider
      * @methodOf ui.router.util.$templateFactory
-     *
+   *
      * @description
      * Creates a template by invoking an injectable provider function.
-     *
+   *
      * @param {Function} provider Function to invoke via `$injector.invoke`
      * @param {Object} params Parameters for the template.
      * @param {Object} locals Locals to pass to `invoke`. Defaults to
      * `{ params: params }`.
      * @return {string|Promise.<string>} The template html as a string, or a promise
      * for that string.
-     */
+   */
     this.fromProvider = function (provider, params, locals) {
       return $injector.invoke(provider, null, locals || {params: params});
     };
@@ -793,7 +793,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         default:
           surroundPattern = ['(' + squash + "|", ')?'];
           break;
-      }
+    }
       return result + surroundPattern[0] + pattern + surroundPattern[1];
     }
 
@@ -840,8 +840,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           param = addParameter(p.id, p.type, p.cfg, "search");
           last = placeholder.lastIndex;
           // check if ?&
-        }
       }
+    }
     } else {
       this.sourcePath = pattern;
       this.sourceSearch = '';
@@ -885,7 +885,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       caseInsensitive: $$UMFP.caseInsensitive(),
       strict: $$UMFP.strictMode(),
       squash: $$UMFP.defaultSquashPolicy()
-    };
+  };
     return new UrlMatcher(this.sourcePath + pattern + this.sourceSearch, extend(defaultConfig, config), this);
   };
 
@@ -949,7 +949,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       // if the param value matches a pre-replace pair, replace the value before decoding.
       for (j = 0; j < param.replace; j++) {
         if (param.replace[j].from === paramVal) paramVal = param.replace[j].to;
-      }
+    }
       if (paramVal && param.array === true) paramVal = decodePathArray(paramVal);
       values[paramName] = param.value(paramVal);
     }
@@ -1040,22 +1040,22 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
               result += map(encoded, encodeDashes).join("-");
             } else {
               result += encodeURIComponent(encoded);
-            }
           }
+        }
           result += nextSegment;
         } else if (squash === true) {
           var capture = result.match(/\/$/) ? /\/?(.*)/ : /(.*)/;
           result += nextSegment.match(capture)[1];
         } else if (isString(squash)) {
           result += squash + nextSegment;
-        }
+      }
       } else {
         if (encoded == null || (isDefaultValue && squash !== false)) continue;
         if (!isArray(encoded)) encoded = [encoded];
         encoded = map(encoded, encodeURIComponent).join('&' + name + '=');
         result += (search ? '&' : '?') + (name + '=' + encoded);
         search = true;
-      }
+    }
     }
 
     return result;
@@ -1249,7 +1249,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       this.equals = arrayEqualsHandler(bindTo(type, 'equals'));
       this.pattern = type.pattern;
       this.$arrayMode = mode;
-    }
+  }
   };
 
 
@@ -1359,87 +1359,87 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       return (isFunction(value) || (isArray(value) && isFunction(value[value.length - 1])));
     }
 
-    /**
-     * [Internal] Get the default value of a parameter, which may be an injectable function.
-     */
-    $UrlMatcherFactory.$$getDefaultValue = function (config) {
-      if (!isInjectable(config.value)) return config.value;
-      if (!injector) throw new Error("Injectable functions cannot be called at configuration time");
-      return injector.invoke(config.value);
-    };
+  /**
+   * [Internal] Get the default value of a parameter, which may be an injectable function.
+   */
+  $UrlMatcherFactory.$$getDefaultValue = function (config) {
+    if (!isInjectable(config.value)) return config.value;
+    if (!injector) throw new Error("Injectable functions cannot be called at configuration time");
+    return injector.invoke(config.value);
+  };
 
     /**
-     * @ngdoc function
+   * @ngdoc function
      * @name ui.router.util.$urlMatcherFactory#caseInsensitive
      * @methodOf ui.router.util.$urlMatcherFactory
-     *
-     * @description
+   *
+   * @description
      * Defines whether URL matching should be case sensitive (the default behavior), or not.
-     *
+   *
      * @param {boolean} value `false` to match URL in a case sensitive manner; otherwise `true`;
      * @returns {boolean} the current value of caseInsensitive
-     */
+   */
     this.caseInsensitive = function (value) {
       if (isDefined(value))
         isCaseInsensitive = value;
       return isCaseInsensitive;
-    };
+  };
 
-    /**
-     * @ngdoc function
-     * @name ui.router.util.$urlMatcherFactory#strictMode
-     * @methodOf ui.router.util.$urlMatcherFactory
-     *
-     * @description
-     * Defines whether URLs should match trailing slashes, or not (the default behavior).
-     *
-     * @param {boolean=} value `false` to match trailing slashes in URLs, otherwise `true`.
-     * @returns {boolean} the current value of strictMode
-     */
-    this.strictMode = function (value) {
-      if (isDefined(value))
-        isStrictMode = value;
-      return isStrictMode;
-    };
+  /**
+   * @ngdoc function
+   * @name ui.router.util.$urlMatcherFactory#strictMode
+   * @methodOf ui.router.util.$urlMatcherFactory
+   *
+   * @description
+   * Defines whether URLs should match trailing slashes, or not (the default behavior).
+   *
+   * @param {boolean=} value `false` to match trailing slashes in URLs, otherwise `true`.
+   * @returns {boolean} the current value of strictMode
+   */
+  this.strictMode = function (value) {
+    if (isDefined(value))
+      isStrictMode = value;
+    return isStrictMode;
+  };
 
-    /**
-     * @ngdoc function
-     * @name ui.router.util.$urlMatcherFactory#defaultSquashPolicy
-     * @methodOf ui.router.util.$urlMatcherFactory
-     *
-     * @description
-     * Sets the default behavior when generating or matching URLs with default parameter values.
-     *
-     * @param {string} value A string that defines the default parameter URL squashing behavior.
-     *    `nosquash`: When generating an href with a default parameter value, do not squash the parameter value from the URL
-     *    `slash`: When generating an href with a default parameter value, squash (remove) the parameter value, and, if the
-     *             parameter is surrounded by slashes, squash (remove) one slash from the URL
-     *    any other string, e.g. "~": When generating an href with a default parameter value, squash (remove)
-     *             the parameter value from the URL and replace it with this string.
-     */
-    this.defaultSquashPolicy = function (value) {
-      if (!isDefined(value)) return defaultSquashPolicy;
-      if (value !== true && value !== false && !isString(value))
-        throw new Error("Invalid squash policy: " + value + ". Valid policies: false, true, arbitrary-string");
-      defaultSquashPolicy = value;
-      return value;
-    };
+  /**
+   * @ngdoc function
+   * @name ui.router.util.$urlMatcherFactory#defaultSquashPolicy
+   * @methodOf ui.router.util.$urlMatcherFactory
+   *
+   * @description
+   * Sets the default behavior when generating or matching URLs with default parameter values.
+   *
+   * @param {string} value A string that defines the default parameter URL squashing behavior.
+   *    `nosquash`: When generating an href with a default parameter value, do not squash the parameter value from the URL
+   *    `slash`: When generating an href with a default parameter value, squash (remove) the parameter value, and, if the
+   *             parameter is surrounded by slashes, squash (remove) one slash from the URL
+   *    any other string, e.g. "~": When generating an href with a default parameter value, squash (remove)
+   *             the parameter value from the URL and replace it with this string.
+   */
+  this.defaultSquashPolicy = function (value) {
+    if (!isDefined(value)) return defaultSquashPolicy;
+    if (value !== true && value !== false && !isString(value))
+      throw new Error("Invalid squash policy: " + value + ". Valid policies: false, true, arbitrary-string");
+    defaultSquashPolicy = value;
+    return value;
+  };
 
-    /**
-     * @ngdoc function
-     * @name ui.router.util.$urlMatcherFactory#compile
-     * @methodOf ui.router.util.$urlMatcherFactory
-     *
-     * @description
-     * Creates a {@link ui.router.util.type:UrlMatcher `UrlMatcher`} for the specified pattern.
-     *
-     * @param {string} pattern  The URL pattern.
-     * @param {Object} config  The config object hash.
-     * @returns {UrlMatcher}  The UrlMatcher.
-     */
-    this.compile = function (pattern, config) {
-      return new UrlMatcher(pattern, extend(getDefaultConfig(), config));
-    };
+  /**
+   * @ngdoc function
+   * @name ui.router.util.$urlMatcherFactory#compile
+   * @methodOf ui.router.util.$urlMatcherFactory
+   *
+   * @description
+   * Creates a {@link ui.router.util.type:UrlMatcher `UrlMatcher`} for the specified pattern.
+   *
+   * @param {string} pattern  The URL pattern.
+   * @param {Object} config  The config object hash.
+   * @returns {UrlMatcher}  The UrlMatcher.
+   */
+  this.compile = function (pattern, config) {
+    return new UrlMatcher(pattern, extend(getDefaultConfig(), config));
+  };
 
     /**
      * @ngdoc function
@@ -1452,7 +1452,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @param {Object} object  The object to perform the type check against.
      * @returns {Boolean}  Returns `true` if the object matches the `UrlMatcher` interface, by
      *          implementing all the same methods.
-     */
+   */
     this.isMatcher = function (o) {
       if (!isObject(o)) return false;
       var result = true;
@@ -1460,37 +1460,37 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       forEach(UrlMatcher.prototype, function (val, name) {
         if (isFunction(val)) {
           result = result && (isDefined(o[name]) && isFunction(o[name]));
-        }
+      }
       });
       return result;
-    };
+  };
 
-    /**
-     * @ngdoc function
-     * @name ui.router.util.$urlMatcherFactory#type
-     * @methodOf ui.router.util.$urlMatcherFactory
-     *
-     * @description
-     * Registers a custom {@link ui.router.util.type:Type `Type`} object that can be used to
-     * generate URLs with typed parameters.
-     *
-     * @param {string} name  The type name.
-     * @param {Object|Function} definition   The type definition. See
-     *        {@link ui.router.util.type:Type `Type`} for information on the values accepted.
-     * @param {Object|Function} definitionFn (optional) A function that is injected before the app
-     *        runtime starts.  The result of this function is merged into the existing `definition`.
-     *        See {@link ui.router.util.type:Type `Type`} for information on the values accepted.
-     *
-     * @returns {Object}  Returns `$urlMatcherFactoryProvider`.
-     *
-     * @example
-     * This is a simple example of a custom type that encodes and decodes items from an
-     * array, using the array index as the URL-encoded value:
-     *
-     * <pre>
-     * var list = ['John', 'Paul', 'George', 'Ringo'];
-     *
-     * $urlMatcherFactoryProvider.type('listItem', {
+  /**
+   * @ngdoc function
+   * @name ui.router.util.$urlMatcherFactory#type
+   * @methodOf ui.router.util.$urlMatcherFactory
+   *
+   * @description
+   * Registers a custom {@link ui.router.util.type:Type `Type`} object that can be used to
+   * generate URLs with typed parameters.
+   *
+   * @param {string} name  The type name.
+   * @param {Object|Function} definition   The type definition. See
+   *        {@link ui.router.util.type:Type `Type`} for information on the values accepted.
+   * @param {Object|Function} definitionFn (optional) A function that is injected before the app
+   *        runtime starts.  The result of this function is merged into the existing `definition`.
+   *        See {@link ui.router.util.type:Type `Type`} for information on the values accepted.
+   *
+   * @returns {Object}  Returns `$urlMatcherFactoryProvider`.
+   *
+   * @example
+   * This is a simple example of a custom type that encodes and decodes items from an
+   * array, using the array index as the URL-encoded value:
+   *
+   * <pre>
+   * var list = ['John', 'Paul', 'George', 'Ringo'];
+   *
+   * $urlMatcherFactoryProvider.type('listItem', {
    *   encode: function(item) {
    *     // Represent the list item in the URL using its corresponding index
    *     return list.indexOf(item);
@@ -1505,29 +1505,29 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
    *     return list.indexOf(item) > -1;
    *   }
    * });
-     *
-     * $stateProvider.state('list', {
+   *
+   * $stateProvider.state('list', {
    *   url: "/list/{item:listItem}",
    *   controller: function($scope, $stateParams) {
    *     console.log($stateParams.item);
    *   }
    * });
-     *
-     * // ...
-     *
-     * // Changes URL to '/list/3', logs "Ringo" to the console
-     * $state.go('list', { item: "Ringo" });
-     * </pre>
-     *
-     * This is a more complex example of a type that relies on dependency injection to
-     * interact with services, and uses the parameter name from the URL to infer how to
-     * handle encoding and decoding parameter values:
-     *
-     * <pre>
-     * // Defines a custom type that gets a value from a service,
-     * // where each service gets different types of values from
-     * // a backend API:
-     * $urlMatcherFactoryProvider.type('dbObject', {}, function(Users, Posts) {
+   *
+   * // ...
+   *
+   * // Changes URL to '/list/3', logs "Ringo" to the console
+   * $state.go('list', { item: "Ringo" });
+   * </pre>
+   *
+   * This is a more complex example of a type that relies on dependency injection to
+   * interact with services, and uses the parameter name from the URL to infer how to
+   * handle encoding and decoding parameter values:
+   *
+   * <pre>
+   * // Defines a custom type that gets a value from a service,
+   * // where each service gets different types of values from
+   * // a backend API:
+   * $urlMatcherFactoryProvider.type('dbObject', {}, function(Users, Posts) {
    *
    *   // Matches up services to URL parameter names
    *   var services = {
@@ -1556,10 +1556,10 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
    *     }
    *   };
    * });
-     *
-     * // In a config() block, you can then attach URLs with
-     * // type-annotated parameters:
-     * $stateProvider.state('users', {
+   *
+   * // In a config() block, you can then attach URLs with
+   * // type-annotated parameters:
+   * $stateProvider.state('users', {
    *   url: "/users",
    *   // ...
    * }).state('users.item', {
@@ -1570,19 +1570,19 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
    *   },
    *   // ...
    * });
-     * </pre>
-     */
-    this.type = function (name, definition, definitionFn) {
-      if (!isDefined(definition)) return $types[name];
-      if ($types.hasOwnProperty(name)) throw new Error("A type named '" + name + "' has already been defined.");
+   * </pre>
+   */
+  this.type = function (name, definition, definitionFn) {
+    if (!isDefined(definition)) return $types[name];
+    if ($types.hasOwnProperty(name)) throw new Error("A type named '" + name + "' has already been defined.");
 
-      $types[name] = new Type(extend({name: name}, definition));
-      if (definitionFn) {
-        typeQueue.push({name: name, def: definitionFn});
-        if (!enqueue) flushTypeQueue();
-      }
-      return this;
-    };
+    $types[name] = new Type(extend({name: name}, definition));
+    if (definitionFn) {
+      typeQueue.push({name: name, def: definitionFn});
+      if (!enqueue) flushTypeQueue();
+    }
+    return this;
+  };
 
     // `flushTypeQueue()` waits until `$urlMatcherFactory` is injected before invoking the queued `definitionFn`s
     function flushTypeQueue() {
@@ -1590,7 +1590,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         var type = typeQueue.shift();
         if (type.pattern) throw new Error("You cannot override a type's .pattern at runtime.");
         angular.extend($types[type.name], injector.invoke(type.def));
-      }
+    }
     }
 
     // Register default types. Store them in the prototype of $types.
@@ -1607,7 +1607,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
       forEach(defaultTypes, function (type, name) {
         if (!$types[name]) $types[name] = new Type(type);
-      });
+    });
       return this;
     }];
 
@@ -1699,7 +1699,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             return obj.to;
           });
           return replacement.length ? replacement[0] : value;
-        }
+      }
 
         value = $replace(value);
         return isDefined(value) ? self.type.decode(value) : $$getDefaultValue();
@@ -1770,7 +1770,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           val = paramValues[key];
           isOptional = !val && param.isOptional;
           result = result && (isOptional || !!param.type.is(val));
-        });
+      });
         return result;
       },
       $$parent: undefined
@@ -1808,7 +1808,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     function regExpPrefix(re) {
       var prefix = /^\^((?:\\[^a-zA-Z0-9]|[^\\\[\]\^$*+?.()|{}]+)*)/.exec(re.source);
       return (prefix != null) ? prefix[1].replace(/\\(.)/g, "$1") : '';
-    }
+  }
 
     // Interpolates matched values into a String.replace()-style pattern
     function interpolate(pattern, match) {
@@ -1817,20 +1817,20 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       });
     }
 
-    /**
-     * @ngdoc function
-     * @name ui.router.router.$urlRouterProvider#rule
-     * @methodOf ui.router.router.$urlRouterProvider
-     *
-     * @description
-     * Defines rules that are used by `$urlRouterProvider` to find matches for
-     * specific URLs.
-     *
-     * @example
-     * <pre>
-     * var app = angular.module('app', ['ui.router.router']);
-     *
-     * app.config(function ($urlRouterProvider) {
+  /**
+   * @ngdoc function
+   * @name ui.router.router.$urlRouterProvider#rule
+   * @methodOf ui.router.router.$urlRouterProvider
+   *
+   * @description
+   * Defines rules that are used by `$urlRouterProvider` to find matches for
+   * specific URLs.
+   *
+   * @example
+   * <pre>
+   * var app = angular.module('app', ['ui.router.router']);
+   *
+   * app.config(function ($urlRouterProvider) {
    *   // Here's an example of how you might allow case insensitive urls
    *   $urlRouterProvider.rule(function ($injector, $location) {
    *     var path = $location.path(),
@@ -1841,18 +1841,18 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
    *     }
    *   });
    * });
-     * </pre>
-     *
-     * @param {object} rule Handler function that takes `$injector` and `$location`
-     * services as arguments. You can use them to return a valid path as a string.
-     *
-     * @return {object} `$urlRouterProvider` - `$urlRouterProvider` instance
-     */
-    this.rule = function (rule) {
-      if (!isFunction(rule)) throw new Error("'rule' must be a function");
-      rules.push(rule);
-      return this;
-    };
+   * </pre>
+   *
+   * @param {object} rule Handler function that takes `$injector` and `$location`
+   * services as arguments. You can use them to return a valid path as a string.
+   *
+   * @return {object} `$urlRouterProvider` - `$urlRouterProvider` instance
+   */
+  this.rule = function (rule) {
+    if (!isFunction(rule)) throw new Error("'rule' must be a function");
+    rules.push(rule);
+    return this;
+  };
 
     /**
      * @ngdoc object
@@ -1970,7 +1970,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             handler = ['$match', function ($match) {
               return interpolate(redirect, $match);
             }];
-          }
+        }
           return extend(function ($injector, $location) {
             return handleIfMatch($injector, handler, what.exec($location.path()));
           }, {
@@ -1992,7 +1992,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * @ngdoc function
      * @name ui.router.router.$urlRouterProvider#deferIntercept
      * @methodOf ui.router.router.$urlRouterProvider
-     *
+   *
      * @description
      * Disables (or enables) deferring location change interception.
      *
@@ -2079,13 +2079,13 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if (!handled) return false;
           if (isString(handled)) $location.replace().url(handled);
           return true;
-        }
+      }
 
         var n = rules.length, i;
 
         for (i = 0; i < n; i++) {
           if (check(rules[i])) return;
-        }
+      }
         // always check otherwise last to allow dynamic updates to the set of rules
         if (otherwise) check(otherwise);
       }
@@ -2200,7 +2200,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           return [$location.protocol(), '://', $location.host(), port, slash, url].join('');
         }
       };
-    }
+  }
   }
 
   angular.module('ui.router.router').provider('$urlRouter', $UrlRouterProvider);
@@ -2336,14 +2336,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if (rel[i] === "" && i === 0) {
             current = base;
             continue;
-          }
+        }
           if (rel[i] === "^") {
             if (!current.parent) throw new Error("Path '" + name + "' not valid for state '" + base.name + "'");
             current = current.parent;
             continue;
           }
           break;
-        }
+      }
         rel = rel.slice(i).join(".");
         name = current.name + (current.name && rel ? "." : "") + rel;
       }
@@ -2351,14 +2351,14 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
       if (state && (isStr || (!isStr && (state === stateOrName || state.self === stateOrName)))) {
         return state;
-      }
+    }
       return undefined;
     }
 
     function queueState(parentName, state) {
       if (!queue[parentName]) {
         queue[parentName] = [];
-      }
+    }
       queue[parentName].push(state);
     }
 
@@ -2366,7 +2366,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       var queued = queue[parentName] || [];
       while (queued.length) {
         registerState(queued.shift());
-      }
+    }
     }
 
     function registerState(state) {
@@ -2443,8 +2443,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
       for (var i = 0, l = globSegments.length; i < l; i++) {
         if (globSegments[i] === '*') {
           segments[i] = '*';
-        }
       }
+    }
 
       return segments.join('') === globSegments.join('');
     }
@@ -2558,8 +2558,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         return stateBuilder[name];
       }
       if (!isFunction(func) || !isString(name)) {
-        return this;
-      }
+      return this;
+    }
       if (stateBuilder[name] && !stateBuilder.$delegates[name]) {
         stateBuilder.$delegates[name] = stateBuilder[name];
       }
@@ -2725,7 +2725,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
    *       controller: "messagesCtrl",
    *       templateUrl: "messages.html"
    *     }
-     *   }</pre>
+   *   }</pre>
      *
      * @param {boolean=} [stateConfig.abstract=false]
      * <a id='abstract'></a>
@@ -2965,9 +2965,9 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
         // Allow the handler to return a promise to defer state lookup retry
         if (options.$retry) {
-          $urlRouter.update();
+        $urlRouter.update();
           return TransitionFailed;
-        }
+      }
         var retryTransition = $state.transition = $q.when(evt.retry);
 
         retryTransition.then(function () {
@@ -3160,7 +3160,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if (!isDefined(toState)) {
             if (!options.relative) throw new Error("No such state '" + to + "'");
             throw new Error("Could not resolve '" + to + "' from state '" + options.relative + "'");
-          }
+        }
         }
         if (toState[abstractKey]) throw new Error("Cannot transition to abstract state '" + to + "'");
         if (options.inherit) toParams = inheritParams($stateParams, toParams || {}, $state.$current, toState);
@@ -3179,7 +3179,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             locals = toLocals[keep] = state.locals;
             keep++;
             state = toPath[keep];
-          }
+        }
         }
 
         // If we're going to the same state and all locals are kept, we've got nothing to do.
@@ -3228,7 +3228,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           if ($rootScope.$broadcast('$stateChangeStart', to.self, toParams, from.self, fromParams).defaultPrevented) {
             $urlRouter.update();
             return TransitionPrevented;
-          }
+        }
         }
 
         // Resolve locals for the remaining states, but don't update any global state just
@@ -3259,7 +3259,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             exiting = fromPath[l];
             if (exiting.self.onExit) {
               $injector.invoke(exiting.self.onExit, exiting.self, exiting.locals.globals);
-            }
+          }
             exiting.locals = null;
           }
 
@@ -3269,7 +3269,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             entering.locals = toLocals[l];
             if (entering.self.onEnter) {
               $injector.invoke(entering.self.onEnter, entering.self, entering.locals.globals);
-            }
+          }
           }
 
           // Run it again, to catch any transitions in callbacks
@@ -3444,8 +3444,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         options = extend({relative: $state.$current}, options || {});
         if (isString(stateOrName) && isGlob(stateOrName)) {
           if (!doesStateMatchGlob(stateOrName)) {
-            return false;
-          }
+          return false;
+        }
           stateOrName = $state.$current.name;
         }
 
@@ -3575,7 +3575,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
         return $q.all(promises).then(function (values) {
           return dst;
         });
-      }
+    }
 
       return $state;
     }
@@ -3583,8 +3583,8 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
     function shouldTriggerReload(to, from, locals, options) {
       if (to === from && ((locals === from.locals && !options.reload) || (to.self.reloadOnSearch === false))) {
         return true;
-      }
     }
+  }
   }
 
   angular.module('ui.router.state')
@@ -3630,35 +3630,35 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             result = $templateFactory.fromConfig(options.view, options.params, options.locals);
           }
           if (result && options.notify) {
-            /**
-             * @ngdoc event
-             * @name ui.router.state.$state#$viewContentLoading
-             * @eventOf ui.router.state.$view
-             * @eventType broadcast on root scope
-             * @description
-             *
-             * Fired once the view **begins loading**, *before* the DOM is rendered.
-             *
-             * @param {Object} event Event object.
-             * @param {Object} viewConfig The view config properties (template, controller, etc).
-             *
-             * @example
-             *
-             * <pre>
-             * $scope.$on('$viewContentLoading',
-             * function(event, viewConfig){
+        /**
+         * @ngdoc event
+         * @name ui.router.state.$state#$viewContentLoading
+         * @eventOf ui.router.state.$view
+         * @eventType broadcast on root scope
+         * @description
+         *
+         * Fired once the view **begins loading**, *before* the DOM is rendered.
+         *
+         * @param {Object} event Event object.
+         * @param {Object} viewConfig The view config properties (template, controller, etc).
+         *
+         * @example
+         *
+         * <pre>
+         * $scope.$on('$viewContentLoading',
+         * function(event, viewConfig){
          *     // Access to all the view config properties.
          *     // and one special property 'targetView'
          *     // viewConfig.targetView
          * });
-             * </pre>
-             */
-            $rootScope.$broadcast('$viewContentLoading', options);
-          }
+         * </pre>
+         */
+        $rootScope.$broadcast('$viewContentLoading', options);
+        }
           return result;
         }
       };
-    }
+  }
   }
 
   angular.module('ui.router.state').provider('$view', $ViewProvider);
@@ -3674,44 +3674,44 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
     var useAnchorScroll = false;
 
-    /**
-     * @ngdoc function
-     * @name ui.router.state.$uiViewScrollProvider#useAnchorScroll
-     * @methodOf ui.router.state.$uiViewScrollProvider
-     *
-     * @description
-     * Reverts back to using the core [`$anchorScroll`](http://docs.angularjs.org/api/ng.$anchorScroll) service for
-     * scrolling based on the url anchor.
-     */
-    this.useAnchorScroll = function () {
-      useAnchorScroll = true;
+  /**
+   * @ngdoc function
+   * @name ui.router.state.$uiViewScrollProvider#useAnchorScroll
+   * @methodOf ui.router.state.$uiViewScrollProvider
+   *
+   * @description
+   * Reverts back to using the core [`$anchorScroll`](http://docs.angularjs.org/api/ng.$anchorScroll) service for
+   * scrolling based on the url anchor.
+   */
+  this.useAnchorScroll = function () {
+    useAnchorScroll = true;
+  };
+
+  /**
+   * @ngdoc object
+   * @name ui.router.state.$uiViewScroll
+   *
+   * @requires $anchorScroll
+   * @requires $timeout
+   *
+   * @description
+   * When called with a jqLite element, it scrolls the element into view (after a
+   * `$timeout` so the DOM has time to refresh).
+   *
+   * If you prefer to rely on `$anchorScroll` to scroll the view to the anchor,
+   * this can be enabled by calling {@link ui.router.state.$uiViewScrollProvider#methods_useAnchorScroll `$uiViewScrollProvider.useAnchorScroll()`}.
+   */
+  this.$get = ['$anchorScroll', '$timeout', function ($anchorScroll, $timeout) {
+    if (useAnchorScroll) {
+      return $anchorScroll;
+    }
+
+    return function ($element) {
+      $timeout(function () {
+        $element[0].scrollIntoView();
+      }, 0, false);
     };
-
-    /**
-     * @ngdoc object
-     * @name ui.router.state.$uiViewScroll
-     *
-     * @requires $anchorScroll
-     * @requires $timeout
-     *
-     * @description
-     * When called with a jqLite element, it scrolls the element into view (after a
-     * `$timeout` so the DOM has time to refresh).
-     *
-     * If you prefer to rely on `$anchorScroll` to scroll the view to the anchor,
-     * this can be enabled by calling {@link ui.router.state.$uiViewScrollProvider#methods_useAnchorScroll `$uiViewScrollProvider.useAnchorScroll()`}.
-     */
-    this.$get = ['$anchorScroll', '$timeout', function ($anchorScroll, $timeout) {
-      if (useAnchorScroll) {
-        return $anchorScroll;
-      }
-
-      return function ($element) {
-        $timeout(function () {
-          $element[0].scrollIntoView();
-        }, 0, false);
-      };
-    }];
+  }];
   }
 
   angular.module('ui.router.state').provider('$uiViewScroll', $ViewScrollProvider);
@@ -3861,7 +3861,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             element.remove();
             cb();
           }
-        };
+      };
       };
 
       if ($animate) {
@@ -3890,7 +3890,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             cb();
           }
         };
-      }
+    }
 
       return statics();
     }
@@ -3934,7 +3934,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
               previousEl = currentEl;
               currentEl = null;
-            }
+          }
           }
 
           function updateView(firstTime) {
@@ -3955,7 +3955,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
                 if (angular.isDefined(autoScrollExp) && !autoScrollExp || scope.$eval(autoScrollExp)) {
                   $uiViewScroll(clone);
                 }
-              });
+            });
               cleanupLastView();
             });
 
@@ -4007,7 +4007,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             var controller = $controller(locals.$$controller, locals);
             if (locals.$$controllerAs) {
               scope[locals.$$controllerAs] = controller;
-            }
+          }
             $element.data('$ngControllerController', controller);
             $element.children().data('$ngControllerController', controller);
           }
@@ -4044,7 +4044,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
 
     if (stateData && stateData.state && stateData.state.name) {
       return stateData.state;
-    }
+  }
   }
 
   /**
@@ -4141,7 +4141,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
           var activeDirective = uiSrefActive[1] || uiSrefActive[0];
           if (activeDirective) {
             activeDirective.$$setStateInfo(ref.state, params);
-          }
+        }
           if (newHref === null) {
             nav = false;
             return false;
@@ -4281,7 +4281,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             $element.addClass(activeClass);
           } else {
             $element.removeClass(activeClass);
-          }
+        }
         }
 
         function isMatch() {
@@ -4289,7 +4289,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
             return state && $state.is(state.name, params);
           } else {
             return state && $state.includes(state.name, params);
-          }
+        }
         }
       }]
     };

@@ -179,6 +179,7 @@ a.item {
   }
 }
 
+
 /**
  * Complex Items
  * --------------------------------------------------
@@ -194,7 +195,6 @@ a.item.item-complex,
 button.item.item-complex {
   padding: 0;
 }
-
 .item-complex .item-content,
 .item-radio .item-content {
   position: relative;
@@ -231,7 +231,6 @@ a.item-content {
   overflow: visible;
   white-space: normal;
 }
-
 .item-complex.item-text-wrap,
 .item-complex.item-text-wrap h1,
 .item-complex.item-text-wrap h2,
@@ -304,6 +303,7 @@ a.item-content {
   }
 }
 
+
 /**
  * Item Icons
  * --------------------------------------------------
@@ -338,7 +338,6 @@ a.item-content {
     left: ceil(($item-padding / 3) * 2);
   }
 }
-
 .item-complex.item-icon-left {
   padding-left: 0;
 
@@ -354,7 +353,6 @@ a.item-content {
     right: ceil(($item-padding / 3) * 2);
   }
 }
-
 .item-complex.item-icon-right {
   padding-right: 0;
 
@@ -366,7 +364,6 @@ a.item-content {
 .item-icon-left.item-icon-right .icon:first-child {
   right: auto;
 }
-
 .item-icon-left.item-icon-right .icon:last-child,
 .item-icon-left .item-delete .icon {
   left: auto;
@@ -377,14 +374,13 @@ a.item-content {
   color: $item-icon-accessory-color;
   font-size: $item-icon-accessory-font-size;
 }
-
 .item-icon-left .icon-accessory {
   left: floor($item-padding / 5);
 }
-
 .item-icon-right .icon-accessory {
   right: floor($item-padding / 5);
 }
+
 
 /**
  * Item Button
@@ -459,6 +455,7 @@ button.item.item-button-right {
   }
 }
 
+
 // Item Avatar
 // -------------------------------
 
@@ -500,6 +497,7 @@ button.item.item-button-right {
   }
 }
 
+
 // Item Thumbnails
 // -------------------------------
 
@@ -520,7 +518,6 @@ button.item.item-button-right {
     height: 100%;
   }
 }
-
 .item-avatar.item-complex,
 .item-avatar-left.item-complex,
 .item-thumbnail-left.item-complex {
@@ -545,12 +542,12 @@ button.item.item-button-right {
     height: 100%;
   }
 }
-
 .item-avatar-right.item-complex,
 .item-thumbnail-right.item-complex {
   padding-top: 0;
   padding-right: 0;
 }
+
 
 // Item Image
 // -------------------------------
@@ -564,6 +561,7 @@ button.item.item-button-right {
     vertical-align: middle;
   }
 }
+
 
 // Item Body
 // -------------------------------
@@ -579,6 +577,7 @@ button.item.item-button-right {
     margin-bottom: $item-padding;
   }
 }
+
 
 // Item Divider
 // -------------------------------
@@ -607,6 +606,7 @@ button.item.item-button-right {
   font-weight: 300;
   font-size: 13px;
 }
+
 
 // Item Note
 // -------------------------------
@@ -701,7 +701,6 @@ button.item.item-button-right {
     }
   }
 }
-
 .list-left-editing .item-left-edit {
   @include transition-delay($item-edit-transition-duration / 2);
 }

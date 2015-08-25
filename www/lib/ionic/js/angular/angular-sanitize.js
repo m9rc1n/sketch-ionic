@@ -202,21 +202,21 @@
 
 // Safe Block Elements - HTML5
   var blockElements = angular.extend({}, optionalEndTagBlockElements, makeMap("address,article," +
-  "aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5," +
-  "h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul"));
+    "aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5," +
+    "h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul"));
 
 // Inline Elements - HTML5
   var inlineElements = angular.extend({}, optionalEndTagInlineElements, makeMap("a,abbr,acronym,b," +
-  "bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s," +
-  "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
+    "bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s," +
+    "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
 
 // SVG Elements
 // https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Elements
 // Note: the elements animate,animateColor,animateMotion,animateTransform,set are intentionally omitted.
 // They can potentially allow for arbitrary javascript to be executed. See #11290
   var svgElements = makeMap("circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph," +
-  "hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline," +
-  "radialGradient,rect,stop,svg,switch,text,title,tspan,use");
+    "hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline," +
+    "radialGradient,rect,stop,svg,switch,text,title,tspan,use");
 
 // Special Elements (can contain anything)
   var specialElements = makeMap("script,style");
@@ -232,28 +232,28 @@
   var uriAttrs = makeMap("background,cite,href,longdesc,src,usemap,xlink:href");
 
   var htmlAttrs = makeMap('abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,' +
-  'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,' +
-  'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,' +
-  'scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,' +
-  'valign,value,vspace,width');
+    'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,' +
+    'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,' +
+    'scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,' +
+    'valign,value,vspace,width');
 
 // SVG attributes (without "id" and "name" attributes)
 // https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Attributes
   var svgAttrs = makeMap('accent-height,accumulate,additive,alphabetic,arabic-form,ascent,' +
-  'baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,' +
-  'cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,' +
-  'font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,' +
-  'height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,' +
-  'marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,' +
-  'max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,' +
-  'path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,' +
-  'requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,' +
-  'stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,' +
-  'stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,' +
-  'stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,' +
-  'underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,' +
-  'width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,' +
-  'xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan', true);
+    'baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,' +
+    'cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,' +
+    'font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,' +
+    'height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,' +
+    'marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,' +
+    'max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,' +
+    'path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,' +
+    'requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,' +
+    'stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,' +
+    'stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,' +
+    'stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,' +
+    'underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,' +
+    'width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,' +
+    'xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan', true);
 
   var validAttrs = angular.extend({},
     uriAttrs,
@@ -264,7 +264,7 @@
     var obj = {}, items = str.split(','), i;
     for (i = 0; i < items.length; i++) {
       obj[lowercaseKeys ? angular.lowercase(items[i]) : items[i]] = true;
-    }
+  }
     return obj;
   }
 
@@ -287,7 +287,7 @@
         html = '';
       } else {
         html = '' + html;
-      }
+    }
     }
     var index, chars, match, stack = [], last = html, text;
     stack.last = function () {
@@ -338,13 +338,13 @@
             if (match[4]) {
               html = html.substring(match[0].length);
               match[0].replace(START_TAG_REGEXP, parseStartTag);
-            }
+          }
             chars = false;
           } else {
             // no ending tag found --- this piece should be encoded as an entity.
             text += '<';
             html = html.substring(1);
-          }
+        }
         }
 
         if (chars) {
@@ -372,8 +372,8 @@
 
       if (html == last) {
         throw $sanitizeMinErr('badparse', "The sanitizer was unable to parse the following block " +
-        "of html: {0}", html);
-      }
+          "of html: {0}", html);
+    }
       last = html;
     }
 
@@ -385,7 +385,7 @@
       if (blockElements[tagName]) {
         while (stack.last() && inlineElements[stack.last()]) {
           parseEndTag("", stack.last());
-        }
+      }
       }
 
       if (optionalEndTagElements[tagName] && stack.last() == tagName) {
@@ -419,7 +419,7 @@
         // Find the closest opened tag of the same type
         for (pos = stack.length - 1; pos >= 0; pos--) {
           if (stack[pos] == tagName) break;
-        }
+      }
       }
 
       if (pos >= 0) {
@@ -429,8 +429,8 @@
 
         // Remove the open elements from the stack
         stack.length = pos;
-      }
     }
+  }
   }
 
   var hiddenPre = document.createElement("pre");
@@ -563,10 +563,10 @@
                'Pretty text with some links:\n'+
                'http://angularjs.org/,\n'+
                'mailto:us@somewhere.org,\n'+
-   'another@somewhere.org,\n'+
-   'and one more: ftp://127.0.0.1/.';
-   $scope.snippetWithTarget = 'http://angularjs.org/';
-   }]);
+               'another@somewhere.org,\n'+
+               'and one more: ftp://127.0.0.1/.';
+             $scope.snippetWithTarget = 'http://angularjs.org/';
+           }]);
    </script>
    <div ng-controller="ExampleController">
    Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
@@ -605,16 +605,16 @@
    it('should linkify the snippet with urls', function() {
          expect(element(by.id('linky-filter')).element(by.binding('snippet | linky')).getText()).
              toBe('Pretty text with some links: http://angularjs.org/, us@somewhere.org, ' +
-   'another@somewhere.org, and one more: ftp://127.0.0.1/.');
-   expect(element.all(by.css('#linky-filter a')).count()).toEqual(4);
-   });
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#linky-filter a')).count()).toEqual(4);
+       });
 
    it('should not linkify snippet without the linky filter', function() {
          expect(element(by.id('escaped-html')).element(by.binding('snippet')).getText()).
              toBe('Pretty text with some links: http://angularjs.org/, mailto:us@somewhere.org, ' +
-   'another@somewhere.org, and one more: ftp://127.0.0.1/.');
-   expect(element.all(by.css('#escaped-html a')).count()).toEqual(0);
-   });
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#escaped-html a')).count()).toEqual(0);
+       });
 
    it('should update', function() {
          element(by.model('snippet')).clear();
@@ -653,7 +653,7 @@
         // if we did not match ftp/http/www/mailto then assume mailto
         if (!match[2] && !match[4]) {
           url = (match[3] ? 'http://' : 'mailto:') + url;
-        }
+      }
         i = match.index;
         addText(raw.substr(0, i));
         addLink(url, match[0].replace(MAILTO_REGEXP, ''));
@@ -665,7 +665,7 @@
       function addText(text) {
         if (!text) {
           return;
-        }
+      }
         html.push(sanitizeText(text));
       }
 
@@ -675,7 +675,7 @@
           html.push('target="',
             target,
             '" ');
-        }
+      }
         html.push('href="',
           url.replace(/"/g, '&quot;'),
           '">');

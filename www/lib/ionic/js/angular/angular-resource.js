@@ -21,7 +21,7 @@
   function lookupDottedPath(obj, path) {
     if (!isValidDottedPath(path)) {
       throw $resourceMinErr('badmember', 'Dotted member path "@{0}" is invalid.', path);
-    }
+  }
     var keys = path.split('.');
     for (var i = 0, ii = keys.length; i < ii && obj !== undefined; i++) {
       var key = keys[i];
@@ -43,8 +43,8 @@
     for (var key in src) {
       if (src.hasOwnProperty(key) && !(key.charAt(0) === '$' && key.charAt(1) === '$')) {
         dst[key] = src[key];
-      }
     }
+  }
 
     return dst;
   }
@@ -459,7 +459,7 @@
                     return leadingSlashes + tail;
                   }
                 });
-              }
+            }
             });
 
             // strip trailing slashes and set the url (unless this behavior is specifically disabled)
@@ -537,8 +537,8 @@
                     if (isFunction(a1)) {
                       success = a1;
                       error = a2;
-                      break;
-                    }
+                    break;
+                  }
 
                     success = a2;
                     error = a3;
@@ -547,7 +547,7 @@
                     params = a1;
                     data = a2;
                     success = a3;
-                    break;
+                  break;
                   }
                 case 1:
                   if (isFunction(a1)) success = a1;
@@ -595,7 +595,7 @@
                       'Error in resource configuration for action `{0}`. Expected response to ' +
                       'contain an {1} but got an {2} (Request: {3} {4})', name, action.isArray ? 'array' : 'object',
                       angular.isArray(data) ? 'array' : 'object', httpConfig.method, httpConfig.url);
-                  }
+                }
                   // jshint +W018
                   if (action.isArray) {
                     value.length = 0;
@@ -632,7 +632,7 @@
                 function (response) {
                   var value = responseInterceptor(response);
                   (success || noop)(value, response.headers);
-                  return value;
+                return value;
                 },
                 responseErrorInterceptor);
 
@@ -659,7 +659,7 @@
               }
               var result = Resource[name].call(this, params, this, success, error);
               return result.$promise || result;
-            };
+          };
           });
 
           Resource.bind = function (additionalParamDefaults) {
